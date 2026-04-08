@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תצוגה תלת-מימדית — היתר 16860 | מגרש 37A</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#fff;font-family:'Segoe UI',Arial,sans-serif;overflow:hidden;height:100vh;direction:rtl}
+#header{position:fixed;top:0;right:0;left:0;z-index:100;background:linear-gradient(180deg,rgba(13,17,23,0.95),transparent);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+#header h1{font-size:15px;font-weight:600;color:#e8d5b0;white-space:nowrap}
+#header p{font-size:11px;color:#888;margin-top:1px}
+#legend{position:fixed;top:70px;right:16px;z-index:100;display:flex;flex-direction:column;gap:5px;background:rgba(13,17,23,0.8);padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.08)}
+.leg{display:flex;align-items:center;gap:8px;font-size:11px;color:#ccc}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+#controls{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;background:rgba(13,17,23,0.8);padding:8px 12px;border-radius:24px;border:1px solid rgba(255,255,255,0.08)}
+.vbtn{background:rgba(255,255,255,0.08);color:#ddd;border:1px solid rgba(255,255,255,0.15);padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer;font-family:inherit;transition:all .15s}
+.vbtn:hover{background:rgba(255,255,255,0.18);color:#fff}
+.vbtn.active{background:rgba(232,213,176,0.2);border-color:rgba(232,213,176,0.5);color:#e8d5b0}
+#depth-badge{position:fixed;top:70px;left:16px;z-index:100;background:rgba(212,118,26,0.2);border:1px solid rgba(212,118,26,0.4);color:#f4a444;padding:6px 12px;border-radius:20px;font-size:11px}
+#hint{position:fixed;bottom:68px;left:50%;transform:translateX(-50%);z-index:100;color:#555;font-size:11px;white-space:nowrap}
+canvas{display:block;width:100vw;height:100vh}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <h1>🏗 תצוגה תלת-מימדית — היתר בניה 16860</h1>
+    <p>תוספת קומה ב׳ | מגרש 37A | ברגר ליאור ונועה | אושר 17/03/2025</p>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button onclick="window.close()" style="background:rgba(232,213,176,0.2);color:#e8d5b0;border:1px solid rgba(232,213,176,0.4);padding:6px 14px;border-radius:16px;font-size:12px;cursor:pointer;font-family:inherit">← חזור לכ"כ</button>
+    <span id="floor-label" style="background:rgba(232,213,176,0.15);color:#e8d5b0;padding:5px 12px;border-radius:16px;font-size:12px">כל הקומות</span>
+  </div>
+</div>
+
+<div id="depth-badge">עומק: -11.15מ עד +7.55מ</div>
+
+<div id="legend">
+  <div class="leg"><div class="leg-dot" style="background:#c0392b"></div>גג רעפים</div>
+  <div class="leg"><div class="leg-dot" style="background:#d4c4a0"></div>תוספת קומה ב</div>
+  <div class="leg"><div class="leg-dot" style="background:#e8d5b0"></div>קומת קרקע</div>
+  <div class="leg"><div class="leg-dot" style="background:#8b6914"></div>קיר תומך</div>
+  <div class="leg"><div class="leg-dot" style="background:#4a4a8a"></div>כלונסאות Ø50 L=11מ</div>
+  <div class="leg"><div class="leg-dot" style="background:#8b7355"></div>יסודות</div>
+  <div class="leg"><div class="leg-dot" style="background:#d4761a"></div>קורות כתר RC</div>
+</div>
+
+<div id="controls">
+  <button class="vbtn active" onclick="setView('all')"         id="btn-all">הכל</button>
+  <button class="vbtn" onclick="setView('underground')" id="btn-underground" style="color:#ffaa44">תת-קרקע</button>
+  <button class="vbtn" onclick="setView('gf')"          id="btn-gf">קומת קרקע</button>
+  <button class="vbtn" onclick="setView('upper')"       id="btn-upper">קומה א׳</button>
+  <button class="vbtn" onclick="setView('roof')"        id="btn-roof">גג</button>
+  <button class="vbtn" onclick="setView('site')"        id="btn-site">שטח</button>
+  <button class="vbtn" onclick="setView('section')"     id="btn-section" style="color:#88ccff">חתך</button>
+  <button class="vbtn" onclick="toggleWire()"           id="wireBtn">רשת</button>
+</div>
+
+<div id="hint">גרור לסיבוב · גלגל לזום · לחצני קומות למטה</div>
+
+<canvas id="c3d"></canvas>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+'use strict';
+var scene, camera, renderer;
+var wireMode = false;
+var allMeshes = [];
+var groups = {gf:[],upper:[],roof:[],site:[],foundation:[],underground:[],retwall:[]};
+var currentView = 'all';
+
+function mat(color, opacity) {
+  var m = new THREE.MeshLambertMaterial({color: color});
+  if (opacity !== undefined && opacity < 1) { m.transparent = true; m.opacity = opacity; }
+  return m;
+}
+
+function box(w,h,d,color,x,y,z,grp,opacity) {
+  var mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat(color,opacity));
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true; mesh.receiveShadow = true;
+  mesh.userData = {origColor:color, origOp: opacity===undefined?1:opacity, grp:grp};
+  scene.add(mesh); allMeshes.push(mesh);
+  if (grp && groups[grp]) groups[grp].push(mesh);
+  return mesh;
+}
+
+function cyl(rt,rb,h,color,x,y,z,grp,segs) {
+  var mesh = new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,segs||16), mat(color));
+  mesh.position.set(x,y,z);
+  mesh.castShadow = true;
+  mesh.userData = {origColor:color, origOp:1, grp:grp};
+  scene.add(mesh); allMeshes.push(mesh);
+  if (grp && groups[grp]) groups[grp].push(mesh);
+  return mesh;
+}
+
+function triRoof(pts, color, grp) {
+  var geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(pts), 3));
+  geo.computeVertexNormals();
+  var mesh = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({color:color, side:THREE.DoubleSide}));
+  mesh.castShadow = true;
+  mesh.userData = {origColor:color, origOp:1, grp:grp};
+  scene.add(mesh); allMeshes.push(mesh);
+  if (grp && groups[grp]) groups[grp].push(mesh);
+  return mesh;
+}
+
+function buildScene() {
+  var S = 0.8;
+
+  // Ground
+  var gnd = new THREE.Mesh(new THREE.PlaneGeometry(60,60), mat(0x2a5225));
+  gnd.rotation.x = -Math.PI/2; gnd.receiveShadow = true;
+  scene.add(gnd); groups.site.push(gnd);
+
+  // ── UNDERGROUND PILES ────────────────────────────────────────
+  var pPos = [[-2.5*S,-5*S],[0,-5*S],[2.5*S,-5*S],[-2.5*S,0],[0,0],[2.5*S,0]];
+  pPos.forEach(function(p) {
+    cyl(0.25,0.25,11*S, 0x4a4a8a, p[0],-5.5*S,p[1], 'underground');
+    cyl(0.12,0.25,0.5*S, 0x3a3a6a, p[0],-11*S,p[1], 'underground');
+    box(0.8*S,0.4*S,0.8*S, 0x6a5a3a, p[0],-0.1*S,p[1], 'underground');
+  });
+  // Foundation beams
+  box(6.55*S,0.4*S,0.23*S,0x8b7355,0,-0.1*S,-5*S,'underground');
+  box(6.55*S,0.4*S,0.20*S,0x8b7355,0,-0.1*S,0,'underground');
+  box(0.23*S,0.4*S,3.45*S,0x8b7355,-2.5*S,-0.1*S,-2.5*S,'underground');
+  box(0.23*S,0.4*S,3.45*S,0x8b7355, 2.5*S,-0.1*S,-2.5*S,'underground');
+  box(0.20*S,0.4*S,3.45*S,0x8b7355,0,-0.1*S,-2.5*S,'underground');
+  // Blinding
+  box(9*S,0.1*S,14*S,0x9e9070,0,-0.28*S,-2.5*S,'underground');
+  box(5.1*S,0.1*S,7*S,0x9e9070,-2*S,-0.28*S,5.5*S,'underground');
+  // Fill
+  box(9*S,8*S,14*S,0x6b5a3a,0,-4.3*S,-2.5*S,'underground',0.15);
+
+  // ── RETAINING WALL ────────────────────────────────────────────
+  box(0.25,2.2*S,14*S,0x8b6914,-5.2*S,1.1*S,-2.5*S,'retwall');
+  box(0.08,2.2*S,14*S,0x7a5c10,-5.33*S,1.1*S,-2.5*S,'retwall');
+  box(0.4,0.15*S,14*S,0xaa9050,-5.2*S,2.28*S,-2.5*S,'retwall');
+  for (var ri=-8; ri<=5; ri+=2) {
+    cyl(0.05,0.05,0.6,0x555566,-5.45*S,0.5*S,ri*S,'retwall',8);
+  }
+  box(0.5,2.0*S,14*S,0xbba880,-4.85*S,1.0*S,-2.5*S,'retwall',0.3);
+  box(0.02,2.0*S,14*S,0x8899aa,-4.58*S,1.0*S,-2.5*S,'retwall',0.55);
+
+  // ── FOUNDATION SLAB ───────────────────────────────────────────
+  box(9*S,0.3,14*S,0x8b7355,0,0.15,-2.5*S,'foundation');
+  box(5.1*S,0.3,7*S,0x8b7355,-2*S,0.15,5.5*S,'foundation');
+
+  // ── GROUND FLOOR ─────────────────────────────────────────────
+  var gfH=2.8*S, gfY=gfH/2+0.3;
+  box(9*S,gfH,10*S,0xe8d5b0,0,gfY,-4*S,'gf');
+  box(9*S,gfH,2.5*S,0xe8d5b0,0,gfY,0.5*S,'gf');
+  box(5.1*S,gfH,7.5*S,0xe8d5b0,-2*S,gfY,4.5*S,'gf');
+  var wc=0x88ccee;
+  box(1.8*S,1.4*S,0.1,wc,-2*S,gfY+0.15,-9*S,'gf',0.7);
+  box(1.2*S,1.2*S,0.1,wc,1*S,gfY+0.15,-9*S,'gf',0.7);
+  box(1.2*S,1.2*S,0.1,wc,3*S,gfY+0.15,-9*S,'gf',0.7);
+  box(0.1,1.2*S,1.0*S,wc,-4.5*S,gfY+0.15,-2*S,'gf',0.7);
+  box(0.1,2.0*S,1.8*S,wc,4.5*S,gfY-0.1,-4*S,'gf',0.65);
+  box(0.1,1.2*S,1.0*S,wc,-4.5*S,gfY+0.15,3*S,'gf',0.7);
+  box(0.1,2.1*S,0.9*S,0x6b4c2a,-4.5*S,gfY-0.1,4.5*S,'gf');
+  box(1.2*S,0.15,0.35*S,0xccbbaa,-4.5*S,0.37,4.8*S,'gf');
+  box(1.2*S,0.3,0.35*S,0xccbbaa,-4.5*S,0.22,5.15*S,'gf');
+  // Ring beam +2.80
+  box(9*S,0.25,10*S,0xd4761a,0,2.8*S+0.12,-4*S,'gf',0.85);
+  box(9*S,0.25,2.5*S,0xd4761a,0,2.8*S+0.12,0.5*S,'gf',0.85);
+
+  // ── UPPER FLOOR ──────────────────────────────────────────────
+  var ufH=(6.45-2.80)*S, ufY=2.8*S+ufH/2;
+  box(9*S,ufH,8*S,0xd4c4a0,0,ufY,-5*S,'upper');
+  box(9*S,ufH,2*S,0xd4c4a0,0,ufY,-0.5*S,'upper');
+  box(6*S,ufH*0.7,7*S,0xc8b898,-1.5*S,2.8*S+ufH*0.7/2,-4*S,'upper');
+  box(1.2*S,1.1*S,0.1,wc,-2.5*S,ufY+0.15,-9*S,'upper',0.7);
+  box(1.2*S,1.1*S,0.1,wc,0,ufY+0.15,-9*S,'upper',0.7);
+  box(1.2*S,1.1*S,0.1,wc,2.5*S,ufY+0.15,-9*S,'upper',0.7);
+  box(0.1,1.1*S,1.2*S,wc,-4.5*S,ufY+0.15,-4*S,'upper',0.7);
+  box(0.1,1.1*S,1.2*S,wc,4.5*S,ufY+0.15,-4*S,'upper',0.7);
+  box(5*S,0.15,1.0*S,0xccbbaa,-4.3*S,2.8*S+0.07,0,'upper');
+  box(5*S,0.8*S,0.08,0xaaa090,-4.3*S,2.8*S+0.47,0,'upper');
+  // Ring beam +6.45
+  box(9*S,0.22,8*S,0xd4761a,0,6.45*S+0.11,-5*S,'upper',0.9);
+  box(9*S,0.22,2*S,0xd4761a,0,6.45*S+0.11,-0.5*S,'upper',0.9);
+
+  // ── ROOF ─────────────────────────────────────────────────────
+  var eave=6.45*S+0.3, ridge=7.55*S, rW=9*S, rD=10*S;
+  triRoof([-rW/2,eave,-rD/2, rW/2,eave,-rD/2, 0,ridge,0],0xc0392b,'roof');
+  triRoof([-rW/2,eave,rD/2,  rW/2,eave,rD/2,  0,ridge,0],0xa93226,'roof');
+  triRoof([rW/2,eave,-rD/2,  rW/2,eave,rD/2,  0,ridge,0],0xb03020,'roof');
+  triRoof([-rW/2,eave,-rD/2,-rW/2,eave,rD/2,  0,ridge,0],0xb03020,'roof');
+  box(9.5*S,0.12,10.5*S,0xb8a070,0,eave-0.08,0,'roof');
+  // Rafter infill concrete
+  [-1,-2,-3].forEach(function(z){box(9*S,0.18,0.28*S,0xccaa66,0,eave+Math.abs(z)*0.25,z*S,'roof');});
+  box(0.8*S,0.1,0.6*S,0x88ccff,1*S,ridge-0.3,-2*S,'roof',0.8);
+  // Lower roof
+  var e2=6.45*S+0.1,r2=7.3*S,cx=-2*S,cz=4.5*S,rw2=5*S,rd2=7*S;
+  triRoof([cx-rw2/2,e2,cz-rd2/2, cx+rw2/2,e2,cz-rd2/2, cx,r2,cz],0xc0392b,'roof');
+  triRoof([cx+rw2/2,e2,cz-rd2/2, cx+rw2/2,e2,cz+rd2/2, cx,r2,cz],0xa93226,'roof');
+  triRoof([cx+rw2/2,e2,cz+rd2/2, cx-rw2/2,e2,cz+rd2/2, cx,r2,cz],0xc0392b,'roof');
+  triRoof([cx-rw2/2,e2,cz+rd2/2, cx-rw2/2,e2,cz-rd2/2, cx,r2,cz],0xb03020,'roof');
+
+  // ── SITE ────────────────────────────────────────────────────
+  var trees=[[-7,7],[-7,2],[-7,-4],[7,6],[7,-1],[6,-7],[2,-9],[-2,-9],[-5,-9]];
+  trees.forEach(function(p) {
+    var tr=new THREE.Mesh(new THREE.CylinderGeometry(0.15,0.2,1.8,8),mat(0x5c3d1e));
+    tr.position.set(p[0]*S,0.9,p[1]*S); tr.castShadow=true; scene.add(tr); groups.site.push(tr);
+    var fo=new THREE.Mesh(new THREE.SphereGeometry(1.1,8,6),mat(p[1]<-5?0x4a8a1a:0x2d7a2d));
+    fo.position.set(p[0]*S,2.5,p[1]*S); fo.castShadow=true; scene.add(fo); groups.site.push(fo);
+  });
+  box(5*S,0.06,7*S,0x444444,-6*S,0.04,7*S,'site');
+  box(4*S,0.06,5*S,0x555555,-6.5*S,0.04,-2*S,'site');
+  for(var gi=-8;gi<=6;gi+=1.8) box(0.4*S,0.06,0.4*S,0xddccbb,4.2*S,0.04,gi*S,'site');
+  box(18*S,0.08,0.08,0x777777,0,1.1,-10*S,'site');
+  box(0.1,1.2*S,18*S,0x777777,-9*S,0.6,-0.5*S,'site');
+  box(3*S,0.15,2*S,0x4a7a3a,4*S,0.1,-8*S,'site');
+  box(2*S,0.15,3*S,0x3a6a2a,6*S,0.1,2*S,'site');
+  // Parking spaces
+  box(4*S,0.05,5*S,0x444444,-6*S,0.03,-2*S,'site');
+  box(0.05,0.08,5*S,0x999999,-4*S,0.05,-2*S,'site');
+}
+
+function init() {
+  var canvas = document.getElementById('c3d');
+  var W = window.innerWidth, H = window.innerHeight;
+
+  renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true});
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0d1117);
+  scene.fog = new THREE.Fog(0x0d1117, 70, 140);
+
+  camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 200);
+  camera.position.set(24,18,30);
+  camera.lookAt(0,2,0);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  var sun = new THREE.DirectionalLight(0xfff5e0, 1.3);
+  sun.position.set(18,28,12); sun.castShadow=true;
+  sun.shadow.mapSize.set(2048,2048);
+  sun.shadow.camera.left=-30; sun.shadow.camera.right=30;
+  sun.shadow.camera.top=30; sun.shadow.camera.bottom=-30;
+  sun.shadow.camera.far=100;
+  scene.add(sun);
+  var fill = new THREE.DirectionalLight(0xaac8ff,0.3);
+  fill.position.set(-10,6,-8); scene.add(fill);
+
+  buildScene();
+  setupControls();
+  animate();
+
+  window.addEventListener('resize', function() {
+    var W=window.innerWidth, H=window.innerHeight;
+    renderer.setSize(W,H); camera.aspect=W/H; camera.updateProjectionMatrix();
+  });
+}
+
+// ── ORBIT CONTROLS ────────────────────────────────────────────
+var _theta=0.55, _phi=0.42, _radius=40;
+var _tgt = {x:0,y:2,z:0};
+
+function updateCamera() {
+  camera.position.set(
+    _tgt.x + _radius*Math.sin(_phi)*Math.sin(_theta),
+    _tgt.y + _radius*Math.cos(_phi),
+    _tgt.z + _radius*Math.sin(_phi)*Math.cos(_theta)
+  );
+  camera.lookAt(_tgt.x, _tgt.y, _tgt.z);
+}
+
+function setupControls() {
+  var drag=false, px=0, py=0;
+  var canvas = document.getElementById('c3d');
+
+  canvas.addEventListener('mousedown', function(e){drag=true;px=e.clientX;py=e.clientY;});
+  window.addEventListener('mouseup',   function(){drag=false;});
+  canvas.addEventListener('mousemove', function(e){
+    if(!drag) return;
+    _theta -= (e.clientX-px)*0.009;
+    _phi = Math.max(0.05,Math.min(1.5,_phi+(e.clientY-py)*0.007));
+    px=e.clientX; py=e.clientY; updateCamera();
+  });
+  canvas.addEventListener('wheel', function(e){
+    _radius = Math.max(6,Math.min(90,_radius+e.deltaY*0.06));
+    updateCamera(); e.preventDefault();
+  },{passive:false});
+
+  // Touch
+  var lx=0,ly=0,lpd=0;
+  canvas.addEventListener('touchstart',function(e){
+    if(e.touches.length===1){lx=e.touches[0].clientX;ly=e.touches[0].clientY;}
+    if(e.touches.length===2){lpd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+    e.preventDefault();
+  },{passive:false});
+  canvas.addEventListener('touchmove',function(e){
+    if(e.touches.length===1){
+      _theta-=(e.touches[0].clientX-lx)*0.012;
+      _phi=Math.max(0.05,Math.min(1.5,_phi+(e.touches[0].clientY-ly)*0.009));
+      lx=e.touches[0].clientX;ly=e.touches[0].clientY;updateCamera();
+    }
+    if(e.touches.length===2){
+      var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      _radius=Math.max(6,Math.min(90,_radius-(d-lpd)*0.05));
+      lpd=d; updateCamera();
+    }
+    e.preventDefault();
+  },{passive:false});
+
+  updateCamera();
+}
+
+function goTo(t,p,r,tx,ty,tz) {
+  _theta=t; _phi=p; _radius=r;
+  _tgt={x:tx||0,y:ty||2,z:tz||0};
+  updateCamera();
+}
+
+function setView(v) {
+  currentView = v;
+  var labels={all:'כל הקומות',underground:'תת-קרקע',gf:'קומת קרקע',upper:'קומה א׳',roof:'גג',site:'שטח',section:'חתך'};
+  document.getElementById('floor-label').textContent = labels[v]||v;
+
+  // Button states
+  ['all','underground','gf','upper','roof','site','section'].forEach(function(id){
+    var b=document.getElementById('btn-'+id);
+    if(b) b.classList.toggle('active', id===v);
+  });
+
+  // Reset visibility
+  allMeshes.forEach(function(m){
+    m.visible=true;
+    if(m.material){m.material.transparent=m.userData.origOp<1;m.material.opacity=m.userData.origOp;}
+  });
+
+  function fade(grp){groups[grp].forEach(function(m){if(m.material){m.material.transparent=true;m.material.opacity=0.1;}});}
+  function hide(grp){groups[grp].forEach(function(m){m.visible=false;});}
+
+  if(v==='underground'){
+    ['gf','upper','roof','site'].forEach(hide);
+    goTo(0.6,0.75,26,0,-3.5,0);
+  } else if(v==='gf'){
+    ['underground','upper','roof'].forEach(hide);
+    goTo(0.5,0.45,26,0,1,0);
+  } else if(v==='upper'){
+    hide('underground'); fade('gf'); hide('roof');
+    goTo(0.5,0.38,24,0,4,0);
+  } else if(v==='roof'){
+    hide('underground'); fade('gf'); fade('upper');
+    goTo(0.5,0.2,22,0,6,0);
+  } else if(v==='site'){
+    hide('underground');
+    goTo(0.2,0.15,55,0,1,0);
+  } else if(v==='section'){
+    allMeshes.forEach(function(m){if(m.position.x<-0.5) m.visible=false;});
+    goTo(Math.PI/2,0.45,32,0,3,0);
+  } else {
+    goTo(0.55,0.42,40,0,2,0);
+  }
+}
+
+function toggleWire(){
+  wireMode=!wireMode;
+  allMeshes.forEach(function(m){if(m.material)m.material.wireframe=wireMode;});
+  document.getElementById('wireBtn').textContent=wireMode?'מוצק':'רשת';
+}
+
+function animate(){requestAnimationFrame(animate);renderer.render(scene,camera);}
+
+init();
+</script>
+</body>
+</html>

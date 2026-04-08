@@ -1,0 +1,2363 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="version" content="08042026-v3">
+<title>כתב כמויות — היתר 16860</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap');
+:root {
+  --bg:#fdf8ee; --surface:#fffdf5; --surface2:#f5eedb; --border:#e2d5b0;
+  --accent:#1a5cb0; --accent2:#5a3faa; --green:#16803c; --amber:#b45309;
+  --red:#c0392b; --teal:#0f766e; --purple:#7c3aed;
+  --text:#1a1810; --text2:#5a4e2a; --text3:#8a7850;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direction:rtl}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#f5e8c0,#ede0a8);border-bottom:2px solid #c8a84b;
+  padding:16px 28px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100}
+.hicon{width:40px;height:40px;border-radius:9px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  display:flex;align-items:center;justify-content:center;font-size:18px}
+.htitle{display:flex;align-items:center;gap:12px}
+.htitle h1{font-size:18px;font-weight:700}
+.htitle p{font-size:11px;color:var(--text2);margin-top:2px}
+.hbtns{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* BUTTONS */
+.btn{padding:8px 16px;border-radius:7px;border:none;font-family:'Heebo',sans-serif;
+  font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:5px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#3a7de0;transform:translateY(-1px)}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{background:var(--border)}
+.btn-success{background:var(--green);color:#fff}
+.btn-success:hover{background:#16a34a}
+.btn-sm{padding:5px 11px;font-size:12px}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+
+/* STATUS BAR */
+.sbar{background:#f0e8cc;border-bottom:1px solid #c8a84b;
+  padding:8px 28px;display:flex;gap:20px;align-items:center;flex-wrap:wrap;font-size:12px}
+.si{display:flex;align-items:center;gap:6px}
+.sdot{width:7px;height:7px;border-radius:50%}
+.dg{background:var(--green);box-shadow:0 0 5px var(--green)}
+.da{background:var(--amber);box-shadow:0 0 5px var(--amber)}
+.dr{background:var(--red);box-shadow:0 0 5px var(--red)}
+.sl{color:var(--text2)}.sv{color:var(--text);font-weight:600}
+.ssp{flex:1}
+#grand-total-display{font-size:20px;font-weight:800;color:var(--accent);
+  text-shadow:0 0 18px rgba(79,142,247,.45)}
+
+/* LAYOUT */
+.main{display:flex;min-height:calc(100vh - 110px)}
+.sidebar{width:210px;min-width:210px;background:var(--surface);
+  border-left:1px solid var(--border);padding:14px 0;
+  position:sticky;top:61px;height:calc(100vh - 61px);overflow-y:auto}
+.sbl{font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--text3);
+  padding:0 14px 8px;text-transform:uppercase}
+.cni{padding:9px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;
+  font-size:12px;color:var(--text2);transition:all .15s;border-right:3px solid transparent}
+.cni:hover{background:var(--surface2);color:var(--text)}
+.cni.active{background:var(--surface2);color:var(--text);font-weight:600;border-right-color:var(--accent)}
+.cdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ccount{margin-right:auto;background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:1px 6px;font-size:10px;color:var(--text3)}
+.content{flex:1;padding:20px 24px;overflow-x:auto;min-width:0}
+
+/* SUMMARY GRID */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:22px}
+.scard{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:14px 16px;border-top-width:3px;transition:border-color .2s;cursor:pointer}
+.scard:hover{border-color:var(--accent)!important}
+.sc-lbl{font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;
+  letter-spacing:.7px;margin-bottom:5px}
+.sc-val{font-size:20px;font-weight:800}
+.sc-sub{font-size:11px;color:var(--text2);margin-top:3px}
+.grand-card{border-color:var(--accent)!important}
+.grand-card .sc-val{color:var(--accent)}
+
+/* TOOLBAR */
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;padding:13px 16px;
+  background:var(--surface);border-radius:9px;border:1px solid var(--border);align-items:center}
+.tl-label{font-size:12px;color:var(--text2)}
+.tl-spacer{flex:1}
+.vat-row{display:flex;align-items:center;gap:8px;font-size:13px}
+.vat-row input{width:52px;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:4px 7px;border-radius:6px;font-size:13px;font-family:'Heebo',sans-serif;text-align:center}
+.profit-row{display:flex;align-items:center;gap:8px;font-size:13px}
+.profit-row input{width:52px;background:var(--surface2);border:1px solid var(--border);
+  color:var(--text);padding:4px 7px;border-radius:6px;font-size:13px;font-family:'Heebo',sans-serif;text-align:center}
+
+/* CAT SECTION */
+.cat-sec{margin-bottom:32px}
+.cat-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;
+  padding-bottom:9px;border-bottom:1px solid var(--border)}
+.cat-badge{width:9px;height:9px;border-radius:50%}
+.cat-title{font-size:15px;font-weight:700}
+.cat-sub{font-size:11px;color:var(--text2)}
+.cat-tot{margin-right:auto;background:var(--surface2);border:1px solid var(--border);
+  border-radius:16px;padding:2px 11px;font-size:12px;font-weight:700;color:var(--accent)}
+.btn-add{background:transparent;border:1px dashed var(--border);color:var(--text2);
+  border-radius:6px;padding:4px 11px;font-size:11px;cursor:pointer;
+  font-family:'Heebo',sans-serif;transition:all .15s}
+.btn-add:hover{border-color:var(--accent);color:var(--accent);background:rgba(79,142,247,.06)}
+
+/* TABLE */
+.boq-table{width:100%;border-collapse:collapse;font-size:12px}
+.boq-table th{background:var(--surface);color:var(--text2);font-weight:600;
+  padding:8px 10px;text-align:right;border-bottom:2px solid var(--border);
+  white-space:nowrap;font-size:11px;letter-spacing:.2px}
+.boq-table td{padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:middle}
+.boq-table tbody tr{background:var(--surface2);transition:background .1s}
+.boq-table tbody tr:hover{background:#f0e4b8}
+.boq-table tbody tr:nth-child(even){background:#faf3e0}
+.boq-table tbody tr:nth-child(even):hover{background:#f0e4b8}
+.tfoot-row td{background:var(--surface)!important;border-top:2px solid var(--border)!important;
+  font-weight:700;color:var(--accent);font-size:12px;padding:9px 10px}
+
+/* CELLS */
+.ci{background:transparent;border:none;color:var(--text);font-family:'Heebo',sans-serif;
+  font-size:12px;text-align:center;width:64px;padding:3px 5px;border-radius:4px;transition:all .15s}
+.ci:focus{outline:none;background:rgba(79,142,247,.13);border:1px solid var(--accent)}
+.ciw{background:transparent;border:none;color:var(--text);font-family:'Heebo',sans-serif;
+  font-size:12px;width:100%;padding:3px 2px;border-radius:4px;transition:all .15s}
+.ciw:focus{outline:none;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.3)}
+.cis{background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  font-family:'Heebo',sans-serif;font-size:11px;padding:2px 6px;border-radius:4px;cursor:pointer}
+.cis:focus{outline:none;border-color:var(--accent)}
+
+/* price states */
+.pf{color:var(--green);font-weight:600}   /* fetched from db */
+.pm{color:var(--amber);font-weight:600}   /* manual */
+.px{color:var(--red);font-size:10px;font-style:italic} /* missing */
+
+/* profit cell */
+.profit-pos{color:var(--green);font-weight:700}
+.profit-neg{color:var(--red);font-weight:700}
+
+/* status badges */
+.badge{display:inline-block;padding:2px 8px;border-radius:16px;font-size:10px;font-weight:600}
+.bnew{background:rgba(34,197,94,.15);color:var(--green)}
+.bex {background:rgba(245,158,11,.15);color:var(--amber)}
+.bdel{background:rgba(239,68,68,.15);color:var(--red)}
+
+/* standard tag */
+.std-tag{display:inline-block;background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3);
+  color:var(--purple);border-radius:4px;padding:1px 6px;font-size:10px;margin-top:2px;cursor:pointer}
+.std-tag:hover{background:rgba(167,139,250,.25)}
+
+/* standard search dropdown */
+.std-search-wrap{position:relative}
+.std-search{width:100%;background:var(--surface);border:1px solid var(--border);
+  color:var(--text);font-family:'Heebo',sans-serif;font-size:11px;
+  padding:3px 7px;border-radius:5px}
+.std-search:focus{outline:none;border-color:var(--purple)}
+.std-dropdown{position:absolute;top:100%;right:0;left:0;background:var(--surface2);
+  border:1px solid var(--border);border-radius:6px;z-index:50;max-height:180px;
+  overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none}
+.std-dropdown.open{display:block}
+.std-opt{padding:6px 10px;cursor:pointer;font-size:11px;border-bottom:1px solid var(--border)}
+.std-opt:hover{background:rgba(167,139,250,.15);color:var(--purple)}
+.std-opt-cat{font-size:10px;color:var(--text3);margin-top:1px}
+
+.btn-del{background:transparent;border:none;color:var(--text3);cursor:pointer;
+  padding:3px 6px;border-radius:4px;font-size:14px;transition:all .15s}
+.btn-del:hover{background:rgba(239,68,68,.15);color:var(--red)}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(15,17,23,.88);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:500;gap:14px}
+.spinner{width:40px;height:40px;border:3px solid var(--border);
+  border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{color:var(--text2);font-size:13px}
+
+/* TOAST */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  background:var(--surface2);border:1px solid var(--border);color:var(--text);
+  padding:10px 22px;border-radius:9px;font-size:13px;z-index:999;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+  box-shadow:0 8px 28px rgba(0,0,0,.45);display:flex;align-items:center;gap:7px}
+#toast.show{opacity:1;pointer-events:auto}
+#toast.tok{border-color:var(--green)}
+#toast.terr{border-color:var(--red)}
+#toast.tinfo{border-color:var(--accent)}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:#f5edcc}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loadingText">טוען נתונים...</div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="htitle">
+    <div class="hicon">🏗️</div>
+    <div>
+      <h1>כתב כמויות ומחירים — היתר בניה 16860</h1>
+      <p>תוספת קומה ב׳ | מגרש 37A | אושר 17/03/2025</p>
+    </div>
+  </div>
+  <div class="hbtns">
+    <button class="btn btn-secondary btn-sm" onclick="reloadPrices()">🔄 רענן מחירים</button>
+    <button class="btn btn-secondary btn-sm" onclick="reloadStandards()">📚 רענן תקנים</button>
+    <button class="btn btn-secondary btn-sm" onclick="open3DViewer()" style="background:linear-gradient(135deg,#1a4a8c,#0f3268);border-color:#1a4a8c;color:#fff;font-weight:700">🏗 תצוגה תלת-מימדית</button>
+    <button class="btn btn-primary"          onclick="saveToSupabase()">💾 שמור</button>
+    <button class="btn btn-success"          onclick="exportCSV()">📊 Excel XLS</button>
+    <button onclick="openGenerateOfferModal()" style="background:linear-gradient(135deg,#b8860b,#8b6508);color:#fff;border:none;padding:8px 18px;border-radius:7px;font-family:'Heebo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.3px">📋 צור הצעה ללקוח</button>
+  </div>
+</div>
+
+<!-- STATUS BAR -->
+<div class="sbar">
+  <div class="si"><div class="sdot dg" id="dbDot"></div>
+    <span class="sl">Supabase</span><span class="sv" id="dbStatus">מתחבר...</span></div>
+  <div class="si"><span class="sl">מחירים:</span><span class="sv" id="priceCount">0/0</span></div>
+  <div class="si"><span class="sl">תקנים:</span><span class="sv" id="stdCount">0</span></div>
+  <div class="ssp"></div>
+  <div class="si"><span class="sl" style="font-size:13px">סה"כ הצעה (כולל מע"מ):</span>
+    <span id="grand-total-display">₪ 0</span></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="sidebar">
+    <div class="sbl">קטגוריות</div>
+    <div id="catNav"></div>
+
+  </div>
+  <div class="content">
+    <div class="sgrid" id="summaryCards"></div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <span class="tl-label">ייצוא:</span>
+      <button class="btn btn-secondary btn-sm" onclick="exportCSV()">📊 CSV/Excel</button>
+      <button class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ הדפסה</button>
+      <button class="btn btn-secondary btn-sm" onclick="exportJSON()">📋 JSON</button>
+      <div class="tl-spacer"></div>
+      <div class="vat-row">
+        <span>מע"מ:</span>
+        <input type="number" id="vatInput" value="18" min="0" max="30"
+          onchange="recalcAll()" style="width:52px">
+        <span>%</span>
+      </div>
+      <div class="profit-row" style="margin-right:18px">
+        <span>רווח ברירת מחדל:</span>
+        <input type="number" id="defaultProfit" value="20" min="0" max="200"
+          onchange="applyDefaultProfit()" style="width:52px">
+        <span>%</span>
+        <button class="btn btn-secondary btn-sm" onclick="applyDefaultProfit()">החל הכל</button>
+      </div>
+    </div>
+
+    <div id="boqContainer"></div>
+
+    <!-- ── PRICE SUMMARY PANEL ──────────────────────────────── -->
+    <div id="priceSummaryPanel" style="margin-top:32px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+
+      <!-- header -->
+      <div style="background:linear-gradient(135deg,var(--accent),var(--accent2));padding:14px 22px;display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">💰</span>
+        <span style="font-weight:800;font-size:16px;color:#fff">סיכום מחיר — הצעת מחיר ללקוח</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.7);margin-right:auto">היתר בניה 16860 | מגרש 37A</span>
+      </div>
+
+      <div style="padding:22px 28px;display:flex;flex-direction:column;gap:0">
+
+        <!-- A: Grand Total (sell, excl VAT) -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+          <span style="color:var(--text2);font-size:14px">א) סה"כ עלות כוללת (לפני מע"מ ולפני רווח)</span>
+          <span id="sum-cost" style="font-weight:700;font-size:15px;color:var(--text)">₪ 0</span>
+        </div>
+        <!-- B: Profit -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+          <span style="color:var(--text2);font-size:14px">ב) רווח קבלן</span>
+          <span id="sum-profit" style="font-weight:700;font-size:15px;color:var(--green)">₪ 0</span>
+        </div>
+        <!-- C: Net offer excl VAT -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);background:rgba(79,142,247,.05);margin:0 -4px;padding-right:4px;padding-left:4px;border-radius:6px">
+          <span style="color:var(--text);font-size:15px;font-weight:700">ג) מחיר הצעה נטו (לפני מע"מ)</span>
+          <span id="sum-net" style="font-weight:800;font-size:17px;color:var(--accent)">₪ 0</span>
+        </div>
+        <!-- D: VAT -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
+          <span style="color:var(--text2);font-size:14px">ד) מע"מ <span id="sum-vat-pct" style="color:var(--amber)">18%</span></span>
+          <span id="sum-vat-amt" style="font-weight:700;font-size:15px;color:var(--amber)">₪ 0</span>
+        </div>
+        <!-- E: Grand Total incl VAT -->
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:2px solid var(--accent)">
+          <span style="color:var(--text);font-size:16px;font-weight:800">ה) סה"כ הצעת מחיר ללקוח (כולל מע"מ)</span>
+          <span id="sum-gross" style="font-weight:800;font-size:22px;color:var(--accent);text-shadow:0 0 18px rgba(79,142,247,.4)">₪ 0</span>
+        </div>
+
+        <!-- DISCOUNT ROW -->
+        <div style="display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);flex-wrap:wrap">
+          <span style="color:var(--text2);font-size:14px;white-space:nowrap">הנחה:</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" id="discountPct" min="0" max="100" step="0.5" value="0" placeholder="%" 
+              style="width:60px;background:var(--surface2);border:1px solid var(--border);color:var(--text);
+              padding:5px 8px;border-radius:6px;font-size:13px;font-family:Heebo,sans-serif;text-align:center"
+              oninput="recalcSummary()">
+            <span style="color:var(--text3);font-size:12px">%</span>
+          </div>
+          <span style="color:var(--text3);font-size:12px">או</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="color:var(--text3);font-size:12px">₪</span>
+            <input type="number" id="discountSum" min="0" step="100" value="0" placeholder="₪ סכום"
+              style="width:110px;background:var(--surface2);border:1px solid var(--border);color:var(--text);
+              padding:5px 8px;border-radius:6px;font-size:13px;font-family:Heebo,sans-serif;text-align:center"
+              oninput="recalcSummary()">
+          </div>
+          <span style="color:var(--red);font-weight:700;font-size:14px" id="sum-discount-amt">— ₪ 0</span>
+          <div style="flex:1"></div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+            <span style="color:var(--text3);font-size:11px">מחיר סופי לאחר הנחה (כולל מע"מ)</span>
+            <span id="sum-final" style="font-weight:800;font-size:20px;color:var(--green);text-shadow:0 0 14px rgba(34,197,94,.35)">₪ 0</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── PAYMENT TERMS PANEL ───────────────────────────────── -->
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+      <div style="background:var(--surface2);padding:12px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px">
+        <span style="font-size:16px">📄</span>
+        <span style="font-weight:700;font-size:14px">תנאי תשלום והערות להצעה</span>
+      </div>
+      <div style="padding:18px 22px;display:flex;flex-direction:column;gap:10px">
+
+        <!-- Default payment terms -->
+        <div style="background:rgba(79,142,247,.07);border:1px solid rgba(79,142,247,.2);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--text2);line-height:1.8">
+          <div style="font-weight:700;color:var(--accent);margin-bottom:6px">תנאי תשלום סטנדרטיים:</div>
+          <div>• מקדמה עם חתימת חוזה: <strong style="color:var(--text)">20%</strong></div>
+          <div>• תשלום שוטף עם התקדמות עבודה (לפי אבני דרך): <strong style="color:var(--text)">60%</strong></div>
+          <div>• תשלום סיום עם מסירת עבודה ותיקון ליקויים: <strong style="color:var(--text)">20%</strong></div>
+          <div>• תקופת אחריות: <strong style="color:var(--text)">12 חודש</strong> מיום המסירה</div>
+          <div>• תוקף ההצעה: <strong style="color:var(--text)">30 יום</strong> מתאריך ההנפקה</div>
+        </div>
+
+        <!-- 10 free remark lines -->
+        <div style="font-size:12px;color:var(--text3);margin-top:4px">הערות נוספות (עד 10 שורות):</div>
+        <div id="paymentRemarks" style="display:flex;flex-direction:column;gap:6px">
+        </div>
+        <button onclick="addPaymentRemark()" class="btn btn-secondary btn-sm" style="align-self:flex-start">+ הוסף הערה</button>
+      </div>
+    </div>
+
+    <!-- ── PROJECT PRESENTATION GALLERY ─────────────────────── -->
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+      <div style="background:var(--surface2);padding:12px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:16px">🖼</span>
+          <span style="font-weight:700;font-size:14px">מצגת פרויקט — תמונות והדמיות</span>
+        </div>
+        <span style="font-size:11px;color:var(--text3)">היתר 16860 | מגרש 37A | ברגר ליאור ונועה</span>
+      </div>
+      <div style="padding:16px 18px;display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;align-items:start">
+
+        <!-- Infographic — full width left -->
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase">אינפוגרפיקה — כתב כמויות</div>
+          <a href="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/infographic_16860_08042026.png" target="_blank" style="display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer">
+            <img src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/infographic_16860_08042026.png"
+              alt="אינפוגרפיקה BOQ 16860"
+              style="width:100%;display:block;object-fit:cover;max-height:280px;border-radius:7px"
+              onerror="this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--text3);font-size:12px\'>⚠ תמונה לא נטענה</div>'">
+          </a>
+          <div style="font-size:10px;color:var(--text2)">לחץ לפתיחה בגודל מלא</div>
+        </div>
+
+        <!-- middetails -->
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase">פרטי אמצע</div>
+          <a href="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png" target="_blank" style="display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer">
+            <img src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png"
+              alt="middetails"
+              style="width:100%;display:block;object-fit:cover;max-height:280px;border-radius:7px"
+              onerror="this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--text3);font-size:12px\'>⚠ תמונה לא נטענה</div>'">
+          </a>
+          <div style="font-size:10px;color:var(--text2)">לחץ לפתיחה בגודל מלא</div>
+        </div>
+
+        <!-- midj -->
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase">הדמיה — Midjourney</div>
+          <a href="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png" target="_blank" style="display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer">
+            <img src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png"
+              alt="הדמיה midjourney"
+              style="width:100%;display:block;object-fit:cover;max-height:280px;border-radius:7px"
+              onerror="this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--text3);font-size:12px\'>⚠ תמונה לא נטענה</div>'">
+          </a>
+          <div style="font-size:10px;color:var(--text2)">לחץ לפתיחה בגודל מלא</div>
+        </div>
+
+      </div>
+      <!-- Quick copy URLs for offer modal -->
+      <div style="padding:10px 18px 14px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border)">
+        <span style="font-size:11px;color:var(--text3);align-self:center">העתק URL להצעת מחיר:</span>
+        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/infographic_16860_08042026.png','אינפוגרפיקה')" class="btn btn-secondary btn-sm">📋 אינפוגרפיקה</button>
+        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png','פרטי אמצע')" class="btn btn-secondary btn-sm">📋 פרטי אמצע</button>
+        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png','הדמיה')" class="btn btn-secondary btn-sm">📋 הדמיה</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"><span id="toastIcon">✓</span><span id="toastMsg"></span></div>
+
+<script>
+'use strict';
+
+// ── CONFIG ────────────────────────────────────────────────────
+var SB_NEW_URL = 'https://hbmnlfzvorektbricvsl.supabase.co';
+var SB_NEW_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhibW5sZnp2b3Jla3RicmljdnNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU1Njk3ODMsImV4cCI6MjA5MTE0NTc4M30.5gUXwAGlkqPNPnHRwKh4iHuCVGy1xtJ-p_0U-iGGKhI';
+
+// Old Supabase — standards table only (read-only)
+var SB_OLD_URL = 'https://vmcipofovheztbjmhwsl.supabase.co';
+var SB_OLD_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZtY2lwb2ZvdmhlenRiam1od3NsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE0NjE2MTcsImV4cCI6MjA4NzAzNzYxN30.LPq5N2Xo8iEqjgz2UhmdzUdh5tpGT3EYzSxJcYBEJ1w';
+
+var priceCache   = {};   // price_key -> price (ILS)
+var standardsDB  = [];   // all standards from old supabase
+var boqData      = {};   // category_id -> [ row, ... ]
+
+// ── CATEGORIES ────────────────────────────────────────────────
+var CATS = [
+  {id:'areas',   color:'#4f8ef7',icon:'📐',he:'שטחי בניה',       en:'Building Areas',   unit:'מ"ר'},
+  {id:'tiles',   color:'#a78bfa',icon:'🟫',he:'ריצוף',            en:'Tiles / Flooring', unit:'מ"ר'},
+  {id:'plaster', color:'#fb923c',icon:'🪣',he:'טיח חוץ',          en:'External Plaster', unit:'מ"ר'},
+  {id:'stairs',  color:'#34d399',icon:'🪜',he:'מדרגות',           en:'Stairs',           unit:'יח'},
+  {id:'windows', color:'#60a5fa',icon:'🪟',he:'חלונות אלומיניום', en:'Aluminium Windows',unit:'יח'},
+  {id:'doors',   color:'#f472b6',icon:'🚪',he:'דלתות',            en:'Doors',            unit:'יח'},
+  {id:'sanitary',color:'#facc15',icon:'🚿',he:'סניטציה',          en:'Sanitary',         unit:'יח'},
+  {id:'taps',    color:'#4ade80',icon:'🚰',he:'ברזים',            en:'Taps / Fittings',  unit:'יח'},
+  {id:'lighting',color:'#c084fc',icon:'💡',he:'תאורה',            en:'Lighting',         unit:'יח'},
+  {id:'outlets',    color:'#f87171',icon:'🔌',he:'שקעים חשמל',           en:'Electrical Points',        unit:'יח'},
+  {id:'elec_panel', color:'#fbbf24',icon:'⚡',he:'לוח חשמל / תקשורת',   en:'Panel & Communications',   unit:'יח'},
+  {id:'hvac',       color:'#22d3ee',icon:'❄️',he:'מיזוג מרכזי / HVAC',  en:'Central AC / HVAC',        unit:'יח'},
+  {id:'logistics',  color:'#a3a3a3',icon:'🚛',he:'לוגיסטיקה / פינוי פסולת', en:'Site Logistics / Waste', unit:'יח'},
+  {id:'paint',   color:'#38bdf8',icon:'🎨',he:'צבע פנים',         en:'Internal Paint',   unit:'מ"ר'},
+  {id:'roof',    color:'#fb7185',icon:'🏠',he:'רעפים / גג',       en:'Tiled Roof',       unit:'מ"ר'},
+  {id:'pituch',  color:'#84cc16',icon:'🏗',he:'פיתוח / קירות תומכים',en:'Site Dev / Retaining Walls',unit:'מ"ר'},
+  {id:'chatzer', color:'#f97316',icon:'🌿',he:'פיתוח חצר / שטח',    en:'Site Works / Landscaping',  unit:'מ"ר'},
+  {id:'bisus',   color:'#e879f9',icon:'🏚',he:'ביסוס / כלונסאות',   en:'Foundations & Piling',      unit:'יח'},
+  {id:'labor',   color:'#fb923c',icon:'👷',he:'כוח אדם יומי / מקצועות', en:'Daily Labor / Trades',   unit:'יום'},
+  {id:'supervision', color:'#94a3b8',icon:'🦺',he:'פיקוח אתר',      en:'Site Supervision',          unit:'חודש'},
+  {id:'extras',  color:'#67e8f9',icon:'➕',he:'סעיפים נוספים',      en:'Extra Items',               unit:'יח'},
+  {id:'mamad',   color:'#dc2626',icon:'🛡',he:'ממ"ד — מרחב מוגן דירתי', en:'Safe Room (Bomb Shelter)', unit:'יח'},
+];
+
+// ── DEFAULT BOQ ───────────────────────────────────────────────
+var DEFAULT_BOQ = {
+  areas:[
+    {desc:'Upper floor gross area',       descHe:'שטח ברוטו קומה ב',      qty:62.82,unit:'מ"ר',priceKey:'floor_area_gross',   status:'new',     profit:20,stdKey:''},
+    {desc:'Upper floor net area',         descHe:'שטח עיקרי נטו קומה ב',  qty:50.45,unit:'מ"ר',priceKey:'floor_area_net',     status:'new',     profit:20,stdKey:''},
+    {desc:'Ground floor existing area',   descHe:'שטח קומת קרקע קיימת',   qty:112.0, unit:'מ"ר',priceKey:'floor_area_existing', status:'existing',profit:15,stdKey:''},
+    {desc:'Roof / floor slab',            descHe:'יציקת תקרה / רצפה',     qty:62.82,unit:'מ"ר',priceKey:'slab_area',          status:'new',     profit:20,stdKey:''},
+    {desc:'Foundation slab',              descHe:'יסוד / תת רצפה',         qty:62.82,unit:'מ"ר',priceKey:'foundation_area',    status:'new',     profit:18,stdKey:''},
+  ],
+  tiles:[
+    {desc:'Floor tiles upper floor',      descHe:'ריצוף רצפה קומה ב (מנוכה 9 מ"ר ממ"ד)',     qty:41.45,unit:'מ"ר',priceKey:'tiles_floor',        status:'new',     profit:25,stdKey:''},
+    {desc:'Floor tiles ground floor',     descHe:'ריצוף רצפה קרקע',       qty:95.0, unit:'מ"ר',priceKey:'tiles_floor',        status:'existing',profit:20,stdKey:''},
+    {desc:'Bathroom wall tiles upper',    descHe:'ריצוף קירות אמבטיה עליונה',qty:19.0,unit:'מ"ר',priceKey:'tiles_wall',      status:'new',     profit:25,stdKey:''},
+    {desc:'Bathroom wall tiles GF',       descHe:'ריצוף קירות אמבטיה קרקע',qty:15.0,unit:'מ"ר',priceKey:'tiles_wall',        status:'existing',profit:20,stdKey:''},
+  ],
+  plaster:[
+    {desc:'External render north facade', descHe:'טיח חוץ צפון',           qty:42.0, unit:'מ"ר',priceKey:'plaster_external',  status:'new',     profit:22,stdKey:''},
+    {desc:'External render south facade', descHe:'טיח חוץ דרום',           qty:42.0, unit:'מ"ר',priceKey:'plaster_external',  status:'new',     profit:22,stdKey:''},
+    {desc:'External render east facade',  descHe:'טיח חוץ מזרח',           qty:38.0, unit:'מ"ר',priceKey:'plaster_external',  status:'new',     profit:22,stdKey:''},
+    {desc:'External render west facade',  descHe:'טיח חוץ מערב',           qty:38.0, unit:'מ"ר',priceKey:'plaster_external',  status:'new',     profit:22,stdKey:''},
+    {desc:'Stone cladding external',      descHe:'חיפוי אבן חוץ',          qty:80.0, unit:'מ"ר',priceKey:'stone_cladding',    status:'new',     profit:30,stdKey:''},
+  ],
+  stairs:[
+    {desc:'Internal staircase GF to 2F',  descHe:'מדרגות פנים קרקע לב',   qty:1,    unit:'יח', priceKey:'staircase_internal', status:'new',     profit:25,stdKey:''},
+    {desc:'External entrance steps west', descHe:'מדרגות כניסה מערב',      qty:1,    unit:'יח', priceKey:'stairs_external',    status:'existing',profit:15,stdKey:''},
+    {desc:'External entrance steps south',descHe:'מדרגות כניסה דרום',      qty:1,    unit:'יח', priceKey:'stairs_external',    status:'existing',profit:15,stdKey:''},
+  ],
+  windows:[
+    {desc:'Aluminium window upper 0.9x1.2m',descHe:'חלון אלו קומה ב',     qty:6,    unit:'יח', priceKey:'window_aluminium_std',status:'new',    profit:30,stdKey:''},
+    {desc:'Aluminium window upper west 0.8x1.2m',descHe:'חלון אלו מערב ב', qty:2,   unit:'יח', priceKey:'window_aluminium_std',status:'new',    profit:30,stdKey:''},
+    {desc:'Large sliding window GF south',descHe:'הזזה גדולה דרום',        qty:1,    unit:'יח', priceKey:'window_sliding_large',status:'existing',profit:20,stdKey:''},
+    {desc:'Window large GF west',         descHe:'חלון גדול מערב קרקע',    qty:2,    unit:'יח', priceKey:'window_aluminium_lg', status:'existing',profit:20,stdKey:''},
+    {desc:'Window small GF east',         descHe:'חלון קטן מזרח קרקע',     qty:2,    unit:'יח', priceKey:'window_aluminium_std',status:'existing',profit:20,stdKey:''},
+    {desc:'Window small service west',    descHe:'חלון שרות קטן מערב',     qty:1,    unit:'יח', priceKey:'window_aluminium_sm', status:'existing',profit:20,stdKey:''},
+    {desc:'Roof skylight',                descHe:'חלון גג',                 qty:1,    unit:'יח', priceKey:'skylight',           status:'new',     profit:25,stdKey:''},
+  ],
+  doors:[
+    {desc:'Entrance security door west',  descHe:'דלת כניסה ראשית מערב',  qty:1,    unit:'יח', priceKey:'door_entrance',      status:'existing',profit:25,stdKey:''},
+    {desc:'Entrance door south',          descHe:'דלת כניסה דרום',         qty:1,    unit:'יח', priceKey:'door_entrance',      status:'existing',profit:25,stdKey:''},
+    {desc:'Double garage door north',     descHe:'שער מוסך כפול צפון',     qty:1,    unit:'יח', priceKey:'door_garage_double', status:'existing',profit:20,stdKey:''},
+    {desc:'Internal doors upper floor',   descHe:'דלתות פנים קומה ב',      qty:5,    unit:'יח', priceKey:'door_internal',      status:'new',     profit:30,stdKey:''},
+    {desc:'Internal doors GF existing',   descHe:'דלתות פנים קרקע',        qty:5,    unit:'יח', priceKey:'door_internal',      status:'existing',profit:20,stdKey:''},
+    {desc:'External side door east',      descHe:'דלת חוץ מזרח',           qty:1,    unit:'יח', priceKey:'door_external',      status:'existing',profit:22,stdKey:''},
+  ],
+  sanitary:[
+    {desc:'WC toilet upper floor',        descHe:'אסלה קומה ב',            qty:1,    unit:'יח', priceKey:'toilet_unit',        status:'new',     profit:25,stdKey:''},
+    {desc:'Washbasin upper floor',        descHe:'כיור קומה ב',            qty:1,    unit:'יח', priceKey:'washbasin_unit',     status:'new',     profit:25,stdKey:''},
+    {desc:'Shower enclosure upper',       descHe:'מקלחון קומה ב',          qty:1,    unit:'יח', priceKey:'shower_unit',        status:'new',     profit:25,stdKey:''},
+    {desc:'WC toilet GF',                 descHe:'אסלה קרקע',              qty:1,    unit:'יח', priceKey:'toilet_unit',        status:'existing',profit:15,stdKey:''},
+    {desc:'Washbasin GF',                 descHe:'כיור קרקע',              qty:1,    unit:'יח', priceKey:'washbasin_unit',     status:'existing',profit:15,stdKey:''},
+    {desc:'Kitchen sink',                 descHe:'כיור מטבח',              qty:1,    unit:'יח', priceKey:'kitchen_sink',       status:'existing',profit:15,stdKey:''},
+  ],
+  taps:[
+    {desc:'Bathroom mixer tap upper',     descHe:'ברז אמבטיה עליונה',      qty:2,    unit:'יח', priceKey:'tap_bathroom',       status:'new',     profit:30,stdKey:''},
+    {desc:'Bathroom mixer tap GF',        descHe:'ברז אמבטיה קרקע',        qty:2,    unit:'יח', priceKey:'tap_bathroom',       status:'existing',profit:20,stdKey:''},
+    {desc:'Kitchen mixer tap',            descHe:'ברז מטבח',               qty:1,    unit:'יח', priceKey:'tap_kitchen',        status:'existing',profit:20,stdKey:''},
+    {desc:'Outdoor hose tap',             descHe:'ברז גינה',               qty:1,    unit:'יח', priceKey:'tap_outdoor',        status:'new',     profit:25,stdKey:''},
+  ],
+  lighting:[
+    {desc:'Ceiling light bedroom x3 upper',descHe:'מנורת תקרה חדרי שינה ב',qty:3,  unit:'יח', priceKey:'light_ceiling',      status:'new',     profit:30,stdKey:''},
+    {desc:'Ceiling light bathroom upper', descHe:'מנורת תקרה אמבטיה ב',    qty:1,   unit:'יח', priceKey:'light_ceiling',      status:'new',     profit:30,stdKey:''},
+    {desc:'Corridor landing lights',      descHe:'מנורות מסדרון',           qty:2,   unit:'יח', priceKey:'light_ceiling',      status:'new',     profit:30,stdKey:''},
+    {desc:'Staircase lighting',           descHe:'תאורת מדרגות',            qty:3,   unit:'יח', priceKey:'light_stair',        status:'new',     profit:30,stdKey:''},
+    {desc:'External facade lighting',     descHe:'תאורת חוץ חזיתות',        qty:4,   unit:'יח', priceKey:'light_exterior',     status:'new',     profit:30,stdKey:''},
+    {desc:'GF lighting existing',         descHe:'תאורה קרקע קיימת',        qty:6,   unit:'יח', priceKey:'light_ceiling',      status:'existing',profit:20,stdKey:''},
+  ],
+  outlets:[
+    {desc:'Standard power outlet — upper floor bedrooms (wiring+socket per point)',
+     descHe:'שקע חשמל תקני — חדרי שינה קומה ב (נקודה כולל חיווט + שקע)',
+     qty:12, unit:'יח', priceKey:'outlet_power', manualPrice:300, status:'new', profit:25, stdKey:''},
+    {desc:'Power outlet — bathroom upper IP44 (waterproof, per point)',
+     descHe:'שקע חשמל אמבטיה עליונה — IP44 עמיד מים (נקודה כולל חיווט)',
+     qty:2,  unit:'יח', priceKey:'outlet_power', manualPrice:320, status:'new', profit:25, stdKey:''},
+    {desc:'Power outlet — corridor upper floor (per point)',
+     descHe:'שקע חשמל מסדרון קומה ב (נקודה כולל חיווט)',
+     qty:2,  unit:'יח', priceKey:'outlet_power', manualPrice:300, status:'new', profit:25, stdKey:''},
+    {desc:'Heavy load point — AC / boiler (direct line to panel, per point)',
+     descHe:'נקודת עומס כבד — מזגן / דוד (קו ישיר ללוח, לנקודה)',
+     qty:4,  unit:'יח', priceKey:'outlet_heavy', manualPrice:600, status:'new', profit:25, stdKey:''},
+    {desc:'TV / Cat6 data point — bedrooms (per point)',
+     descHe:'נקודת טלוויזיה / נתונים Cat6 — חדרים (לנקודה)',
+     qty:3,  unit:'יח', priceKey:'outlet_data', manualPrice:425, status:'new', profit:25, stdKey:''},
+    {desc:'Light switch — single/double (wiring + mechanism, per point)',
+     descHe:'מתג אור — יחיד / כפול (חיווט + מנגנון, לנקודה)',
+     qty:8,  unit:'יח', priceKey:'switch_light', manualPrice:325, status:'new', profit:25, stdKey:''},
+    {desc:'Light point — ceiling/wall (wiring to point, excludes fixture)',
+     descHe:'נקודת תאורה — תקרה / קיר (חיווט לנקודה, לא כולל גוף תאורה)',
+     qty:12, unit:'יח', priceKey:'light_point', manualPrice:270, status:'new', profit:25, stdKey:''},
+    {desc:'GF outlets / switches — existing floor refurbishment (per point)',
+     descHe:'שקעים ומתגים קומת קרקע — שיפוץ קיים (לנקודה)',
+     qty:15, unit:'יח', priceKey:'outlet_power', manualPrice:300, status:'existing', profit:15, stdKey:''},
+    {desc:'Electric shutter / motorized blind point (wiring + controller per point)',
+     descHe:'נקודת תריס חשמלי / תריסון ממונע (חיווט + בקר, לנקודה)',
+     qty:6,  unit:'יח', priceKey:'', manualPrice:425, status:'new', profit:25, stdKey:''},
+    {desc:'Outdoor waterproof outlet — balcony / garden (IP65, per point)',
+     descHe:'שקע חוץ עמיד מים — מרפסת / גינה (IP65, לנקודה)',
+     qty:4,  unit:'יח', priceKey:'', manualPrice:525, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_elec_points',
+     desc:'Per-point rates: standard ₪280–380, heavy load AC ₪450–750, 3-phase AC ₪800–1,200, data ₪350–500, shutter ₪350–500, outdoor WP ₪450–600. Rate includes wiring, conduit, and labor. Fixtures billed separately.',
+     descHe:'תעריפים לנקודה: תקני ₪280–380, עומס כבד ₪450–750, תלת-פאזי AC ₪800–1,200, נתונים ₪350–500, תריס ₪350–500, חוץ ₪450–600. כולל חיווט, צנרת ועבודה. גוף תאורה בנפרד'},
+  ],
+  elec_panel:[
+    // ── לוח חשמל מרכזי ───────────────────────────────────────────
+    {desc:'Main electrical panel box — 3-phase, DIN rail enclosure (empty)',
+     descHe:'ארון לוח חשמל מרכזי — 3 פאזות, מתפלג DIN (קופסה ריקה)',
+     qty:1,  unit:'יח', priceKey:'panel_box', manualPrice:550, status:'new', profit:20, stdKey:''},
+    {desc:'Panel components — main breaker + Fahat (RCCB) + circuit breakers (full set)',
+     descHe:'רכיבי לוח — מפסק ראשי + פאהט (RCCB) + מפסקי עזר (סט מלא)',
+     qty:1,  unit:'יח', priceKey:'panel_components', manualPrice:2500, status:'new', profit:20, stdKey:''},
+    {desc:'Panel wiring labor — certified electrician (internal wiring + terminations)',
+     descHe:'עבודת חיווט לוח — חשמלאי מוסמך (חיווט פנימי + חיבורים)',
+     qty:1,  unit:'יח', priceKey:'panel_labor', manualPrice:3250, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_panel_main',
+     desc:'Total panel estimate ₪3,800–₪8,800. 3×40A spec recommended for modern home (multi-AC + EV charger). IEC upgrade fee ₪3,000–₪6,000 extra if upgrading from single-phase — bill separately.',
+     descHe:'הערכה כוללת ₪3,800–₪8,800. מומלץ 3×40A לבית מודרני (מזגנים + עמדת טעינה EV). דמי חיבור חברת חשמל ₪3,000–₪6,000 בנפרד אם שדרוג מחד-פאזי'},
+    {desc:'IEC (Hachashmal) 3-phase upgrade fee — 3×40A connection (lump sum allowance)',
+     descHe:'דמי חיבור חברת חשמל — שדרוג לתלת-פאזי 3×40A (סכום מוערך)',
+     qty:1,  unit:'יח', priceKey:'iec_upgrade', manualPrice:4500, status:'new', profit:5, stdKey:''},
+    {isRemark:true, id:'rem_iec',
+     desc:'IEC connection fee varies ₪3,000–₪6,000 — confirm with Israel Electric Corporation before project start. Billed directly to client.',
+     descHe:'דמי חיבור חברת חשמל ₪3,000–₪6,000 — לאשר מול חברת חשמל לפני תחילת הפרויקט. מחויב ישירות מהלקוח'},
+    // ── ארון תקשורת ──────────────────────────────────────────────
+    {desc:'Communications cabinet — built-in, near entrance/hallway',
+     descHe:'ארון תקשורת — בנוי בקיר, ליד כניסה / מסדרון',
+     qty:1,  unit:'יח', priceKey:'comm_cabinet', manualPrice:650, status:'new', profit:20, stdKey:''},
+    {desc:'Managed network switch (16–24 port) + Mesh WiFi router — supply',
+     descHe:'מתג רשת מנוהל 16–24 פורט + ראוטר Mesh — אספקה',
+     qty:1,  unit:'יח', priceKey:'network_switch', manualPrice:1200, status:'new', profit:20, stdKey:''},
+    {desc:'Patch panel + network setup labor (terminating room cables + config)',
+     descHe:'פאנל טלאים + עבודת הגדרת רשת (סיום כבלי חדרים + תצורה)',
+     qty:1,  unit:'יח', priceKey:'patch_panel_labor', manualPrice:1850, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_comm_cabinet',
+     desc:'Total internet cabinet estimate ₪2,200–₪5,200. Excludes monthly ISP subscription. Cat6/7 cabling from rooms billed under data points above.',
+     descHe:'הערכה כוללת ארון תקשורת ₪2,200–₪5,200. לא כולל מנוי ספק אינטרנט חודשי. כבלי Cat6/7 מחדרים בסעיף נקודות נתונים לעיל'},
+    // ── אופציות חכמות ────────────────────────────────────────────
+    {desc:'Smart breakers — WiFi-controlled (optional upgrade, per breaker)',
+     descHe:'מפסקים חכמים — שלט WiFi (שדרוג אופציונלי, למפסק)',
+     qty:0,  unit:'יח', priceKey:'smart_breaker', manualPrice:325, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_smart',
+     desc:'Smart breakers add ₪250–₪400 per unit to panel cost. Set qty = number of circuits to control remotely. Requires panel with smart bus (e.g. Legrand, Schneider).',
+     descHe:'מפסקים חכמים תוספת ₪250–₪400 למפסק. הזן כמות = מספר מעגלים לשליטה מרחוק. דורש לוח עם אוטובוס חכם'},
+    {desc:'Electrical inspection certificate — Bdikah (mandatory for insurance)',
+     descHe:'תעודת בדיקה חשמלית — בדיקה (חובה לביטוח ומסירה)',
+     qty:1,  unit:'יח', priceKey:'elec_certificate', manualPrice:850, status:'new', profit:10, stdKey:''},
+    {isRemark:true, id:'rem_bdikah',
+     desc:'Bdikah certificate is legally mandatory before occupancy and required by all insurance companies. Must be issued by a licensed testing lab.',
+     descHe:'תעודת בדיקה חשמלית חובה לפני אכלוס ולכל חברות הביטוח. חייב להיות מוציא על ידי מעבדה מורשית'},
+  ],
+  paint:[
+    {desc:'Internal paint upper walls',   descHe:'צבע פנים קירות קומה ב (מנוכה ~32 מ"ר ממ"ד)', qty:148,  unit:'מ"ר',priceKey:'paint_internal',     status:'new',     profit:25,stdKey:''},
+    {desc:'Internal paint upper ceiling', descHe:'צבע פנים תקרה קומה ב (מנוכה 9 מ"ר ממ"ד)', qty:41,   unit:'מ"ר',priceKey:'paint_internal',     status:'new',     profit:25,stdKey:''},
+    {desc:'Internal paint stairwell',     descHe:'צבע פנים חדר מדרגות',    qty:30,   unit:'מ"ר',priceKey:'paint_internal',     status:'new',     profit:25,stdKey:''},
+    {desc:'Internal paint GF refresh',    descHe:'צבע פנים קרקע רענון',    qty:250,  unit:'מ"ר',priceKey:'paint_internal',     status:'existing',profit:20,stdKey:''},
+  ],
+  roof:[
+    // ── גג עליון — יח"ד 1 (upper unit, hipped tile roof ~10.55×17.25m pitched) ──
+    {desc:'Roof tiles — upper unit, hipped pitched area (incl. hips)',
+     descHe:'רעפים מלצג — גג עליון יח"ד 1, שטח משופע כולל ירכתיים',
+     qty:95, unit:'מ"ר', priceKey:'', manualPrice:280, status:'new', profit:25, stdKey:''},
+    // ── גג תחתון — יח"ד 2 (lower unit, hipped tile roof ~10.0×9.0m pitched) ───
+    {desc:'Roof tiles — lower unit, hipped pitched area (incl. hips)',
+     descHe:'רעפים מלצג — גג תחתון יח"ד 2, שטח משופע כולל ירכתיים',
+     qty:75, unit:'מ"ר', priceKey:'', manualPrice:280, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_roof_tiles',
+     desc:'Total pitched area ~170m² across 2 hipped roofs. Rate ₪250–320/m² supply+lay incl. underlay. Verify exact area with structural roof drawings.',
+     descHe:'סה"כ ~170 מ"ר בשני גגות ירכתיים. תעריף ₪250–320 למ"ר אספקה + הנחה כולל רשת תחתית. לאמת עם תוכנית קונסטרוקציה'},
+    // ── בידוד ────────────────────────────────────────────────────
+    {desc:'Thermal/waterproof insulation under tiles — both units (170m²)',
+     descHe:'בידוד תרמי/הידרו תחת רעפים — שתי יחידות',
+     qty:170, unit:'מ"ר', priceKey:'', manualPrice:95, status:'new', profit:20, stdKey:''},
+    // ── קונסטרוקציה ──────────────────────────────────────────────
+    {desc:'Timber roof structure — upper unit (rafters, purlins, ridge beam)',
+     descHe:'קונסטרוקציית עץ גג — יח"ד עליונה (שברים, מישנים, קורת שדרה)',
+     qty:95, unit:'מ"ר', priceKey:'', manualPrice:320, status:'new', profit:25, stdKey:''},
+    {desc:'Timber roof structure — lower unit (rafters, purlins, ridge beam)',
+     descHe:'קונסטרוקציית עץ גג — יח"ד תחתונה (שברים, מישנים, קורת שדרה)',
+     qty:75, unit:'מ"ר', priceKey:'', manualPrice:320, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_roof_struct',
+     desc:'Drawing note: column placement must follow structural plan. Coordinate with engineer before execution.',
+     descHe:'הערת תוכנית: מיקום עמודים יש לבצע לפי תכנית קונסטרוקציה — לתאם עם המהנדס לפני ביצוע'},
+    // ── שכלת + ירכתיים ──────────────────────────────────────────
+    {desc:'Ridge tiles — both units (upper ~10.55m + lower ~10.0m ridge lines)',
+     descHe:'שכלת גג — שתי יחידות (קורת שדרה עליונה ~10.55מ + תחתונה ~10.0מ)',
+     qty:21, unit:'מ"א', priceKey:'', manualPrice:185, status:'new', profit:22, stdKey:''},
+    {desc:'Hip tiles — all hip lines both units (~4 hips × ~2.8m avg each)',
+     descHe:'רעפי ירכתיים — כל קווי הירך שתי יחידות (~4 ירכתיים × ~2.8מ ממוצע)',
+     qty:11, unit:'מ"א', priceKey:'', manualPrice:210, status:'new', profit:22, stdKey:''},
+    {desc:'Lead/aluminium flashing — wall abutments + chimney (per drawing)',
+     descHe:'אבזם עופרת / אלומיניום — חיבורי קיר + מנוף לפי תוכנית',
+     qty:18, unit:'מ"א', priceKey:'', manualPrice:145, status:'new', profit:20, stdKey:''},
+    // ── ניקוז גג ────────────────────────────────────────────────
+    {desc:'Roof eave overhang / eave closure tiles (min 7cm per drawing note)',
+     descHe:'בליטת גג לניקוז / רעפי שוליים — מינימום 7 ס"מ לפי הערת תוכנית',
+     qty:48, unit:'מ"א', priceKey:'', manualPrice:95, status:'new', profit:20, stdKey:''},
+    {desc:'Aluminium gutters (ארגז) — both units, 3 sides each',
+     descHe:'תעלות אלומיניום (ארגז) — שתי יחידות, 3 צדדים כל אחת',
+     qty:48, unit:'מ"א', priceKey:'', manualPrice:165, status:'new', profit:20, stdKey:''},
+    {desc:'Downpipes — PVC/aluminium, both units (1 per corner approx)',
+     descHe:'צינורות ירידה — PVC/אלומיניום, שתי יחידות (~1 לכל פינה)',
+     qty:8, unit:'יח', priceKey:'', manualPrice:420, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_gutters',
+     desc:'Drawing note: calculate eave overhang (סים ארגז) at min. 7cm per side. Gutters and plumbing per sanitary plan — coordinate with plumbing consultant.',
+     descHe:'הערת תוכנית: יש לחשבון את הסים ארגז תחריים 7 ס"מ לפחות על כל צד. ניקוז גג עפ"י נספח סניטרי — תיאום עם יועץ'},
+    // ── גישה לגג ────────────────────────────────────────────────
+    {desc:'Roof access hatch / roof window (per plan symbol)',
+     descHe:'פתח גישה לגג / חלון גג לפי סמל בתוכנית',
+     qty:1, unit:'יח', priceKey:'', manualPrice:1800, status:'new', profit:25, stdKey:''},
+    {desc:'Safety parapet / guardrail at roof edge (where required)',
+     descHe:'מעקה בטיחות בשולי הגג / ממ"ד גג (היכן שנדרש)',
+     qty:22, unit:'מ"א', priceKey:'', manualPrice:380, status:'new', profit:22, stdKey:''},
+    {desc:'Concrete infill between timber rafters — per structural drawing note (B-30)',
+     descHe:'השלמת יציקת בטון בין קורות עץ גג — לפי הנחיית יועץ גגות (ב-30)',
+     qty:18, unit:'מ"א', priceKey:'', manualPrice:320, status:'new', profit:22, stdKey:''},
+    {isRemark:true, id:'rem_rafter_infill',
+     desc:'Drawing note (section 5-5): "יש להשלים ביציקת בטון בין קורות העץ — גבהים ושיפועים ע"פ תכניות יועץ גגות". Coordinate with roof consultant before execution.',
+     descHe:'הערת תוכנית חתך 5-5: יש להשלים ביציקת בטון בין קורות העץ — גבהים ושיפועים ע"פ תכניות יועץ גגות. לתאם עם יועץ גגות לפני ביצוע'},
+  ],
+  pituch:[
+    // ── עבודות עפר ──────────────────────────────────────────────
+    {desc:'Excavation for retaining wall + footing (incl. rock)',
+     descHe:'חפירה לקיר תומך כולל יסוד (כולל חציבה)',
+     qty:45, unit:'מ"ק', priceKey:'excavation_rock', manualPrice:135, status:'new', profit:25, stdKey:''},
+    {desc:'Earthworks — levelling / grading to ±0.00 (up to 1.00m depth)',
+     descHe:'פרשת מפלסי קרקע עד עומק 1.00מ — ביטול/ישור',
+     qty:62.82, unit:'מ"ר', priceKey:'earthwork_levelling', manualPrice:48, status:'new', profit:20, stdKey:''},
+    // ── יסודות ──────────────────────────────────────────────────
+    {desc:'Concrete footing strip — pour stage A (20/60 cm, C25/30)',
+     descHe:'יציקת הורנות יסוד שלב א — 20×60 ס"מ, בטון 25/30',
+     qty:18, unit:'מ"א', priceKey:'concrete_footing_strip', manualPrice:265, status:'new', profit:22, stdKey:''},
+    {desc:'Lean concrete blinding under footing (10cm)',
+     descHe:'קו חפירה — שכבת בטון זיתית 10 ס"מ תחת יסוד',
+     qty:18, unit:'מ"א', priceKey:'concrete_blinding', manualPrice:85, status:'new', profit:18, stdKey:''},
+    // ── קיר בטון ────────────────────────────────────────────────
+    {desc:'RC retaining wall — pour stage B, t=20cm (H avg 2.0m, C25/30)',
+     descHe:'יציקת קיר בטון מזוין שלב ב — עובי 20 ס"מ, גובה ממוצע 2.0מ',
+     qty:36, unit:'מ"ר', priceKey:'concrete_wall_rc', manualPrice:475, status:'new', profit:25, stdKey:''},
+    {desc:'Formwork to retaining wall — both faces',
+     descHe:'ביצוע תבנית לקיר — שתי פנים',
+     qty:72, unit:'מ"ר', priceKey:'formwork_wall', manualPrice:190, status:'new', profit:22, stdKey:''},
+    {desc:'Reinforcement steel — retaining wall (ø8–ø12, per structural drawing)',
+     descHe:'ברזל פרוס קיר תומך — ø8 עד ø12 לפי פרט (כולל הכנה והנחה)',
+     qty:1.1, unit:'טון', priceKey:'rebar_supply_fix', manualPrice:6800, status:'new', profit:28, stdKey:''},
+    {desc:'Construction joint strip — wall (tafar dion)',
+     descHe:'תפר ביצוע / תפר דיון קיר — פרופיל PVC',
+     qty:18, unit:'מ"א', priceKey:'construction_joint', manualPrice:105, status:'new', profit:20, stdKey:''},
+    // ── ניקוז ────────────────────────────────────────────────────
+    {desc:'Drainage pipe Ø4" CVP through wall — every 1.5m H / 2m spacing',
+     descHe:'צינור ניקוז Ø4" C.V.P דרך קיר — כל 1.5מ גובה ו-2מ לאורך',
+     qty:12, unit:'יח', priceKey:'drain_pipe_cvp_100', manualPrice:120, status:'new', profit:25, stdKey:''},
+    {desc:'Gravel filter layer 30/30/30 + geotextile fabric behind wall',
+     descHe:'מסננת חצץ 30/30/30 + בד גיאוטכני — מאחורי קיר תומך',
+     qty:20, unit:'מ"ק', priceKey:'gravel_filter_geo', manualPrice:310, status:'new', profit:22, stdKey:''},
+    // ── מילוי ────────────────────────────────────────────────────
+    {desc:'Compacted granular backfill in 20cm layers (98% Proctor)',
+     descHe:'מילוי גרנולרי מהודק בשכבות 20 ס"מ — 98% פרוקטור',
+     qty:35, unit:'מ"ק', priceKey:'backfill_compacted', manualPrice:175, status:'new', profit:20, stdKey:''},
+    // ── גמר ────────────────────────────────────────────────────
+    {desc:'Concrete floor slab on grade — paved area (10cm, C25/30)',
+     descHe:'יציקת רצפה על קרקע — חצר / מדרכה (10 ס"מ, בטון 25/30)',
+     qty:40, unit:'מ"ר', priceKey:'slab_on_grade', manualPrice:240, status:'new', profit:20, stdKey:''},
+    {desc:'Removal and disposal of excavated soil off-site',
+     descHe:'הובלת עודפי עפר מהאתר',
+     qty:50, unit:'מ"ק', priceKey:'soil_removal', manualPrice:105, status:'new', profit:18, stdKey:''},
+  ],
+  chatzer:[
+    // ── הריסות ─────────────────────────────────────────────────
+    {desc:'Demolition — partial tiled roof section (unit 1, per plan)',
+     descHe:'הריסת חלק מגג רעפים — יח"ד מס׳ 1 לפי תוכנית',
+     qty:30, unit:'מ"ר', priceKey:'demo_roof_tiles', manualPrice:105, status:'existing', profit:20, stdKey:''},
+    {desc:'Demolition — partial tiled roof section (unit 2, per plan)',
+     descHe:'הריסת חלק מגג רעפים — יח"ד מס׳ 2 לפי תוכנית',
+     qty:25, unit:'מ"ר', priceKey:'demo_roof_tiles', manualPrice:105, status:'existing', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_roof_demo',
+     desc:'Rate ₪80–130/m². Includes tile removal, timber battens, and off-site disposal.',
+     descHe:'תעריף ₪80–130 למ"ר — כולל הסרת רעפים, רצועות עץ ופינוי מהאתר'},
+    {desc:'Demolition — tensile canopy / tensafe roof structure',
+     descHe:'הריסת קירוי טנסף קיים',
+     qty:1, unit:'יח', priceKey:'demo_canopy', manualPrice:600, status:'existing', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_tensaf',
+     desc:'If new tensafe replaces this, verify anchor point reinforcement into existing structure — hidden cost.',
+     descHe:'אם טנסף חדש מחליף — יש לוודא חיזוק נקודות עיגון במבנה הקיים, עלות נסתרת אפשרית'},
+    // ── עצים להריסה ────────────────────────────────────────────
+    {desc:'Tree removal — marked trees (22,23,24,26: palm, oak, ornamental)',
+     descHe:'כריתת עצים מסומנים להריסה — עץ 22,23,24,26 (דקל, אלון, נוי)',
+     qty:4, unit:'יח', priceKey:'tree_removal', manualPrice:1050, status:'existing', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_tree_permit',
+     desc:'⚠ KKL permit required before removal (Alon + Dekel = protected species). Fine for illegal removal is significant. Rate ₪600–1,500/tree.',
+     descHe:'⚠ נדרש היתר פקיד היערות לפני כריתה (אלון + דקל = עצים מוגנים). קנס על כריתה ללא היתר — משמעותי'},
+    {desc:'Tree stump grinding and disposal',
+     descHe:'השמדת גדמי עצים ופינוי',
+     qty:4, unit:'יח', priceKey:'stump_grind', manualPrice:350, status:'existing', profit:20, stdKey:''},
+    // ── כביש ומדרכה ────────────────────────────────────────────
+    {desc:'Asphalt paving — driveway / access road (5cm binder + 4cm wearing, compacted)',
+     descHe:'ריצוף אספלט — דרך גישה / כביש פנימי (5 ס"מ בינדר + 4 ס"מ שכבת בלאי)',
+     qty:80, unit:'מ"ר', priceKey:'asphalt_paving', manualPrice:210, status:'new', profit:22, stdKey:''},
+    {isRemark:true, id:'rem_asphalt',
+     desc:'Rate ₪180–240/m². Includes binder course, wearing course, and compaction. Sub-base billed separately.',
+     descHe:'תעריף ₪180–240 למ"ר — כולל שכבת בינדר, שכבת בלאי והידוק. בסיס אגרגט בסעיף נפרד'},
+    {desc:'Sub-base aggregate layer under asphalt (20cm, compacted)',
+     descHe:'שכבת בסיס אגרגט תחת אספלט — 20 ס"מ מהודק',
+     qty:80, unit:'מ"ר', priceKey:'subbase_asphalt', manualPrice:65, status:'new', profit:18, stdKey:''},
+    // ── חניות ──────────────────────────────────────────────────
+    {desc:'Uncovered parking space — unit 1 (paving + marking + wheel stops)',
+     descHe:'חנייה לא מקורה יח"ד מס׳ 1 — ריצוף + סימון + עצור גלגלים',
+     qty:1, unit:'יח', priceKey:'parking_space', manualPrice:3000, status:'new', profit:22, stdKey:''},
+    {desc:'Uncovered parking space — unit 2 (paving + marking + wheel stops)',
+     descHe:'חנייה לא מקורה יח"ד מס׳ 2 — ריצוף + סימון + עצור גלגלים',
+     qty:1, unit:'יח', priceKey:'parking_space', manualPrice:3000, status:'new', profit:22, stdKey:''},
+    {isRemark:true, id:'rem_parking',
+     desc:'Rate ₪2,500–3,500/space. Includes paving, wheel stops, marking, and localized drainage.',
+     descHe:'תעריף ₪2,500–3,500 ליחידה — כולל ריצוף, עצורי גלגלים, סימון וניקוז מקומי'},
+    // ── מרוצף / חצר ────────────────────────────────────────────
+    {desc:'Courtyard paving — stone / concrete tiles (west side, per plan)',
+     descHe:'ריצוף מרוצף חצר — אבן / בטון (צד מערב לפי תוכנית)',
+     qty:60, unit:'מ"ר', priceKey:'courtyard_paving', manualPrice:365, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_courtyard',
+     desc:'Rate ₪280–450/m². Final rate depends on stone type: Holland block ≈ ₪280, granite ≈ ₪420, cast concrete ≈ ₪320.',
+     descHe:'תעריף ₪280–450 למ"ר — תלוי בסוג: הולנד ≈ ₪280, גרניט ≈ ₪420, יצוק ≈ ₪320'},
+    {desc:'Concrete kerb / edge restraint to paved areas',
+     descHe:'שפה בטונית לגבול שטח מרוצף',
+     qty:45, unit:'מ"א', priceKey:'concrete_kerb', manualPrice:85, status:'new', profit:20, stdKey:''},
+    // ── ביוב ותשתיות ────────────────────────────────────────────
+    {desc:'Sewage inspection manhole — new (TL=67.75 / IL=66.35, depth ~1.40m)',
+     descHe:'שוחת ביקורת ביוב חדשה — TL=67.75 / IL=66.35, עומק ~1.40מ',
+     qty:1, unit:'יח', priceKey:'manhole_inspection', manualPrice:2200, status:'new', profit:25, stdKey:''},
+    {desc:'Sewage inspection manhole — new (TL=67.64 / IL=65.95, depth ~1.69m)',
+     descHe:'שוחת ביקורת ביוב חדשה — TL=67.64 / IL=65.95, עומק ~1.69מ',
+     qty:1, unit:'יח', priceKey:'manhole_inspection', manualPrice:2200, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_manhole',
+     desc:'Rate ₪1,800–2,600/unit (DN400–600 concrete/plastic + cover + casting). Depth >1.5m attracts 15–20% premium — verify final levels on site.',
+     descHe:'תעריף ₪1,800–2,600 ליחידה (DN400–600). עומק מעל 1.5מ — תוספת 15–20%. יש לאמת מפלסי IL בשטח'},
+    {desc:'Sewage / plumbing connection to municipal line (labor + piping, lump sum)',
+     descHe:'חיבור ביוב / אינסטלציה לקו עירוני — עבודה + צנרת, סכום כולל',
+     qty:1, unit:'יח', priceKey:'sewage_connection', manualPrice:5500, status:'new', profit:22, stdKey:''},
+    {isRemark:true, id:'rem_sewage',
+     desc:'Lump sum ₪4,000–7,000. Coordinate with municipal plumbing consultant — see drawing note: ביוב ואינסטלציה ראה תכנית אינסטלציה.',
+     descHe:'סכום כולל ₪4,000–7,000. לתיאום עם יועץ אינסטלציה — ראה הערה בתוכנית: ביוב ואינסטלציה ראה תכנית'},
+    {desc:'Plastic storage shed — supply and install (per plan)',
+     descHe:'מחסן פלסטיק — אספקה והתקנה לפי תוכנית',
+     qty:1, unit:'יח', priceKey:'storage_shed_plastic', manualPrice:1600, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_shed',
+     desc:'Rate ₪1,200–2,000. Includes assembly labor + basic concrete leveling base.',
+     descHe:'תעריף ₪1,200–2,000 — כולל הרכבה + בסיס בטון לאיפוס'},
+    // ── גדר וגינון ──────────────────────────────────────────────
+    {desc:'Perimeter fence — new plot boundary (aluminium/steel profile, per plan)',
+     descHe:'גדר גבול מגרש חדשה — פרופיל אלומיניום / ברזל, לפי תוכנית',
+     qty:90, unit:'מ"א', priceKey:'fence_perimeter', manualPrice:875, status:'new', profit:22, stdKey:''},
+    {isRemark:true, id:'rem_fence',
+     desc:'Rate ₪650–1,100/m. Standard height aluminium or steel profile. Verify exact boundary with surveyor before ordering.',
+     descHe:'תעריף ₪650–1,100 למ"א — פרופיל תקני. יש לאמת גבולות מדויקים עם מודד לפני הזמנה'},
+    {desc:'Landscaping — tree line replacement + drip irrigation + garden beds',
+     descHe:'גינון — שורת עצים חדשה + השקיה בטפטוף + ערוגות לפי תוכנית',
+     qty:30, unit:'מ"א', priceKey:'landscaping_trees', manualPrice:450, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_landscape',
+     desc:'Rate ₪350–550/m. Includes soil preparation, 2" drip irrigation, and 15L–25L nursery trees.',
+     descHe:'תעריף ₪350–550 למ"א — כולל הכנת קרקע, השקיה בטפטוף 2", עצים 15–25 ליטר מהמשתלה'},
+  ],
+  bisus:[
+    // ── חפירה ───────────────────────────────────────────────────
+    {desc:'Excavation for pile caps + strip footings (incl. rock breaking)',
+     descHe:'חפירה לראשי כלונסאות + יסודות (כולל פיצוץ/שבירת סלע)',
+     qty:55, unit:'מ"ק', priceKey:'excav_foundations', manualPrice:145, status:'new', profit:22, stdKey:''},
+    {isRemark:true, id:'rem_excav_bisus',
+     desc:'Rate ₪130–160/m³. Drawing note: contractor must verify depth with surveyor before starting — levels may differ from plan.',
+     descHe:'תעריף ₪130–160 למ"ק. הערת תוכנית: הקבלן לקרוא את הקרקע לפני ביצוע — המודד מוסמך לתואם'},
+    // ── כלונסאות ────────────────────────────────────────────────
+    {desc:'Bored cast-in-situ concrete piles — Ø50cm, L=11.0m, B-30 (6 piles total)',
+     descHe:'כלונסאות יצוק באתר — Ø50 ס"מ, עומק 11.0מ, בטון ב-30 (6 כלונסאות)',
+     qty:6, unit:'יח', priceKey:'pile_bored_50', manualPrice:9500, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_pile_spec',
+     desc:'Spec from drawing: Ø50cm columns, 7ø16 longitudinal bars, stirrups ø8@20, L=11.0m, concrete B-30, cover 6cm. AS-MADE survey required after each pile.',
+     descHe:'מפרט: Ø50 ס"מ, 7ø16 אורכי, אונקלים ø8@20, L=11.0מ, ב-30, כיסוי 6 ס"מ. נדרש מדידת AS-MADE לכל כלונסאה'},
+    {desc:'Pile rebar cage — 7ø16 longitudinal + ø8@20 stirrups, L=11.0m (supply + lower)',
+     descHe:'כלוב ברזל לכלונסאה — 7ø16 אורכי + אונקלים ø8@20, L=11.0מ (אספקה + הורדה)',
+     qty:6, unit:'יח', priceKey:'pile_rebar_cage', manualPrice:4200, status:'new', profit:25, stdKey:''},
+    {desc:'Pile head breaking / trimming to design level (after casting)',
+     descHe:'שבירת ראשי כלונסאות למפלס תכנוני לאחר יציקה',
+     qty:6, unit:'יח', priceKey:'pile_head_break', manualPrice:650, status:'new', profit:20, stdKey:''},
+    // ── יסודות ──────────────────────────────────────────────────
+    {desc:'Pile cap — reinforced concrete pad footing on pile (B-30, cover 5cm)',
+     descHe:'ראש כלונסאה / יסוד בודד — בטון מזוין על כלונסאה, ב-30, כיסוי 5 ס"מ',
+     qty:6, unit:'יח', priceKey:'pile_cap_rc', manualPrice:3800, status:'new', profit:22, stdKey:''},
+    {desc:'Strip footing / ground beam — יסוד עובר (B-30, 6ø12 top + btm, cover 5cm)',
+     descHe:'יסוד עובר / קורת קרקע — ב-30, 6ø12 עליון + תחתון, כיסוי 5 ס"מ',
+     qty:28, unit:'מ"א', priceKey:'strip_footing_rc', manualPrice:1350, status:'new', profit:22, stdKey:''},
+    {desc:'Lean concrete blinding under all footings (10cm, B-15)',
+     descHe:'בטון זיתית תחת כל היסודות — 10 ס"מ, ב-15',
+     qty:42, unit:'מ"ר', priceKey:'blinding_concrete', manualPrice:90, status:'new', profit:18, stdKey:''},
+    // ── עמודים וקירות ───────────────────────────────────────────
+    {desc:'RC columns — external, H up to 2.0m (B-30, 7ø16, cover 6cm)',
+     descHe:'עמודי חוץ — גובה עד 2.0מ, ב-30, 7ø16, כיסוי 6 ס"מ',
+     qty:6, unit:'יח', priceKey:'column_rc_ext', manualPrice:2800, status:'new', profit:25, stdKey:''},
+    {desc:'RC columns — internal, H up to 2.0m (B-30, cover 6cm)',
+     descHe:'עמודי פנים — גובה עד 2.0מ, ב-30, כיסוי 6 ס"מ',
+     qty:4, unit:'יח', priceKey:'column_rc_int', manualPrice:2400, status:'new', profit:25, stdKey:''},
+    {desc:'RC walls — external, H up to 2.0m (B-30, cover 6cm)',
+     descHe:'קירות חוץ מזויינים — גובה עד 2.0מ, ב-30, כיסוי 6 ס"מ',
+     qty:38, unit:'מ"ר', priceKey:'wall_rc_ext', manualPrice:620, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_cols',
+     desc:'Drawing: columns/walls >4m height require separate structural check — coordinate with engineer יובל תנעמי.',
+     descHe:'הערת תוכנית: עמודים/קירות גבוהים מ-4מ — בדיקה קונסטרוקטיבית נפרדת עם המהנדס'},
+    // ── תקרות וקורות ────────────────────────────────────────────
+    {desc:'Ground floor slab — ריצפה ראשונה (B-30, cover 5cm, on compacted fill)',
+     descHe:'ריצפה ראשונה — ב-30, כיסוי 5 ס"מ, על מילוי מהודק',
+     qty:148, unit:'מ"ר', priceKey:'slab_ground_floor', manualPrice:480, status:'new', profit:22, stdKey:''},
+    {desc:'Tie beams — קורות קשר between pile caps (B-30, cover 5cm)',
+     descHe:'קורות קשר בין ראשי כלונסאות — ב-30, כיסוי 5 ס"מ',
+     qty:18, unit:'מ"א', priceKey:'tie_beam_rc', manualPrice:1100, status:'new', profit:22, stdKey:''},
+    {desc:'Downstand beams / ring beams at +6.45 — קורות יורדות / קורות כתר (B-30, cover 5cm)',
+     descHe:'קורות יורדות / קורות כתר מפלס +6.45 — ב-30, כיסוי 5 ס"מ (B12–B16 לפי תוכנית)',
+     qty:30, unit:'מ"א', priceKey:'downstand_beam_rc', manualPrice:950, status:'new', profit:22, stdKey:''},
+    // ── ברזל ────────────────────────────────────────────────────
+    {desc:'Reinforcement steel — all foundations + pile caps + beams (supply + fix)',
+     descHe:'ברזל פרוס — כל היסודות + ראשי כלונסאות + קורות (אספקה + הנחה)',
+     qty:4.2, unit:'טון', priceKey:'rebar_foundations', manualPrice:6800, status:'new', profit:25, stdKey:''},
+    {isRemark:true, id:'rem_rebar_bisus',
+     desc:'Rebar schedule from drawing (טבלת בטונים): 6ø12@50/23 pad ftgs, 10ø12@85/23 strip ftgs, 6ø12@50/23 slabs, 10ø12@85/23 beams. Verify tonnage with structural BOM.',
+     descHe:'ע"פ טבלת בטונים: 6ø12 ו-10ø12 ביסודות וקורות — יש לאמת כמות ברזל מול כמויות קונסטרוקציה'},
+    // ── מילוי וגמר ──────────────────────────────────────────────
+    {desc:'Compacted granular backfill under ground slab (20cm layers, 98% Proctor)',
+     descHe:'מילוי גרנולרי מהודק תחת ריצפה ראשונה — שכבות 20 ס"מ, 98% פרוקטור',
+     qty:65, unit:'מ"ק', priceKey:'backfill_slab', manualPrice:175, status:'new', profit:18, stdKey:''},
+    {desc:'Soil removal and disposal off-site (excess from excavation)',
+     descHe:'פינוי עודפי עפר מהאתר מחפירת ביסוס',
+     qty:55, unit:'מ"ק', priceKey:'soil_removal_bisus', manualPrice:105, status:'new', profit:18, stdKey:''},
+  ],
+  labor:[
+    {desc:'General construction laborer — daily rate',
+     descHe:'פועל בניה כללי — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'labor_general', manualPrice:550, status:'new', profit:15, stdKey:''},
+    {desc:'Skilled tradesman (tiler / plasterer / painter) — daily rate',
+     descHe:'בעל מקצוע (רצף / טייח / צבעי) — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'labor_skilled', manualPrice:800, status:'new', profit:15, stdKey:''},
+    {desc:'Electrician — daily rate',
+     descHe:'חשמלאי — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'labor_electrician', manualPrice:950, status:'new', profit:15, stdKey:''},
+    {desc:'Plumber / sanitary — daily rate',
+     descHe:'אינסטלטור / סניטציה — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'labor_plumber', manualPrice:900, status:'new', profit:15, stdKey:''},
+    {desc:'Crane / machinery operator — daily rate',
+     descHe:'מפעיל מנוף / ציוד — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'labor_crane', manualPrice:1400, status:'new', profit:12, stdKey:''},
+    {isRemark:true, id:'rem_labor',
+     desc:'Set qty = number of days estimated for each trade. Rates are 2026 Israeli market averages (single worker, excl. materials).',
+     descHe:'הזן כמות = מספר ימי עבודה משוערים לכל מקצוע. תעריפים ממוצעים שוק 2026 (עובד בודד, לא כולל חומרים)'},
+  ],
+  supervision:[
+    {desc:'Site manager / project supervisor — monthly fee',
+     descHe:'מנהל עבודה / מפקח אתר — שכר חודשי',
+     qty:0, unit:'חודש', priceKey:'supervision_site_mgr', manualPrice:12000, status:'new', profit:10, stdKey:''},
+    {desc:'External technical supervision (מפקח מטעם הבעלים) — monthly fee',
+     descHe:'פיקוח טכני חיצוני מטעם הבעלים — שכר חודשי',
+     qty:0, unit:'חודש', priceKey:'supervision_external', manualPrice:4500, status:'new', profit:10, stdKey:''},
+    {desc:'Safety officer (ממונה בטיחות) — monthly fee',
+     descHe:'ממונה בטיחות — שכר חודשי',
+     qty:0, unit:'חודש', priceKey:'supervision_safety', manualPrice:2200, status:'new', profit:10, stdKey:''},
+    {isRemark:true, id:'rem_supervision',
+     desc:'Set qty = estimated construction months. Site manager is legally required for projects over ₪1.5M or structural work.',
+     descHe:'הזן כמות = חודשי ביצוע משוערים. מנהל עבודה נדרש חוקית לפרויקטים מעל ₪1.5M או עבודות קונסטרוקציה'},
+  ],
+  extras:[
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+    {desc:'', descHe:'', qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
+  ],
+  hvac:[
+    // ── יחידות מרכזיות ───────────────────────────────────────────
+    {desc:'Central inverter AC main unit — per floor (10–12 HP total for 350m²)',
+     descHe:'יחידת מיזוג מרכזית אינוורטר — לקומה (סה"כ 10–12 HP ל-350 מ"ר)',
+     qty:2, unit:'יח', priceKey:'', manualPrice:16000, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_hvac_units',
+     desc:'Rate ₪14,000–₪18,000/unit. 2 units for 2-floor villa. Alternative: VRF system ₪110,000–₪150,000 total for full independent room control.',
+     descHe:'תעריף ₪14,000–₪18,000 ליחידה. 2 יחידות לוילה דו-קומתית. חלופה: מערכת VRF ₪110,000–₪150,000 לשליטה עצמאית בכל חדר'},
+    // ── תפסנים וטרמוסטטים ────────────────────────────────────────
+    {desc:'Electric dampers — motorized zone control (per damper)',
+     descHe:'תפסנים חשמליים — שליטת אזורים ממונעת (לתפסן)',
+     qty:9, unit:'יח', priceKey:'', manualPrice:750, status:'new', profit:22, stdKey:''},
+    {desc:'Individual room thermostats (per unit)',
+     descHe:'טרמוסטטים לחדרים — שליטה עצמאית (ליחידה)',
+     qty:9, unit:'יח', priceKey:'', manualPrice:575, status:'new', profit:22, stdKey:''},
+    // ── לוח שליטה ────────────────────────────────────────────────
+    {desc:'Central AC control panel — master controller for all zones',
+     descHe:'לוח שליטה מרכזי למיזוג — ניהול כל האזורים',
+     qty:1, unit:'יח', priceKey:'', manualPrice:1850, status:'new', profit:20, stdKey:''},
+    // ── תעלות ────────────────────────────────────────────────────
+    {desc:'Ductwork — supply + return ducts, insulated, both floors (lump sum)',
+     descHe:'תעלות אוויר — אספקה + חזרה, מבודדות, שתי קומות (סכום כולל)',
+     qty:1, unit:'יח', priceKey:'', manualPrice:15000, status:'new', profit:20, stdKey:''},
+    {desc:'Air grilles / diffusers — supply and return (per unit)',
+     descHe:'תנפוחי אוויר / גרילים — אספקה וחזרה (ליחידה)',
+     qty:18, unit:'יח', priceKey:'', manualPrice:280, status:'new', profit:20, stdKey:''},
+    // ── התקנה ────────────────────────────────────────────────────
+    {desc:'HVAC installation labor — full system commissioning (lump sum)',
+     descHe:'עבודת התקנת מיזוג — הקמה מלאה ותחילת הפעלה (סכום כולל)',
+     qty:1, unit:'יח', priceKey:'', manualPrice:12500, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_hvac_install',
+     desc:'Installation ₪10,000–₪15,000 lump sum. Includes lineset piping, electrical connection (3-phase), drainage, and commissioning. Requires 3×40A panel — see electrical panel category.',
+     descHe:'התקנה ₪10,000–₪15,000 כולל. כולל צנרת, חיבור חשמלי (3 פאז), ניקוז ואיכלוס. דורש לוח 3×40A — ראה סעיף לוח חשמל'},
+    // ── נקודות חשמל מיוחדות למיזוג ──────────────────────────────
+    {desc:'AC power point — 3-phase direct line to outdoor unit (per point)',
+     descHe:'נקודת חשמל למזגן — קו ישיר תלת-פאזי ליחידה חיצונית (לנקודה)',
+     qty:2, unit:'יח', priceKey:'', manualPrice:1000, status:'new', profit:20, stdKey:''},
+    {desc:'Thermostat / damper low-voltage wiring (per point)',
+     descHe:'חיווט מתח נמוך לטרמוסטט / תפסן (לנקודה)',
+     qty:9, unit:'יח', priceKey:'', manualPrice:325, status:'new', profit:20, stdKey:''},
+    // ── אופציה: Smart Home ────────────────────────────────────────
+    {desc:'Smart Home AC integration — central control (phone/KNX/Control4)',
+     descHe:'אינטגרציה בית חכם למיזוג — שליטה מרכזית (טלפון / KNX / Control4)',
+     qty:0, unit:'יח', priceKey:'', manualPrice:7500, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_smart_hvac',
+     desc:'Smart Home integration optional add-on ₪5,000–₪10,000. Requires compatible control panel (Control4, KNX, or TouchOn). Set qty=1 to include.',
+     descHe:'אינטגרציה בית חכם אופציונלית ₪5,000–₪10,000. דורש לוח תואם (Control4/KNX/TouchOn). הזן כמות=1 להכללה'},
+  ],
+  logistics:[
+    // ── מכולות פינוי ─────────────────────────────────────────────
+    {desc:'8-yard dumpster — drop-off, pickup, landfill fees (per trip)',
+     descHe:'מכולת פינוי 8 יארד — הבאה, איסוף ואגרת מטמנה (לנסיעה)',
+     qty:4, unit:'נסיעה', priceKey:'', manualPrice:1050, status:'new', profit:10, stdKey:''},
+    {desc:'10-yard dumpster — large demolition / earthworks (per trip)',
+     descHe:'מכולת פינוי 10 יארד — הריסות גדולות / עפר (לנסיעה)',
+     qty:2, unit:'נסיעה', priceKey:'', manualPrice:1450, status:'new', profit:10, stdKey:''},
+    {desc:'Waste sleeve / debris chute rental — 2nd floor (per week)',
+     descHe:'שרוול פסולת / מגלשת פסולת קומה ב — השכרה (לשבוע)',
+     qty:0, unit:'שבוע', priceKey:'', manualPrice:500, status:'new', profit:10, stdKey:''},
+    {isRemark:true, id:'rem_dumpsters',
+     desc:'8-yard ₪900–₪1,200/trip, 10-yard ₪1,300–₪1,600/trip. Set qty to estimated number of loads for each phase (demolition / structure / finishes). Sleeve required for 2nd floor debris.',
+     descHe:'מכולה 8Y: ₪900–₪1,200 לנסיעה. 10Y: ₪1,300–₪1,600. הזן כמות = מספר נסיעות משוערות לכל שלב. שרוול נדרש לפינוי קומה ב'},
+    // ── שירותי שטח ───────────────────────────────────────────────
+    {desc:'Site toilet rental — portable (per month)',
+     descHe:'שירותים ניידים לאתר — השכרה (לחודש)',
+     qty:0, unit:'חודש', priceKey:'', manualPrice:350, status:'new', profit:10, stdKey:''},
+    {desc:'Site security fence / hoarding (per month, full perimeter)',
+     descHe:'גידור אתר / מחיצה (לחודש, היקף מלא)',
+     qty:0, unit:'חודש', priceKey:'', manualPrice:1200, status:'new', profit:10, stdKey:''},
+    {desc:'Scaffolding — external facade (per month, full height)',
+     descHe:'פיגומים — חזית חיצונית (לחודש, גובה מלא)',
+     qty:0, unit:'חודש', priceKey:'', manualPrice:3500, status:'new', profit:12, stdKey:''},
+    {isRemark:true, id:'rem_logistics',
+     desc:'Set qty = estimated construction months. Scaffolding and fencing are recurring monthly costs — add to site supervision duration.',
+     descHe:'הזן כמות = חודשי ביצוע משוערים. פיגומים וגידור הם עלויות חודשיות שוטפות — להוסיף לאורך פיקוח האתר'},
+  ],
+  mamad:[
+    // ── מידע כללי ────────────────────────────────────────────────
+    {isRemark:true, id:'rem_mamad_spec',
+     desc:'ממ"ד — מרחב מוגן דירתי | תקן: ת"י 4422 + מפרטי פיקוד העורף | חובת בנייה: כל תוספת בנייה מעל 12 מ"ר שטח עיקרי. שטח מינימלי: 9 מ"ר נטו / 13 מ"ר ברוטו. קירות + תקרה: ב-30 עובי 30ס"מ. ריצפה: ב-30 עובי 20ס"מ. גובה: 2.50–2.80מ. שטח הממ"ד מנוכה מסעיפי ריצוף, צבע קירות ותקרה של קומה ב.',
+     descHe:'ממ"ד — מרחב מוגן דירתי | ת"י 4422 + פיקוד העורף | שטח: 9 מ"ר נטו / 13 מ"ר ברוטו | קירות+תקרה ב-30 עובי 30ס"מ | ריצפה 20ס"מ | גובה 2.50–2.80מ | שטח מנוכה מריצוף/צבע קומה ב'},
+
+
+    // ── שלד — 3 שורות כמותיות ────────────────────────────────────
+    {desc:'ממ"ד concrete B-30 — walls (10.52m³) + ceiling (3.89m³) + floor (2.59m³) = 17m³ total, incl. pump + cure',
+     descHe:'בטון ב-30 ממ"ד — קירות 10.52 מ"ק + תקרה 3.89 מ"ק + ריצפה 2.59 מ"ק = 17 מ"ק סה"כ, כולל משאבה וריפוי',
+     qty:17, unit:'מ"ק', priceKey:'', manualPrice:1900, status:'new', profit:22, stdKey:''},
+    {desc:'ממ"ד formwork — inner faces (31.8m²) + outer faces (38.2m²) + ceiling soffit (12.96m²) − openings (6.2m²) = 76.7m²',
+     descHe:'תבנית ממ"ד — פנים 31.8מ"ר + חוץ 38.2מ"ר + תקרה 12.96מ"ר − פתחים 6.2מ"ר = 76.7 מ"ר נטו',
+     qty:76.7, unit:'מ"ר', priceKey:'', manualPrice:320, status:'new', profit:22, stdKey:''},
+    {desc:'ממ"ד rebar — supply + cut + bend + fix, min 6ø12 each face per פיקוד העורף spec (3.06 ton)',
+     descHe:'ברזל ממ"ד — אספקה + חיתוך + כיפוף + הנחה, מינ׳ 6ø12 כל פנים לפי מפרט פיקוד העורף (3.06 טון)',
+     qty:3.06, unit:'טון', priceKey:'', manualPrice:7800, status:'new', profit:22, stdKey:''},
+    {isRemark:true, id:'rem_mamad_shell',
+     desc:'Shell = 17m³ B-30 @ ₪1,900 + 76.7m² formwork @ ₪320 + 3.06t rebar @ ₪7,800 = ₪83,140 subtotal. Formwork: inner 31.8m² + outer 38.2m² + soffit 13m² − openings 6.2m² = 76.7m². Rate ₪320/m² = DB formwork_wall ₪190 + ממ"ד premium (small area, certified contractor). Wall continuity: 70% foundation→roof per פיקוד העורף.',
+     descHe:'שלד = 17מ"ק × ₪1,900 + 76.7מ"ר × ₪320 + 3.06ט × ₪7,800 = ₪83,140 ביניים. תבנית: פנים 31.8 + חוץ 38.2 + תקרה 13 − פתחים 6.2 = 76.7 מ"ר. תעריף ₪320 = ₪190 DB + פרמיית ממ"ד (שטח קטן, קבלן מוסמך). רציפות קירות 70% מהיסוד לגג.'},
+
+    // ── דלת הדף ──────────────────────────────────────────────────
+    {desc:'Blast door (דלת הדף) — standard פיקוד העורף spec, outward opening, installed 2cm below floor level',
+     descHe:'דלת הדף תקנית — לפי מפרט פיקוד העורף, נפתחת כלפי חוץ, מותקנת 2ס"מ מתחת למפלס הרצפה',
+     qty:1, unit:'יח', priceKey:'', manualPrice:14500, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_mamad_door',
+     desc:'Rate ₪12,000–₪18,000 supply+install. Door must: (1) open outward, (2) frame 2cm below floor to prevent blast ingress. Must be approved product per פיקוד העורף list. Includes steel frame, seals, and hardware.',
+     descHe:'תעריף ₪12,000–₪18,000 אספקה + התקנה. דלת חייבת: (1) להיפתח החוצה, (2) מסגרת 2ס"מ מתחת לרצפה. מוצר מאושר פיקוד העורף בלבד. כולל מסגרת פלדה, אטמים ואבזרים'},
+
+    // ── חלון הדף ─────────────────────────────────────────────────
+    {desc:'Blast window (חלון הדף) — armoured steel, shrapnel-proof, 1.2m² mandatory per ת"י 4422',
+     descHe:'חלון הדף — פלדה מוגן רסיסים, 1.2 מ"ר חובה לפי ת"י 4422, מאושר פיקוד העורף',
+     qty:1, unit:'יח', priceKey:'', manualPrice:9500, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_mamad_window',
+     desc:'Rate ₪8,000–₪12,000 supply+install. 1.2m² mandatory in residential ממ"ד per ת"י 4422. Must be approved armoured steel window — NOT an aluminium window. Priced separately from aluminium windows category.',
+     descHe:'תעריף ₪8,000–₪12,000 אספקה + התקנה. 1.2 מ"ר חובה בממ"ד לפי ת"י 4422. חלון פלדה מאושר בלבד — לא חלון אלומיניום. מחיר נפרד מסעיף חלונות אלומיניום'},
+
+    // ── מערכת אב"כ ───────────────────────────────────────────────
+    {desc:'Air filtration / NBC filter system (מערכת אב"כ) — mandatory per ת"י 4570 (since 2010), supply + install',
+     descHe:'מערכת סינון וסגירה אב"כ — חובה לפי ת"י 4570 (מ-2010), אספקה + התקנה',
+     qty:1, unit:'יח', priceKey:'', manualPrice:6500, status:'new', profit:18, stdKey:''},
+    {isRemark:true, id:'rem_mamad_abc',
+     desc:'Rate ₪5,000–₪8,000 supply+install. NBC air filtration system mandatory since 2010 per ת"י 4570. Includes filter unit, ducts, and dampers. Must be approved product.',
+     descHe:'תעריף ₪5,000–₪8,000 אספקה + התקנה. חובה מ-2010 לפי ת"י 4570. כולל יחידת סינון, תעלות ומפסקי אוויר. מוצר מאושר בלבד'},
+
+    // ── חשמל ותקשורת ──────────────────────────────────────────────
+    {desc:'Electrical, protected lighting, phone/data point, AC prep — per פיקוד העורף spec',
+     descHe:'חשמל, תאורה מוגנת, נקודת טלפון/תקשורת, הכנה למזגן — לפי מפרט פיקוד העורף',
+     qty:1, unit:'יח', priceKey:'', manualPrice:7500, status:'new', profit:20, stdKey:''},
+
+    // ── תכנון ואישורים ───────────────────────────────────────────
+    {desc:'ממ"ד planning & approvals — architect, structural engineer, פיקוד העורף (מא"ה system), lab tests',
+     descHe:'תכנון + אישורים — אדריכל, מהנדס קונסטרוקציה, אישור פיקוד העורף (מערכת מא"ה), בדיקות מעבדה',
+     qty:1, unit:'יח', priceKey:'', manualPrice:11000, status:'new', profit:10, stdKey:''},
+    {isRemark:true, id:'rem_mamad_permits',
+     desc:'Required docs: (1) architect plans, (2) structural drawings, (3) פיקוד העורף approval via מא"ה online system, (4) concrete cube tests (מכון התקנים), (5) inspection certificate for טופס 4. Fast-track approval 14–30 working days if submitted correctly.',
+     descHe:'מסמכים נדרשים: תכניות אדריכל + קונסטרוקציה + אישור פיקוד העורף במערכת מא"ה + בדיקות קוביות בטון מכון התקנים + אישור לטופס 4. מסלול מהיר: 14–30 ימי עסקים בהגשה תקינה'},
+
+    // ── גמר בסיסי ────────────────────────────────────────────────
+    {desc:'ממ"ד basic finishing — internal plaster (spec plaster only, not standard), paint, 9m² floor tiles',
+     descHe:'גמר בסיסי ממ"ד — טיח פנים תקני (לא טיח רגיל), צבע, ריצוף 9 מ"ר',
+     qty:1, unit:'יח', priceKey:'', manualPrice:7200, status:'new', profit:20, stdKey:''},
+    {isRemark:true, id:'rem_mamad_finish',
+     desc:'Note: plaster in ממ"ד must be ת"י spec plaster (not standard plaster) — must not crack under blast pressure. 9m² floor tiles included. Ceiling left exposed concrete (no suspended ceiling allowed).',
+     descHe:'טיח ממ"ד חייב להיות לפי תקן מיוחד — לא טיח רגיל, לא יתפרק תחת לחץ הדף. 9 מ"ר ריצוף כלולים. תקרה — בטון חשוף (אין לתלות תקרה אקוסטית)'},
+
+    // ── ניכוי שטחים ──────────────────────────────────────────────
+    {isRemark:true, id:'rem_mamad_deduct_hdr',
+     desc:'⚠ AREA DEDUCTIONS: The ממ"ד (9m² net / 13m² gross) is priced as a standalone category. Its area must be DEDUCTED from the following categories to avoid double-counting:',
+     descHe:'⚠ ניכוי שטחים: ממ"ד (9 מ"ר נטו / 13 מ"ר ברוטו) מחושב כסעיף עצמאי. יש לנכות את שטחו מהסעיפים הבאים למניעת ספירה כפולה:'},
+    {isRemark:true, id:'rem_mamad_deduct_tiles',
+     desc:'DEDUCTION — Tiles upper floor (ריצוף קומה ב): reduce qty by 9 m² net → new qty = 50.45 - 9 = 41.45 m². Update tiles[0].qty accordingly.',
+     descHe:'ניכוי ריצוף קומה ב: הפחת 9 מ"ר נטו → כמות חדשה = 50.45 − 9 = 41.45 מ"ר. עדכן tiles[0].qty'},
+    {isRemark:true, id:'rem_mamad_deduct_paint_ceil',
+     desc:'DEDUCTION — Ceiling paint upper (צבע תקרה קומה ב): reduce qty by 9 m² → new qty = 50 - 9 = 41 m². Update paint[1].qty accordingly.',
+     descHe:'ניכוי צבע תקרה קומה ב: הפחת 9 מ"ר → כמות חדשה = 50 − 9 = 41 מ"ר. עדכן paint[1].qty'},
+    {isRemark:true, id:'rem_mamad_deduct_paint_wall',
+     desc:'DEDUCTION — Wall paint upper (צבע קירות קומה ב): reduce by ~32 m² (perimeter 12m × 2.65m height) → new qty = 180 - 32 = 148 m². Update paint[0].qty accordingly.',
+     descHe:'ניכוי צבע קירות קומה ב: הפחת ~32 מ"ר (היקף 12מ × 2.65מ גובה) → כמות חדשה = 180 − 32 = 148 מ"ר. עדכן paint[0].qty'},
+  ],
+};
+
+// ── INIT ──────────────────────────────────────────────────────
+function initBOQ() {
+  CATS.forEach(function(cat) {
+    boqData[cat.id] = (DEFAULT_BOQ[cat.id]||[]).map(function(r) {
+      return Object.assign({}, r, {id: uid()});
+    });
+  });
+}
+
+function uid() { return Math.random().toString(36).substr(2,9); }
+
+// ── IMAGE URL COPY ────────────────────────────────────────────
+function copyImgUrl(url, label) {
+  navigator.clipboard.writeText(url).then(function() {
+    toast('URL ' + label + ' הועתק ✓', 'ok');
+  }).catch(function() {
+    prompt('העתק URL:', url);
+  });
+}
+
+// ── 3D VIEWER ─────────────────────────────────────────────────
+function open3DViewer() {
+  var url = 'villa3d_08042026.html';
+  var w = window.open(url, '_blank');
+  if (!w) {
+    toast('אפשר חלונות קופצים בדפדפן כדי לפתוח את התצוגה התלת-מימדית', 'err');
+  }
+}
+
+// ── FETCH helpers ─────────────────────────────────────────────
+function sbFetch(baseUrl, key, path) {
+  return fetch(baseUrl + path, {
+    headers: { 'apikey': key, 'Authorization': 'Bearer ' + key, 'Content-Type': 'application/json' }
+  });
+}
+
+// ── LOAD PRICES from new Supabase ────────────────────────────
+function loadPrices() {
+  return sbFetch(SB_NEW_URL, SB_NEW_KEY, '/rest/v1/price_unit?select=price_key,price&limit=500')
+    .then(function(r) { return r.json(); })
+    .then(function(rows) {
+      if (!Array.isArray(rows)) throw new Error(JSON.stringify(rows).substr(0,100));
+      priceCache = {};
+      rows.forEach(function(row) {
+        var k = String(row.price_key||'').trim();
+        var p = parseFloat(row.price) || 0;
+        if (k) priceCache[k] = p;
+      });
+      return rows.length;
+    });
+}
+
+// ── LOAD STANDARDS — lazy, called on first search open ───────
+var _standardsLoaded = false;
+var _standardsLoading = false;
+
+function loadStandards() {
+  var allRows = [];
+  function fetchPage(offset) {
+    return sbFetch(SB_NEW_URL, SB_NEW_KEY,
+      '/rest/v1/building_standards?select=id,standard_id,title_he,title_en,industry_category,standard_category,mandatory_in_israel&limit=500&offset=' + offset)
+      .then(function(r) { return r.json(); })
+      .then(function(rows) {
+        if (!Array.isArray(rows)) throw new Error('standards: ' + JSON.stringify(rows).substr(0,80));
+        allRows = allRows.concat(rows);
+        if (rows.length === 500) return fetchPage(offset + 500);
+        return allRows;
+      });
+  }
+  return fetchPage(0).then(function(rows) {
+    standardsDB = rows;
+    _standardsLoaded = true;
+    document.getElementById('stdCount').textContent = rows.length;
+    return rows.length;
+  });
+}
+
+function ensureStandardsLoaded(cb) {
+  if (_standardsLoaded) { cb(); return; }
+  if (_standardsLoading) {
+    // poll until ready
+    var t = setInterval(function() {
+      if (_standardsLoaded) { clearInterval(t); cb(); }
+    }, 200);
+    return;
+  }
+  _standardsLoading = true;
+  document.getElementById('stdCount').textContent = 'טוען...';
+  loadStandards()
+    .then(function() { _standardsLoading = false; cb(); })
+    .catch(function(e) {
+      _standardsLoading = false;
+      toast('שגיאה בטעינת תקנים: ' + e.message.substr(0,60), 'err');
+    });
+}
+
+// ── GET PRICE for a row ───────────────────────────────────────
+function getPrice(row) {
+  // manualPrice set in data = explicit override — always use it
+  if (row.manualPrice) return { p: row.manualPrice, src: 'manual' };
+  var k = String(row.priceKey||'').trim();
+  // empty priceKey = no DB lookup at all
+  if (!k) return { p: 0, src: 'missing' };
+  // exact DB match
+  if (priceCache[k] !== undefined) return { p: priceCache[k], src: 'db' };
+  // partial DB match — only when k is meaningful (≥4 chars to avoid false hits)
+  if (k.length >= 4) {
+    var keys = Object.keys(priceCache);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i].indexOf(k) !== -1 || k.indexOf(keys[i]) !== -1)
+        return { p: priceCache[keys[i]], src: 'db~' };
+    }
+  }
+  return { p: 0, src: 'missing' };
+}
+
+// ── CALC for a row ────────────────────────────────────────────
+function calcRow(row) {
+  var pp = getPrice(row);
+  var cost     = (row.qty || 0) * pp.p;                   // cost total
+  var profitPct = (row.profit || 0) / 100;
+  var sellPrice = pp.p * (1 + profitPct);                  // sell unit price
+  var sellTotal = (row.qty || 0) * sellPrice;              // sell subtotal
+  var vat       = getVAT();
+  var offer     = sellTotal * (1 + vat);                   // offer to customer inc VAT
+  var profitAmt = sellTotal - cost;
+  return { costUnit: pp.p, costTotal: cost, sellUnit: sellPrice,
+           sellTotal: sellTotal, profitAmt: profitAmt, offer: offer, src: pp.src };
+}
+
+function getVAT() {
+  return (parseFloat(document.getElementById('vatInput').value) || 18) / 100;
+}
+
+// ── RENDER ────────────────────────────────────────────────────
+function render() {
+  renderNav();
+  renderSummaryCards();
+  renderAllTables();
+  recalcAll();
+}
+
+function renderNav() {
+  var nav = document.getElementById('catNav');
+  nav.innerHTML = '';
+  CATS.forEach(function(cat) {
+    var cnt = (boqData[cat.id]||[]).length;
+    var d = document.createElement('div');
+    d.className = 'cni'; d.id = 'nav-' + cat.id;
+    d.innerHTML = '<div class="cdot" style="background:'+cat.color+'"></div>' +
+      '<span>'+cat.icon+' '+cat.he+'</span>' +
+      '<span class="ccount">'+cnt+'</span>';
+    d.onclick = function() {
+      document.getElementById('sec-'+cat.id).scrollIntoView({behavior:'smooth',block:'start'});
+    };
+    nav.appendChild(d);
+  });
+}
+
+function renderSummaryCards() {
+  var grid = document.getElementById('summaryCards');
+  grid.innerHTML = '';
+  var grandCost = 0, grandOffer = 0, grandProfit = 0;
+  var totalRows = 0, pricedRows = 0;
+
+  CATS.forEach(function(cat) {
+    var rows = boqData[cat.id]||[];
+    var catOffer = 0;
+    rows.forEach(function(r) {
+      if (r.isRemark) return;
+      totalRows++;
+      var c = calcRow(r);
+      if (c.src !== 'missing') pricedRows++;
+      catOffer   += c.offer;
+      grandCost  += c.costTotal;
+      grandOffer += c.offer;
+      grandProfit+= c.profitAmt;
+    });
+    var card = document.createElement('div');
+    card.className = 'scard';
+    card.style.borderTopColor = cat.color;
+    var itemCount = rows.filter(function(r){return !r.isRemark;}).length;
+    card.innerHTML = '<div class="sc-lbl">'+cat.icon+' '+cat.he+'</div>' +
+      '<div class="sc-val" id="scard-'+cat.id+'">₪ '+fmt(catOffer)+'</div>' +
+      '<div class="sc-sub">'+itemCount+' פריטים (כולל מע"מ)</div>';
+    card.onclick = function() {
+      document.getElementById('sec-'+cat.id).scrollIntoView({behavior:'smooth',block:'start'});
+    };
+    grid.appendChild(card);
+  });
+
+  document.getElementById('grand-total-display').textContent = '₪ ' + fmt(grandOffer);
+  document.getElementById('priceCount').textContent = pricedRows + ' / ' + totalRows;
+  recalcSummary();
+}
+
+// ── PRICE SUMMARY PANEL ───────────────────────────────────────
+function recalcSummary() {
+  var grandCost = 0, grandSell = 0, grandProfit = 0;
+  var vat = getVAT();
+  CATS.forEach(function(cat) {
+    (boqData[cat.id]||[]).forEach(function(r) {
+      if (r.isRemark) return;
+      var c = calcRow(r);
+      grandCost   += c.costTotal;
+      grandSell   += c.sellTotal;
+      grandProfit += c.profitAmt;
+    });
+  });
+  var vatAmt     = grandSell * vat;
+  var grossTotal = grandSell + vatAmt;
+
+  var discPctEl = document.getElementById('discountPct');
+  var discSumEl = document.getElementById('discountSum');
+  var discPct = discPctEl ? (parseFloat(discPctEl.value) || 0) : 0;
+  var discSum = discSumEl ? (parseFloat(discSumEl.value) || 0) : 0;
+  var discAmt = discSum > 0 ? discSum : (grossTotal * discPct / 100);
+  var finalTotal = Math.max(0, grossTotal - discAmt);
+
+  function se(id, val) { var e = document.getElementById(id); if(e) e.textContent = val; }
+  se('sum-cost',         '₪ ' + fmt(grandCost));
+  se('sum-profit',       '₪ ' + fmt(grandProfit));
+  se('sum-net',          '₪ ' + fmt(grandSell));
+  se('sum-vat-pct',      Math.round(vat*100) + '%');
+  se('sum-vat-amt',      '₪ ' + fmt(vatAmt));
+  se('sum-gross',        '₪ ' + fmt(grossTotal));
+  se('sum-discount-amt', discAmt > 0 ? '— ₪ ' + fmt(discAmt) : '— ₪ 0');
+  se('sum-final',        '₪ ' + fmt(finalTotal > 0 ? finalTotal : grossTotal));
+  se('grand-total-display', '₪ ' + fmt(finalTotal > 0 ? finalTotal : grossTotal));
+}
+
+// ── PAYMENT REMARKS ───────────────────────────────────────────
+var _payRemarkCount = 0;
+function addPaymentRemark() {
+  var container = document.getElementById('paymentRemarks');
+  if (!container) return;
+  if (_payRemarkCount >= 10) { toast('מקסימום 10 הערות', 'err'); return; }
+  _payRemarkCount++;
+  var id = 'pr-' + _payRemarkCount;
+  var row = document.createElement('div');
+  row.id = id;
+  row.style.cssText = 'display:flex;gap:8px;align-items:center';
+  row.innerHTML =
+    '<span style="color:var(--text3);font-size:12px;min-width:20px;text-align:center">'+_payRemarkCount+'.</span>' +
+    '<input class="ciw" placeholder="הקלד הערה / תנאי תשלום..." ' +
+    'style="flex:1;padding:7px 10px;font-size:13px;background:var(--surface2);border:1px solid var(--border);' +
+    'border-radius:6px;color:var(--text)">' +
+    '<button class="btn-del" onclick="document.getElementById(\''+id+'\').remove()" title="מחק">✕</button>';
+  container.appendChild(row);
+}
+
+function renderAllTables() {
+  var container = document.getElementById('boqContainer');
+  container.innerHTML = '';
+  CATS.forEach(function(cat) {
+    renderCatSection(cat, container);
+  });
+}
+
+function renderCatSection(cat, container) {
+  var rows = boqData[cat.id]||[];
+  var sec = document.createElement('div');
+  sec.className = 'cat-sec'; sec.id = 'sec-' + cat.id;
+
+  sec.innerHTML =
+    '<div class="cat-hdr">' +
+      '<div class="cat-badge" style="background:'+cat.color+'"></div>' +
+      '<span class="cat-title">'+cat.icon+' '+cat.he+'</span>' +
+      '<span class="cat-sub">'+cat.en+'</span>' +
+      '<span class="cat-tot" id="ctot-'+cat.id+'">₪ 0</span>' +
+      '<button class="btn-add" onclick="addRow(\''+cat.id+'\')">+ הוסף שורה</button>' +
+    '</div>';
+
+  var tbl = document.createElement('table');
+  tbl.className = 'boq-table';
+  tbl.innerHTML =
+    '<thead><tr>' +
+    '<th style="width:28px">#</th>' +
+    '<th style="min-width:150px">תיאור (EN)</th>' +
+    '<th style="min-width:130px">תיאור (HE)</th>' +
+    '<th style="min-width:120px">תקן / מפרט</th>' +
+    '<th style="width:55px">יח</th>' +
+    '<th style="width:68px">כמות</th>' +
+    '<th style="width:85px">עלות יח׳ ₪</th>' +
+    '<th style="width:90px">עלות סה"כ ₪</th>' +
+    '<th style="width:65px">רווח %</th>' +
+    '<th style="width:85px">רווח ₪</th>' +
+    '<th style="width:90px">מחיר מכירה ₪</th>' +
+    '<th style="width:100px">הצעה ללקוח ₪</th>' +
+    '<th style="width:82px">סטטוס</th>' +
+    '<th style="width:30px">✕</th>' +
+    '</tr></thead>' +
+    '<tbody id="tbody-'+cat.id+'"></tbody>' +
+    '<tfoot><tr class="tfoot-row">' +
+    '<td colspan="7" style="text-align:right;color:var(--text2)">סה"כ קטגוריה (הצעה כולל מע"מ):</td>' +
+    '<td id="tfoot-cost-'+cat.id+'">₪ 0</td>' +
+    '<td></td>' +
+    '<td id="tfoot-profit-'+cat.id+'">₪ 0</td>' +
+    '<td id="tfoot-sell-'+cat.id+'">₪ 0</td>' +
+    '<td id="tfoot-offer-'+cat.id+'">₪ 0</td>' +
+    '<td colspan="2"></td>' +
+    '</tr></tfoot>';
+  sec.appendChild(tbl);
+  container.appendChild(sec);
+  renderRows(cat.id);
+}
+
+function renderRows(catId) {
+  var rows = boqData[catId]||[];
+  var tbody = document.getElementById('tbody-'+catId);
+  if (!tbody) return;
+  tbody.innerHTML = '';
+
+  rows.forEach(function(row, i) {
+
+    // ── REMARK ROW ───────────────────────────────────────────────
+    if (row.isRemark) {
+      var tr = document.createElement('tr');
+      tr.setAttribute('data-id', row.id);
+      tr.innerHTML =
+        '<td colspan="13" style="background:rgba(245,158,11,.08);border-right:3px solid var(--amber);' +
+        'padding:5px 12px;font-size:11px;color:var(--amber);font-style:italic">' +
+        '⚠ ' + esc(row.descHe) +
+        (row.desc ? '<span style="color:var(--text3);margin-right:8px"> — ' + esc(row.desc) + '</span>' : '') +
+        '</td>' +
+        '<td style="background:rgba(245,158,11,.08)">' +
+        '<button class="btn-del" onclick="delRow(\''+catId+'\',\''+row.id+'\')">✕</button></td>';
+      tbody.appendChild(tr);
+      return;
+    }
+    var c = calcRow(row);
+    var priceClass = c.src==='db'||c.src==='db~' ? 'pf' : c.src==='manual' ? 'pm' : 'px';
+    var costDisplay = c.src==='missing'
+      ? '<span class="px">לא נמצא</span>'
+      : '<span class="'+priceClass+'">'+fmt(c.costUnit)+'</span>';
+
+    var profitClass = c.profitAmt >= 0 ? 'profit-pos' : 'profit-neg';
+
+    var statOpts = ['new','existing','demolish'].map(function(s) {
+      var label = s==='new'?'חדש':s==='existing'?'קיים':'הריסה';
+      return '<option value="'+s+'"'+(row.status===s?' selected':'')+'>'+label+'</option>';
+    }).join('');
+
+    // Standard tag — correct columns: standard_id, title_he
+    var stdDisplay = '';
+    if (row.stdKey) {
+      var std = standardsDB.find(function(s) {
+        return s.standard_id === row.stdKey || String(s.id) === String(row.stdKey);
+      });
+      var stdLabel = std ? (std.standard_id || row.stdKey) : row.stdKey;
+      var stdTitle = std ? esc((std.title_he||'').substr(0,100)) : '';
+      stdDisplay = '<div class="std-tag" onclick="openStdSearch(\''+catId+'\',' +
+        '\''+row.id+'\')" title="'+stdTitle+'">📋 '+esc(stdLabel)+'</div>';
+    } else {
+      stdDisplay = '<div class="std-tag" style="opacity:.5" ' +
+        'onclick="openStdSearch(\''+catId+'\',\''+row.id+'\')" title="בחר תקן">+ תקן</div>';
+    }
+
+    var tr = document.createElement('tr');
+    tr.setAttribute('data-id', row.id);
+    tr.innerHTML =
+      '<td style="text-align:center;color:var(--text3);font-size:11px">'+(i+1)+'</td>' +
+      '<td><input class="ciw" value="'+esc(row.desc)+'" ' +
+        'onchange="upd(\''+catId+'\',\''+row.id+'\',\'desc\',this.value)"></td>' +
+      '<td><input class="ciw" value="'+esc(row.descHe)+'" ' +
+        'onchange="upd(\''+catId+'\',\''+row.id+'\',\'descHe\',this.value)"></td>' +
+      '<td>'+stdDisplay+'</td>' +
+      '<td style="color:var(--text2);text-align:center;font-size:11px">'+row.unit+'</td>' +
+      '<td><input class="ci" type="number" min="0" step="0.01" value="'+(row.qty||0)+'" ' +
+        'onchange="upd(\''+catId+'\',\''+row.id+'\',\'qty\',parseFloat(this.value)||0)"></td>' +
+      '<td style="text-align:center">'+costDisplay+
+        '<br><input class="ci" type="number" min="0" placeholder="ידני" style="width:60px;font-size:10px;margin-top:1px" ' +
+        'value="'+(c.src==='manual'?c.costUnit:'')+'" ' +
+        'onchange="setManual(\''+catId+'\',\''+row.id+'\',parseFloat(this.value)||0)"></td>' +
+      '<td style="text-align:center;font-weight:600">'+fmt(c.costTotal)+'</td>' +
+      '<td><input class="ci" type="number" min="0" max="999" step="1" value="'+(row.profit||0)+'" ' +
+        'onchange="upd(\''+catId+'\',\''+row.id+'\',\'profit\',parseFloat(this.value)||0)"></td>' +
+      '<td style="text-align:center" class="'+profitClass+'">'+fmt(c.profitAmt)+'</td>' +
+      '<td style="text-align:center;color:var(--teal);font-weight:600">'+fmt(c.sellTotal)+'</td>' +
+      '<td style="text-align:center;font-weight:700;color:var(--accent)">₪ '+fmt(c.offer)+'</td>' +
+      '<td><select class="cis" onchange="upd(\''+catId+'\',\''+row.id+'\',\'status\',this.value)">'+statOpts+'</select></td>' +
+      '<td><button class="btn-del" onclick="delRow(\''+catId+'\',\''+row.id+'\')">✕</button></td>';
+    tbody.appendChild(tr);
+  });
+}
+
+// ── STANDARD SEARCH ───────────────────────────────────────────
+var _stdTarget = null; // {catId, rowId}
+
+function openStdSearch(catId, rowId) {
+  _stdTarget = {catId: catId, rowId: rowId};
+  var existing = document.getElementById('std-modal');
+  if (existing) existing.remove();
+
+  var modal = document.createElement('div');
+  modal.id = 'std-modal';
+  modal.style.cssText =
+    'position:fixed;inset:0;background:rgba(15,17,23,.88);z-index:300;' +
+    'display:flex;align-items:center;justify-content:center';
+
+  modal.innerHTML =
+    '<div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;' +
+    'padding:20px;width:580px;max-width:96vw;max-height:85vh;display:flex;flex-direction:column;gap:10px">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between">' +
+        '<span style="font-weight:700;font-size:15px">📋 בחר תקן / מפרט</span>' +
+        '<button class="btn-del" onclick="document.getElementById(\'std-modal\').remove()" ' +
+          'style="font-size:18px">✕</button>' +
+      '</div>' +
+      '<input id="std-search-input" class="ciw" placeholder="חפש — מספר תקן, מילות מפתח בעברית, קטגוריה..." ' +
+        'style="padding:9px 12px;font-size:13px;background:var(--surface);border:1px solid var(--border);' +
+        'border-radius:7px;color:var(--text)" oninput="filterStds()">' +
+      '<div style="display:flex;align-items:center;gap:8px">' +
+        '<span style="font-size:11px;color:var(--text3);white-space:nowrap">סנן לפי קטגוריה:</span>' +
+        '<select id="std-cat-filter" style="flex:1;background:var(--surface);border:1px solid var(--border);' +
+        'color:var(--text);font-family:Heebo,sans-serif;font-size:11px;padding:4px 8px;border-radius:6px;cursor:pointer" ' +
+        'onchange="filterStds()">' +
+          '<option value="">הכל (838 תקנים)</option>' +
+        '</select>' +
+        '<span id="std-match-count" style="font-size:11px;color:var(--text3);white-space:nowrap"></span>' +
+      '</div>' +
+      '<div id="std-results" style="overflow-y:auto;flex:1;max-height:52vh;display:flex;flex-direction:column;gap:2px">' +
+        '<div style="color:var(--text3);font-size:12px;padding:8px;text-align:center">טוען תקנים...</div>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px">' +
+        '<button class="btn btn-secondary btn-sm" onclick="clearStd()" style="flex:1">🗑 נקה תקן</button>' +
+        '<button class="btn btn-secondary btn-sm" onclick="document.getElementById(\'std-modal\').remove()" style="flex:1">ביטול</button>' +
+      '</div>' +
+    '</div>';
+
+  document.body.appendChild(modal);
+
+  // close on backdrop click
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) modal.remove();
+  });
+
+  ensureStandardsLoaded(function() {
+    // populate category filter
+    var catSel = document.getElementById('std-cat-filter');
+    if (catSel) {
+      var cats = {};
+      standardsDB.forEach(function(s) {
+        var c = s.industry_category || s.standard_category || '';
+        if (c) cats[c] = (cats[c]||0) + 1;
+      });
+      var sorted = Object.keys(cats).sort(function(a,b){ return cats[b]-cats[a]; });
+      sorted.forEach(function(c) {
+        var o = document.createElement('option');
+        o.value = c; o.textContent = c + ' (' + cats[c] + ')';
+        catSel.appendChild(o);
+      });
+    }
+    document.getElementById('std-search-input').focus();
+    filterStds();
+  });
+}
+
+// Build searchable string — only the key columns
+function stdSearchText(s) {
+  return [
+    s.standard_id       || '',
+    s.title_he          || '',
+    s.title_en          || '',
+    s.industry_category || '',
+    s.standard_category || '',
+  ].join(' ');
+}
+
+// Smart multi-word search: ALL words must appear (Hebrew tolerant)
+function stdMatches(s, words) {
+  var haystack = stdSearchText(s).toLowerCase()
+    // normalise Hebrew ligatures / spelling variants
+    .replace(/[״׳"']/g, '')
+    .replace(/ך/g,'כ').replace(/ם/g,'מ').replace(/ן/g,'נ')
+    .replace(/ף/g,'פ').replace(/ץ/g,'צ');
+  for (var i = 0; i < words.length; i++) {
+    if (haystack.indexOf(words[i]) === -1) return false;
+  }
+  return true;
+}
+
+function filterStds() {
+  var res = document.getElementById('std-results');
+  var countEl = document.getElementById('std-match-count');
+  if (!res) return;
+
+  var rawQ = (document.getElementById('std-search-input').value || '').trim();
+  var catF  = (document.getElementById('std-cat-filter')  ? document.getElementById('std-cat-filter').value : '');
+
+  // Normalise query: remove punctuation, split on whitespace
+  var normQ = rawQ.toLowerCase()
+    .replace(/[״׳"']/g, '')
+    .replace(/ך/g,'כ').replace(/ם/g,'מ').replace(/ן/g,'נ')
+    .replace(/ף/g,'פ').replace(/ץ/g,'צ');
+  var words = normQ.split(/\s+/).filter(function(w){ return w.length > 0; });
+
+  var pool = catF
+    ? standardsDB.filter(function(s) {
+        return (s.industry_category||s.standard_category||'') === catF;
+      })
+    : standardsDB;
+
+  var matches = words.length
+    ? pool.filter(function(s){ return stdMatches(s, words); })
+    : pool;
+
+  var total = matches.length;
+  if (countEl) countEl.textContent = total + ' תוצאות';
+
+  var show = matches.slice(0, 80);
+
+  if (!show.length) {
+    res.innerHTML =
+      '<div style="color:var(--text3);font-size:12px;padding:16px;text-align:center">' +
+      '😕 לא נמצאו תקנים. נסה מילה אחרת או שנה קטגוריה.</div>';
+    return;
+  }
+
+  res.innerHTML = '';
+  show.forEach(function(s) {
+    var num      = s.standard_id || String(s.id);
+    var titleHe  = s.title_he   || '';
+    var titleEn  = s.title_en   || '';
+    var indCat   = s.industry_category  || '';
+    var stdCat   = s.standard_category  || '';
+    var mandatory = (s.mandatory_in_israel === true || s.mandatory_in_israel === 'כן' ||
+                     s.mandatory_in_israel === true)
+      ? '<span style="background:rgba(239,68,68,.18);color:var(--red);font-size:9px;' +
+        'padding:1px 5px;border-radius:10px;font-weight:700">חובה</span>' : '';
+
+    var div = document.createElement('div');
+    div.style.cssText =
+      'padding:8px 10px;cursor:pointer;border-radius:6px;border:1px solid transparent;transition:all .1s';
+    div.onmouseover = function() {
+      this.style.background='rgba(167,139,250,.15)';
+      this.style.borderColor='rgba(167,139,250,.3)';
+    };
+    div.onmouseout = function() {
+      this.style.background='';
+      this.style.borderColor='transparent';
+    };
+    div.innerHTML =
+      '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">' +
+        '<span style="font-weight:700;font-size:12px;color:var(--purple)">'+esc(num)+'</span>' +
+        mandatory +
+        (stdCat ? '<span style="font-size:10px;color:var(--teal);background:rgba(20,184,166,.12);' +
+          'padding:1px 6px;border-radius:10px">'+esc(stdCat)+'</span>' : '') +
+      '</div>' +
+      '<div style="font-size:12px;color:var(--text);margin-top:3px;line-height:1.4">'+esc(titleHe.substr(0,100))+'</div>' +
+      (titleEn ? '<div style="font-size:10px;color:var(--text2);margin-top:1px">'+esc(titleEn.substr(0,80))+'</div>' : '') +
+      (indCat  ? '<div style="font-size:10px;color:var(--text3);margin-top:2px">📁 '+esc(indCat)+'</div>' : '');
+    div.onclick = function() { pickStd(s); };
+    res.appendChild(div);
+  });
+
+  if (total > 80) {
+    var more = document.createElement('div');
+    more.style.cssText = 'font-size:11px;color:var(--text3);text-align:center;padding:8px';
+    more.textContent = '+ עוד ' + (total-80) + ' תקנים — צמצם את החיפוש לתוצאות מדויקות יותר';
+    res.appendChild(more);
+  }
+}
+
+function pickStd(s) {
+  if (!_stdTarget) return;
+  var key = s.standard_id || String(s.id);
+  upd(_stdTarget.catId, _stdTarget.rowId, 'stdKey', key);
+  document.getElementById('std-modal').remove();
+  toast('תקן נבחר: ' + key + ' — ' + (s.title_he||'').substr(0,40), 'ok');
+}
+
+function clearStd() {
+  if (!_stdTarget) return;
+  upd(_stdTarget.catId, _stdTarget.rowId, 'stdKey', '');
+  document.getElementById('std-modal').remove();
+}
+
+// ── MUTATIONS ─────────────────────────────────────────────────
+function upd(catId, rowId, field, val) {
+  var row = findRow(catId, rowId);
+  if (!row) return;
+  row[field] = val;
+  renderRows(catId);
+  recalcAll();
+}
+
+function setManual(catId, rowId, price) {
+  var row = findRow(catId, rowId);
+  if (!row) return;
+  row.manualPrice = price;
+  // Do NOT write to priceCache — that would override DB prices for all rows sharing the same priceKey
+  renderRows(catId);
+  recalcAll();
+}
+
+function findRow(catId, rowId) {
+  return (boqData[catId]||[]).find(function(r){ return r.id===rowId; });
+}
+
+function addRow(catId) {
+  var cat = CATS.find(function(c){ return c.id===catId; });
+  (boqData[catId] = boqData[catId]||[]).push({
+    id:uid(), desc:'פריט חדש', descHe:'', qty:1,
+    unit: cat?cat.unit:'יח', priceKey:'', status:'new', profit:20, stdKey:''
+  });
+  renderRows(catId);
+  recalcAll();
+}
+
+function delRow(catId, rowId) {
+  boqData[catId] = (boqData[catId]||[]).filter(function(r){ return r.id!==rowId; });
+  renderRows(catId);
+  recalcAll();
+}
+
+function applyDefaultProfit() {
+  var pct = parseFloat(document.getElementById('defaultProfit').value) || 20;
+  CATS.forEach(function(cat) {
+    (boqData[cat.id]||[]).forEach(function(r) { r.profit = pct; });
+  });
+  renderAllTables();
+  recalcAll();
+  toast('רווח ' + pct + '% הוחל על כל הפריטים', 'ok');
+}
+
+// ── RECALC ────────────────────────────────────────────────────
+function recalcAll() {
+  var grandOffer = 0, grandCost = 0, grandProfit = 0;
+  var total = 0, priced = 0;
+
+  CATS.forEach(function(cat) {
+    var rows = boqData[cat.id]||[];
+    var catCost=0, catProfit=0, catSell=0, catOffer=0;
+    rows.forEach(function(r) {
+      if (r.isRemark) return;  // remarks contribute ₪0
+      total++;
+      var c = calcRow(r);
+      if (c.src !== 'missing') priced++;
+      catCost   += c.costTotal;
+      catProfit += c.profitAmt;
+      catSell   += c.sellTotal;
+      catOffer  += c.offer;
+    });
+    grandCost   += catCost;
+    grandProfit += catProfit;
+    grandOffer  += catOffer;
+
+    var e; 
+    e = document.getElementById('ctot-'+cat.id);        if(e) e.textContent = '₪ '+fmt(catOffer);
+    e = document.getElementById('tfoot-cost-'+cat.id);  if(e) e.textContent = '₪ '+fmt(catCost);
+    e = document.getElementById('tfoot-profit-'+cat.id);if(e) e.textContent = '₪ '+fmt(catProfit);
+    e = document.getElementById('tfoot-sell-'+cat.id);  if(e) e.textContent = '₪ '+fmt(catSell);
+    e = document.getElementById('tfoot-offer-'+cat.id); if(e) e.textContent = '₪ '+fmt(catOffer);
+    e = document.getElementById('scard-'+cat.id);       if(e) e.textContent = '₪ '+fmt(catOffer);
+  });
+
+  document.getElementById('grand-total-display').textContent = '₪ ' + fmt(grandOffer);
+  document.getElementById('priceCount').textContent = priced + ' / ' + total;
+  recalcSummary();
+}
+
+function fmt(n) { return Math.round(n||0).toLocaleString('he-IL'); }
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+}
+
+// ── SAVE ──────────────────────────────────────────────────────
+function saveToSupabase() {
+  toast('שומר...','info');
+  var allRows = [];
+  CATS.forEach(function(cat) {
+    (boqData[cat.id]||[]).forEach(function(row) {
+      var c = calcRow(row);
+      allRows.push({
+        permit_number: '16860', category: cat.id, category_he: cat.he,
+        description: row.desc, description_he: row.descHe,
+        qty: row.qty, unit: row.unit,
+        unit_price: c.costUnit, total: c.costTotal,
+        status: row.status, price_key: row.priceKey||null, notes: row.stdKey||''
+      });
+    });
+  });
+  sbFetch(SB_NEW_URL, SB_NEW_KEY,
+    '/rest/v1/boq_items')
+    .then(function() {}) // just to check connection; use upsert below
+    .catch(function(){});
+
+  fetch(SB_NEW_URL + '/rest/v1/boq_items', {
+    method: 'POST',
+    headers: {
+      'apikey': SB_NEW_KEY, 'Authorization': 'Bearer ' + SB_NEW_KEY,
+      'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates'
+    },
+    body: JSON.stringify(allRows)
+  }).then(function(r) {
+    if (r.ok || r.status===201) toast('נשמר '+allRows.length+' שורות ✓','ok');
+    else r.text().then(function(t){ toast('שגיאה: '+t.substr(0,80),'err'); });
+  }).catch(function(e){ toast('שגיאת רשת: '+e.message,'err'); });
+}
+
+// ── RELOAD ────────────────────────────────────────────────────
+function reloadPrices() {
+  document.getElementById('loadingText').textContent = 'טוען מחירים...';
+  document.getElementById('loadingOverlay').style.display = 'flex';
+  loadPrices()
+    .then(function(n) {
+      document.getElementById('dbStatus').textContent = 'מחובר ('+n+' מחירים)';
+      document.getElementById('dbDot').className = 'sdot dg';
+      toast('נטענו '+n+' מחירים ✓','ok');
+      renderAllTables(); recalcAll();
+    })
+    .catch(function(e){ toast('מחירים: '+e.message.substr(0,60),'err'); })
+    .finally(function(){ document.getElementById('loadingOverlay').style.display='none'; });
+}
+
+function reloadStandards() {
+  document.getElementById('loadingText').textContent = 'טוען תקנים...';
+  document.getElementById('loadingOverlay').style.display = 'flex';
+  _standardsLoaded = false;
+  _standardsLoading = false;
+  standardsDB = [];
+  loadStandards()
+    .then(function(n) {
+      toast('נטענו '+n+' תקנים ✓','ok');
+    })
+    .catch(function(e){ toast('תקנים: '+e.message.substr(0,80),'err'); })
+    .finally(function(){ document.getElementById('loadingOverlay').style.display='none'; });
+}
+
+// ── EXPORT CSV ────────────────────────────────────────────────
+function exportCSV() {
+  // Export as proper Excel XLS (XML Spreadsheet format) — Hebrew only, no English column
+  var vat = getVAT();
+  var grand = 0;
+
+  var rows = '';
+  CATS.forEach(function(cat) {
+    // Category header row
+    rows += '<Row ss:StyleID="catHdr">'+
+      '<Cell ss:MergeAcross="9"><Data ss:Type="String">'+cat.icon+' '+cat.he+'</Data></Cell>'+
+    '</Row>';
+
+    (boqData[cat.id]||[]).forEach(function(row) {
+      if (row.isRemark) return;
+      var c = calcRow(row);
+      grand += c.offer;
+      var statusHe = row.status==='new'?'חדש':row.status==='existing'?'קיים':'שיפוץ';
+      rows += '<Row>'+
+        '<Cell ss:StyleID="txt"><Data ss:Type="String">'+escXml(row.descHe)+'</Data></Cell>'+
+        '<Cell ss:StyleID="txt"><Data ss:Type="String">'+(row.stdKey||'')+'</Data></Cell>'+
+        '<Cell ss:StyleID="txt"><Data ss:Type="String">'+escXml(row.unit)+'</Data></Cell>'+
+        '<Cell ss:StyleID="num"><Data ss:Type="Number">'+(row.qty||0)+'</Data></Cell>'+
+        '<Cell ss:StyleID="num"><Data ss:Type="Number">'+c.costUnit.toFixed(2)+'</Data></Cell>'+
+        '<Cell ss:StyleID="num"><Data ss:Type="Number">'+c.costTotal.toFixed(2)+'</Data></Cell>'+
+        '<Cell ss:StyleID="pct"><Data ss:Type="Number">'+(row.profit||0)+'</Data></Cell>'+
+        '<Cell ss:StyleID="num"><Data ss:Type="Number">'+c.profitAmt.toFixed(2)+'</Data></Cell>'+
+        '<Cell ss:StyleID="num"><Data ss:Type="Number">'+c.sellTotal.toFixed(2)+'</Data></Cell>'+
+        '<Cell ss:StyleID="offer"><Data ss:Type="Number">'+c.offer.toFixed(2)+'</Data></Cell>'+
+        '<Cell ss:StyleID="txt"><Data ss:Type="String">'+statusHe+'</Data></Cell>'+
+      '</Row>';
+    });
+  });
+
+  // Grand total row
+  rows += '<Row ss:StyleID="totalRow">'+
+    '<Cell ss:MergeAcross="8"><Data ss:Type="String">סה"כ הצעה ללקוח (כולל מע"מ '+Math.round(vat*100)+'%)</Data></Cell>'+
+    '<Cell ss:StyleID="totalNum"><Data ss:Type="Number">'+grand.toFixed(2)+'</Data></Cell>'+
+    '<Cell><Data ss:Type="String"></Data></Cell>'+
+  '</Row>';
+
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n'+
+  '<?mso-application progid="Excel.Sheet"?>\n'+
+  '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"\n'+
+  ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"\n'+
+  ' xmlns:x="urn:schemas-microsoft-com:office:excel">\n'+
+  '<DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">'+
+  '<Title>כתב כמויות 16860 — ברגר</Title>'+
+  '<Author>BOQ System</Author>'+
+  '</DocumentProperties>\n'+
+  '<Styles>\n'+
+  '<Style ss:ID="Default"><Alignment ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="10"/></Style>\n'+
+  '<Style ss:ID="hdr"><Alignment ss:Horizontal="Center" ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="10" ss:Bold="1"/><Interior ss:Color="#1a3a6c" ss:Pattern="Solid"/><Font ss:Color="#FFFFFF" ss:Bold="1" ss:Size="10" ss:FontName="Arial"/></Style>\n'+
+  '<Style ss:ID="catHdr"><Alignment ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="10" ss:Bold="1"/><Interior ss:Color="#e8d5a0" ss:Pattern="Solid"/></Style>\n'+
+  '<Style ss:ID="txt"><Alignment ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="10"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#e0e0e0"/></Borders></Style>\n'+
+  '<Style ss:ID="num"><Alignment ss:Horizontal="Right" ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="10"/><NumberFormat ss:Format="#,##0.00"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#e0e0e0"/></Borders></Style>\n'+
+  '<Style ss:ID="pct"><Alignment ss:Horizontal="Right" ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="10"/><NumberFormat ss:Format="0\\%"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#e0e0e0"/></Borders></Style>\n'+
+  '<Style ss:ID="offer"><Alignment ss:Horizontal="Right" ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="10" ss:Bold="1"/><NumberFormat ss:Format="#,##0.00"/><Interior ss:Color="#eaf3de" ss:Pattern="Solid"/><Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#e0e0e0"/></Borders></Style>\n'+
+  '<Style ss:ID="totalRow"><Alignment ss:ReadingOrder="RightToLeft"/><Font ss:FontName="Arial" ss:Size="11" ss:Bold="1"/><Interior ss:Color="#1a3a6c" ss:Pattern="Solid"/><Font ss:Color="#FFFFFF" ss:Bold="1" ss:Size="11" ss:FontName="Arial"/></Style>\n'+
+  '<Style ss:ID="totalNum"><Alignment ss:Horizontal="Right"/><Font ss:FontName="Arial" ss:Size="12" ss:Bold="1" ss:Color="#FFFFFF"/><NumberFormat ss:Format="#,##0.00"/><Interior ss:Color="#b8860b" ss:Pattern="Solid"/></Style>\n'+
+  '</Styles>\n'+
+  '<Worksheet ss:Name="כתב כמויות 16860">\n'+
+  '<Table ss:DefaultColumnWidth="80" ss:DefaultRowHeight="18">\n'+
+  '<Column ss:Width="220"/><Column ss:Width="60"/><Column ss:Width="50"/>'+
+  '<Column ss:Width="60"/><Column ss:Width="80"/><Column ss:Width="90"/>'+
+  '<Column ss:Width="50"/><Column ss:Width="80"/><Column ss:Width="90"/>'+
+  '<Column ss:Width="100"/><Column ss:Width="60"/>\n'+
+  // Header
+  '<Row ss:StyleID="hdr">'+
+  '<Cell><Data ss:Type="String">תיאור</Data></Cell>'+
+  '<Cell><Data ss:Type="String">תקן</Data></Cell>'+
+  '<Cell><Data ss:Type="String">יח׳</Data></Cell>'+
+  '<Cell><Data ss:Type="String">כמות</Data></Cell>'+
+  '<Cell><Data ss:Type="String">עלות יח׳ ₪</Data></Cell>'+
+  '<Cell><Data ss:Type="String">עלות סה"כ ₪</Data></Cell>'+
+  '<Cell><Data ss:Type="String">רווח %</Data></Cell>'+
+  '<Cell><Data ss:Type="String">רווח ₪</Data></Cell>'+
+  '<Cell><Data ss:Type="String">מחיר נטו ₪</Data></Cell>'+
+  '<Cell><Data ss:Type="String">הצעה ₪ (כולל מע"מ)</Data></Cell>'+
+  '<Cell><Data ss:Type="String">סטטוס</Data></Cell>'+
+  '</Row>\n'+
+  rows+
+  '</Table>\n'+
+  '<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">'+
+  '<DisplayRightToLeft/>'+
+  '<Selected/><FreezePanes/><SplitHorizontal>1</SplitHorizontal><TopRowBottomPane>1</TopRowBottomPane>'+
+  '</WorksheetOptions>\n'+
+  '</Worksheet>\n'+
+  '</Workbook>';
+
+  var blob = new Blob([xml], {type:'application/vnd.ms-excel;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'BOQ_16860_'+today()+'.xls';
+  a.click();
+  toast('Excel הורד ✓','ok');
+}
+
+function escXml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function exportJSON() {
+  var blob = new Blob([JSON.stringify({boq:boqData,prices:priceCache},null,2)],
+    {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'BOQ_16860_'+today()+'.json'; a.click();
+  toast('JSON הורד ✓','ok');
+}
+
+function today() {
+  var d = new Date();
+  return ('0'+d.getDate()).slice(-2)+('0'+(d.getMonth()+1)).slice(-2)+d.getFullYear();
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function toast(msg, type) {
+  var el=document.getElementById('toast');
+  el.className = 't'+(type||'info');
+  document.getElementById('toastIcon').textContent = type==='ok'?'✓':type==='err'?'✕':'ℹ';
+  document.getElementById('toastMsg').textContent = msg;
+  el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); }, 3000);
+}
+
+// ── BOOT ──────────────────────────────────────────────────────
+initBOQ();
+render();
+
+// Load prices only at boot — standards load lazily on first search open
+document.getElementById('loadingText').textContent = 'טוען מחירים...';
+document.getElementById('stdCount').textContent = 'לחץ 📚 לטעינה';
+loadPrices()
+  .then(function(n) {
+    document.getElementById('dbStatus').textContent = 'מחובר ('+n+' מחירים)';
+    document.getElementById('dbDot').className = 'sdot dg';
+    toast('נטענו '+n+' מחירים ✓','ok');
+    renderAllTables(); recalcAll();
+  })
+  .catch(function(e) {
+    document.getElementById('dbStatus').textContent = 'שגיאת מחירים';
+    document.getElementById('dbDot').className = 'sdot dr';
+    toast('מחירים: '+e.message.substr(0,60),'err');
+  })
+  .finally(function() {
+    document.getElementById('loadingOverlay').style.display = 'none';
+  });
+
+// ── GENERATE CLIENT OFFER ─────────────────────────────────────
+
+function openGenerateOfferModal() {
+  var vat = getVAT();
+  var totalSell = 0;
+  CATS.forEach(function(cat){
+    (boqData[cat.id]||[]).forEach(function(r){
+      if(r.isRemark) return;
+      totalSell += calcRow(r).sellTotal;
+    });
+  });
+  var offerIncVAT = Math.round(totalSell * (1+vat));
+
+  var existing = document.getElementById('offerModal');
+  if(existing) existing.remove();
+
+  var overlay = document.createElement('div');
+  overlay.id = 'offerModal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+
+  overlay.innerHTML =
+    '<div style="background:#fffdf5;border-radius:14px;width:100%;max-width:520px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);direction:rtl">'+
+    '<div style="background:linear-gradient(135deg,#b8860b,#8b6508);padding:18px 24px;display:flex;justify-content:space-between;align-items:center">'+
+      '<div><div style="color:#fff;font-size:16px;font-weight:700">📋 צור הצעת מחיר ללקוח</div>'+
+      '<div style="color:rgba(255,255,255,0.75);font-size:11px;margin-top:2px">הגדר פרמטרים לפני יצירת ההצעה</div></div>'+
+      '<button onclick="document.getElementById(\'offerModal\').remove()" style="background:rgba(255,255,255,0.2);color:#fff;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">×</button>'+
+    '</div>'+
+    '<div style="padding:20px 24px;display:flex;flex-direction:column;gap:14px">'+
+
+    '<div style="background:#f0e8cc;border-radius:8px;padding:12px 16px;text-align:center">'+
+      '<div style="font-size:11px;color:#8a7850;margin-bottom:4px">סה"כ הצעה נוכחית (כולל רווח + מע"מ)</div>'+
+      '<div style="font-size:26px;font-weight:700;color:#1a3a6c">₪ '+offerIncVAT.toLocaleString('he-IL')+'</div>'+
+    '</div>'+
+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'+
+      '<div>'+
+        '<label style="font-size:11px;color:#5a4e2a;display:block;margin-bottom:4px">מספר הצעה</label>'+
+        '<input id="offerNum" value="הצ-16860-04-2026" style="width:100%;padding:8px 10px;border:1px solid #e2d5b0;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;background:#fff;direction:rtl">'+
+      '</div>'+
+      '<div>'+
+        '<label style="font-size:11px;color:#5a4e2a;display:block;margin-bottom:4px">תאריך תפוגה (ימים)</label>'+
+        '<input id="offerExpiry" type="number" value="30" min="7" max="90" style="width:100%;padding:8px 10px;border:1px solid #e2d5b0;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;background:#fff">'+
+      '</div>'+
+    '</div>'+
+
+    '<div>'+
+      '<label style="font-size:11px;color:#5a4e2a;display:block;margin-bottom:4px">הוסף URL תמונת מצגת (לוגו / 3D / תמונת הנכס)</label>'+
+      '<input id="offerImg1" placeholder="https://... (תמונה 1 — אופציונלי)" style="width:100%;padding:8px 10px;border:1px solid #e2d5b0;border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;background:#fff;margin-bottom:6px;direction:ltr">'+
+      '<input id="offerImg2" placeholder="https://... (תמונה 2 — אופציונלי)" style="width:100%;padding:8px 10px;border:1px solid #e2d5b0;border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;background:#fff;direction:ltr">'+
+    '</div>'+
+
+    '<div style="background:#fff8f8;border:1px solid #e8b4b4;border-radius:8px;padding:12px 14px">'+
+      '<div style="font-size:11px;font-weight:600;color:#791F1F;margin-bottom:8px">⚠ הצעה ללקוח לא מציגה רווח. רק סה"כ ומע"מ גלויים.</div>'+
+      '<div style="font-size:10px;color:#a33;line-height:1.6">הסעיפים יוצגו עם מחיר מלא (כולל רווח + מע"מ) ללא פירוט עלות.</div>'+
+    '</div>'+
+
+    '<div style="display:flex;gap:8px">'+
+      '<button onclick="generateOffer(\'html\')" style="flex:1;background:#1a3a6c;color:#fff;border:none;padding:10px;border-radius:7px;font-family:Heebo,sans-serif;font-size:13px;font-weight:600;cursor:pointer">📄 פתח HTML / PDF</button>'+
+      '<button onclick="generateOffer(\'whatsapp\')" style="flex:1;background:#25D366;color:#fff;border:none;padding:10px;border-radius:7px;font-family:Heebo,sans-serif;font-size:13px;font-weight:600;cursor:pointer">💬 WhatsApp</button>'+
+      '<button onclick="generateOffer(\'email\')" style="flex:1;background:#b8860b;color:#fff;border:none;padding:10px;border-radius:7px;font-family:Heebo,sans-serif;font-size:13px;font-weight:600;cursor:pointer">✉ מייל</button>'+
+    '</div>'+
+
+    '</div></div>';
+
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+}
+
+function generateOffer(mode) {
+  var vat = getVAT();
+  var offerNum   = (document.getElementById('offerNum')||{}).value || 'הצ-16860-04-2026';
+  var expiryDays = parseInt((document.getElementById('offerExpiry')||{}).value) || 30;
+  var img1       = ((document.getElementById('offerImg1')||{}).value||'').trim();
+  var img2       = ((document.getElementById('offerImg2')||{}).value||'').trim();
+
+  var today      = new Date();
+  var expiry     = new Date(today.getTime() + expiryDays*24*60*60*1000);
+  var fmt2 = function(d){ return d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear(); };
+
+  // Collect per-category offers (client sees offer price only)
+  var cats_offer = [];
+  var totalSell = 0, totalOffer = 0;
+  CATS.forEach(function(cat){
+    var rows = (boqData[cat.id]||[]).filter(function(r){return !r.isRemark;});
+    var sell = rows.reduce(function(s,r){return s+calcRow(r).sellTotal;},0);
+    var offer = sell*(1+vat);
+    if(offer>0){
+      cats_offer.push({he:cat.he, icon:cat.icon, offer:Math.round(offer)});
+      totalSell += sell;
+      totalOffer += offer;
+    }
+  });
+  totalSell  = Math.round(totalSell);
+  totalOffer = Math.round(totalOffer);
+  var vatAmt = totalOffer - totalSell;
+  var maxOffer = cats_offer[0]&&cats_offer[0].offer||1;
+
+  var COLORS = ['#534AB7','#0F6E56','#A32D2D','#791F1F','#633806','#185FA5','#3B6D11','#5F5E5A','#888780','#854F0B'];
+
+  // ── Build the HTML offer document ──────────────────────────
+  var barRows = cats_offer.map(function(c,i){
+    var pct = Math.round(c.offer/maxOffer*100);
+    var valStr = c.offer>=1000000?'₪'+(c.offer/1000000).toFixed(1)+'M':'₪'+Math.round(c.offer/1000)+'K';
+    return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:7px">'+
+      '<div style="font-size:11px;color:#1a1a1a;width:120px;text-align:right;flex-shrink:0">'+c.icon+' '+c.he+'</div>'+
+      '<div style="flex:1;height:20px;background:#f0ede3;border-radius:3px;overflow:hidden">'+
+        '<div style="height:100%;width:'+pct+'%;background:'+COLORS[i%COLORS.length]+';border-radius:3px;display:flex;align-items:center;padding-right:6px">'+
+          '<span style="font-size:9px;color:rgba(255,255,255,0.9);font-weight:600">'+Math.round(c.offer/totalOffer*100)+'%</span>'+
+        '</div>'+
+      '</div>'+
+      '<div style="font-size:11px;color:#555;width:52px;flex-shrink:0;font-weight:500">'+valStr+'</div>'+
+    '</div>';
+  }).join('');
+
+  var scopeItems = cats_offer.map(function(c,i){
+    var pStr = '₪ '+c.offer.toLocaleString('he-IL');
+    var pct  = (c.offer/totalOffer*100).toFixed(1)+'%';
+    return '<div style="padding:9px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:0.5px solid #f0f0f0;border-right:0.5px solid #f0f0f0">'+
+      '<span style="font-size:12px;color:#1a1a1a;display:flex;align-items:center;gap:7px">'+
+        '<span style="width:8px;height:8px;border-radius:50%;background:'+COLORS[i%COLORS.length]+';display:inline-block;flex-shrink:0"></span>'+c.icon+' '+c.he+'</span>'+
+      '<span style="font-size:12px;font-weight:600;color:#1a3a6c">'+pStr+' <span style="font-size:10px;color:#bbb;font-weight:400">('+pct+')</span></span>'+
+    '</div>';
+  }).join('');
+
+  var imgBlock = '';
+  if(img1||img2){
+    imgBlock = '<div style="padding:16px 28px;border-bottom:1px solid #e8e8e8;display:grid;grid-template-columns:'+(img1&&img2?'1fr 1fr':'1fr')+';gap:12px">';
+    if(img1) imgBlock += '<img src="'+img1+'" style="width:100%;border-radius:6px;max-height:220px;object-fit:cover">';
+    if(img2) imgBlock += '<img src="'+img2+'" style="width:100%;border-radius:6px;max-height:220px;object-fit:cover">';
+    imgBlock += '</div>';
+  }
+
+  var expDate = new Date(today.getTime() + expiryDays*24*60*60*1000);
+  var expStr  = fmt2(expDate);
+
+  var html = '<!DOCTYPE html><html lang="he" dir="rtl"><head>'+
+    '<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
+    '<title>הצעת מחיר '+offerNum+' — ברגר ליאור ונועה</title>'+
+    '<style>@import url("https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&display=swap");'+
+    '*{box-sizing:border-box;margin:0;padding:0}'+
+    'body{font-family:Heebo,Arial,sans-serif;background:#f0ece0;color:#1a1a1a;padding:20px;direction:rtl}'+
+    '@media print{body{background:#fff;padding:0}.no-print{display:none!important}@page{size:A4;margin:10mm 12mm}}'+
+    '.doc{max-width:880px;margin:0 auto;background:#fff;border:1px solid #ccc;border-radius:6px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1)}'+
+    'table{border-collapse:collapse}'+
+    '</style></head><body>'+
+    '<button class="no-print" onclick="window.print()" style="display:block;margin:0 auto 16px;padding:10px 28px;background:#1a3a6c;color:#fff;border:none;border-radius:7px;font-family:Heebo,sans-serif;font-size:13px;font-weight:600;cursor:pointer">🖨 הדפסה / שמור PDF</button>'+
+    '<div class="doc">'+
+
+    // HEADER
+    '<div style="background:#1a3a6c;padding:24px 32px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px">'+
+      '<div>'+
+        '<div style="color:#fff;font-size:21px;font-weight:600">הצעת מחיר — תוספת קומה ב׳</div>'+
+        '<div style="color:#a8c4e8;font-size:11px;margin-top:5px;line-height:1.7">בניה, קונסטרוקציה, גמר ופיתוח שטח | היתר 16860 | מגרש 37A | הרצליה<br>אדריכלית: ניצה רוטמשס | מהנדס: עידן הנדסה (יובל תנעמי)</div>'+
+      '</div>'+
+      '<div style="background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.28);color:#fff;padding:10px 18px;border-radius:7px;font-size:11px;text-align:center;line-height:1.9;flex-shrink:0">'+
+        '<strong style="font-size:14px;display:block">'+offerNum+'</strong>'+
+        'תאריך: '+fmt2(today)+'<br>תוקף עד: '+expStr+
+      '</div>'+
+    '</div>'+
+    '<div style="background:#b8860b;height:4px"></div>'+
+
+    // CLIENT
+    '<div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #e8e8e8">'+
+      '<div style="padding:16px 28px">'+
+        '<div style="font-size:9px;color:#aaa;letter-spacing:.9px;text-transform:uppercase;margin-bottom:5px">לכבוד הלקוח</div>'+
+        '<div style="font-size:18px;font-weight:600">ברגר ליאור ונועה</div>'+
+        '<div style="font-size:11px;color:#555;margin-top:3px;line-height:1.7">מגרש 37A, הרצליה<br>היתר בניה 16860 | אושר 17/03/2025</div>'+
+      '</div>'+
+      '<div style="padding:16px 28px;border-right:1px solid #e8e8e8">'+
+        '<div style="font-size:9px;color:#aaa;letter-spacing:.9px;text-transform:uppercase;margin-bottom:5px">פרטי הצעה</div>'+
+        '<div style="font-size:22px;font-weight:700;color:#1a3a6c">'+offerNum+'</div>'+
+        '<div style="font-size:11px;color:#555;margin-top:3px;line-height:1.7">'+
+          'תאריך: '+fmt2(today)+' | תוקף: '+expStr+'<br>'+
+          'כל המחירים כוללים מע"מ 18%<br>'+
+          '<span style="color:#b8860b;font-weight:500">מחירים כפופים לסעיף ההתאמה בעמוד 2</span>'+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+
+    // STATS
+    '<div style="display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid #e8e8e8;background:#fafaf7">'+
+      ['112 מ"ר|קומת קרקע קיימת','62.82 מ"ר|קומה ב׳ חדשה (ברוטו)','ממ"ד|9מ"ר נטו — ת"י 4422','6 כלונסאות|Ø50 עומק 11מ','~12 חודש|ביצוע משוער'].map(function(s){
+        var p=s.split('|');
+        return '<div style="padding:12px 10px;text-align:center;border-right:1px solid #e8e8e8">'+
+          '<div style="font-size:16px;font-weight:600;color:#1a3a6c;line-height:1.1">'+p[0]+'</div>'+
+          '<div style="font-size:9px;color:#aaa;margin-top:3px;line-height:1.3">'+p[1]+'</div></div>';
+      }).join('')+
+    '</div>'+
+
+    // IMAGES
+    imgBlock+
+
+    // BAR CHART
+    '<div style="padding:18px 28px;border-bottom:1px solid #e8e8e8">'+
+      '<div style="font-size:10px;color:#aaa;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px">התפלגות הצעת מחיר לפי קטגוריה</div>'+
+      barRows+
+    '</div>'+
+
+    // SCOPE GRID
+    '<div style="background:#f5f2ea;padding:10px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #e8e8e8">'+
+      '<span style="font-size:12px;font-weight:600">פירוט הצעה לפי קטגוריה (כולל מע"מ 18%)</span>'+
+      '<span style="font-size:10px;color:#aaa">מחירים כוללים חומרים + עבודה + מע"מ</span>'+
+    '</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #e8e8e8">'+scopeItems+'</div>'+
+
+    // TOTALS
+    '<div style="background:#f5f2ea;padding:16px 28px;border-bottom:1px solid #e8e8e8">'+
+      '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;color:#555"><span>סה"כ לפני מע"מ</span><span style="font-weight:500;color:#1a1a1a">₪ '+totalSell.toLocaleString('he-IL')+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;color:#555"><span>מע"מ 18%</span><span style="font-weight:500;color:#1a1a1a">₪ '+vatAmt.toLocaleString('he-IL')+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between;padding:10px 0 4px;font-size:16px;border-top:2px solid #1a3a6c;margin-top:8px">'+
+        '<span style="font-weight:600;color:#1a1a1a">סה"כ הצעת מחיר ללקוח (כולל מע"מ)</span>'+
+        '<span style="font-size:28px;font-weight:700;color:#1a3a6c">₪ '+totalOffer.toLocaleString('he-IL')+'</span>'+
+      '</div>'+
+    '</div>'+
+
+    // ממ"ד
+    '<div style="padding:14px 28px;border-bottom:1px solid #e8e8e8;background:#fffafa">'+
+      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.7px;margin-bottom:7px">ממ"ד — מרחב מוגן דירתי (חובה חוקית ת"י 4422)</div>'+
+      '<div style="font-size:11px;color:#555;margin-bottom:8px">כל תוספת בניה מעל 12 מ"ר מחייבת ממ"ד. ההצעה כוללת ממ"ד מלא בהתאם לכל מפרטי פיקוד העורף.</div>'+
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px">'+
+        [['גודל','9 מ"ר נטו | 13 מ"ר ברוטו'],['קירות + תקרה','ב-30 עובי 30 ס"מ'],['ריצפה','ב-30 עובי 20 ס"מ'],['דלת','דלת הדף — פיקוד העורף'],['חלון','חלון הדף פלדה 1.2 מ"ר'],['מערכת אב"כ','סינון אוויר ת"י 4570']].map(function(s){
+          return '<div style="background:#fff;border:0.5px solid #e8b4b4;border-radius:5px;padding:7px 10px">'+
+            '<div style="font-size:9px;color:#bbb;margin-bottom:1px">'+s[0]+'</div>'+
+            '<div style="font-size:11px;font-weight:600;color:#791F1F">'+s[1]+'</div></div>';
+        }).join('')+
+      '</div>'+
+    '</div>'+
+
+    // PAYMENT
+    '<div style="padding:16px 28px;border-bottom:1px solid #e8e8e8">'+
+      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px">לוח תשלומים מוצע</div>'+
+      '<div style="display:flex;height:26px;border-radius:5px;overflow:hidden;font-size:10px;color:#fff;font-weight:600">'+
+        '<div style="width:20%;background:#1a3a6c;display:flex;align-items:center;justify-content:center;white-space:nowrap;padding:0 4px">20% — חתימה</div>'+
+        '<div style="width:30%;background:#1e4d8c;display:flex;align-items:center;justify-content:center;white-space:nowrap;padding:0 4px">30% — שלד</div>'+
+        '<div style="width:30%;background:#2563a8;display:flex;align-items:center;justify-content:center;white-space:nowrap;padding:0 4px">30% — גמר</div>'+
+        '<div style="width:20%;background:#3578c4;display:flex;align-items:center;justify-content:center;white-space:nowrap;padding:0 4px">20% — מסירה</div>'+
+      '</div>'+
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px">'+
+        [['מקדמה עם חתימה','₪ '+Math.round(totalOffer*0.2).toLocaleString('he-IL')],['תנאי תשלום','שוטף +30 ימים'],['תקופת אחריות','12 חודש מהמסירה'],['ביטוח אתר','על חשבון הקבלן']].map(function(t){
+          return '<div style="background:#f5f2ea;border-radius:5px;padding:9px 12px">'+
+            '<div style="font-size:9px;color:#aaa;margin-bottom:2px">'+t[0]+'</div>'+
+            '<div style="font-size:12px;font-weight:600;color:#1a1a1a">'+t[1]+'</div></div>';
+        }).join('')+
+      '</div>'+
+    '</div>'+
+
+    // ── DISCOUNT / PRICE ADJUSTMENT SECTION ──────────────────
+    '<div style="padding:20px 28px;border-bottom:1px solid #e8e8e8;background:#f8f9ff">'+
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">'+
+        '<div style="width:34px;height:34px;background:#1a3a6c;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;flex-shrink:0">⚖</div>'+
+        '<div>'+
+          '<div style="font-size:14px;font-weight:600;color:#1a3a6c">הנחות, תוספות והתאמות מחיר</div>'+
+          '<div style="font-size:11px;color:#888;margin-top:1px">המחיר הסופי ייקבע בהתאם לתנאי השוק ביום חתימת החוזה</div>'+
+        '</div>'+
+      '</div>'+
+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'+
+
+        // DISCOUNTS card
+        '<div style="background:#fff;border:1px solid #dde4f0;border-radius:8px;padding:14px 16px">'+
+          '<div style="font-size:11px;font-weight:600;color:#27500A;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid #eaf3de">'+
+            '✅ זכאות להנחה — לטובת הלקוח'+
+          '</div>'+
+          [
+            ['חתימת חוזה עד 30/04/2026','3% — ₪'+Math.round(totalOffer*0.03).toLocaleString('he-IL'),'green'],
+            ['תשלום מקדמה 30% (במקום 20%)','1.5% — ₪'+Math.round(totalOffer*0.015).toLocaleString('he-IL'),'green'],
+            ['ביצוע בחורף (אוקט–מרץ)','2% — עבודת שלד בעונת גשמים','green'],
+            ['ויתור על שינויים בתוך כדי','1% — הסכמה מראש על הקפאת תוכנית','green'],
+          ].map(function(r){
+            return '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid #f5f5f5;font-size:11px">'+
+              '<span style="color:#555;line-height:1.4;padding-left:8px">'+r[0]+'</span>'+
+              '<span style="background:#eaf3de;color:#27500A;padding:2px 8px;border-radius:12px;font-weight:600;font-size:10px;white-space:nowrap">'+r[1]+'</span>'+
+            '</div>';
+          }).join('')+
+          '<div style="font-size:10px;color:#aaa;margin-top:7px;line-height:1.6">הנחות ניתנות לצבירה עד מקסימום 5% מסה"כ ההצעה</div>'+
+        '</div>'+
+
+        // PRICE INCREASES card
+        '<div style="background:#fff;border:1px solid #dde4f0;border-radius:8px;padding:14px 16px">'+
+          '<div style="font-size:11px;font-weight:600;color:#791F1F;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid #fcebeb">'+
+            '⚠ תוספות מחיר — תנאי שוק'+
+          '</div>'+
+          [
+            ['עליית מחיר ברזל >10% מיום הצעה','הצמדה למדד תשומות בנייה','red'],
+            ['עיכוב היתר מעל 60 יום','₪ 1,200/חודש — עלויות נלוות','amber'],
+            ['שינויים בתוכנית אחרי חתימה','לפי כתב שינויים מוסכם','amber'],
+            ['מע"מ — שינוי חקיקתי','לפי שיעור מע"מ ביום חשבונית','amber'],
+            ['ריצוף / חלונות / מיזוג — ללא מחיר','יושלם לפי בחירת לקוח','red'],
+          ].map(function(r){
+            var bg = r[2]==='red'?'#fcebeb':r[2]==='amber'?'#faeeda':'#e6f1fb';
+            var tc = r[2]==='red'?'#791F1F':r[2]==='amber'?'#633806':'#0C447C';
+            return '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:0.5px solid #f5f5f5;font-size:11px">'+
+              '<span style="color:#555;line-height:1.4;padding-left:8px">'+r[0]+'</span>'+
+              '<span style="background:'+bg+';color:'+tc+';padding:2px 8px;border-radius:12px;font-weight:600;font-size:10px;white-space:nowrap">'+r[1]+'</span>'+
+            '</div>';
+          }).join('')+
+          '<div style="font-size:10px;color:#aaa;margin-top:7px;line-height:1.6">תוספות מחיר טעונות אישור בכתב 14 יום מראש</div>'+
+        '</div>'+
+
+      '</div>'+
+
+      // FINAL PRICE BOX
+      '<div style="background:#fff8e6;border:1px solid #e8d080;border-radius:8px;padding:14px 18px;margin-top:12px">'+
+        '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">'+
+          '<div>'+
+            '<div style="font-size:12px;font-weight:600;color:#1a1a1a;margin-bottom:4px">מחיר סופי לחתימת חוזה</div>'+
+            '<div style="font-size:11px;color:#888;line-height:1.6">המחיר הסופי יחושב על בסיס ₪ '+totalOffer.toLocaleString('he-IL')+' ±<br>התאמות לפי הסעיפים לעיל, בהסכמה בכתב של שני הצדדים.</div>'+
+          '</div>'+
+          '<div style="text-align:left">'+
+            '<div style="font-size:11px;color:#888;margin-bottom:3px">בסיס הצעה</div>'+
+            '<div style="font-size:26px;font-weight:700;color:#1a3a6c">₪ '+totalOffer.toLocaleString('he-IL')+'</div>'+
+            '<div style="font-size:10px;color:#b8860b;margin-top:2px">כולל מע"מ 18% | תוקף '+expStr+'</div>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+
+      // SIGNATURES
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:12px;padding:14px 16px;background:#fff;border:1px solid #dde4f0;border-radius:8px">'+
+        '<div><div style="font-size:9px;color:#aaa;letter-spacing:.8px;text-transform:uppercase;margin-bottom:22px">אישור הלקוח — הצעה התקבלה</div>'+
+        '<div style="border-bottom:1px solid #bbb;margin-bottom:5px"></div>'+
+        '<div style="font-size:9px;color:#ccc">שם + חתימה + תאריך</div></div>'+
+        '<div><div style="font-size:9px;color:#aaa;letter-spacing:.8px;text-transform:uppercase;margin-bottom:22px">חתימת הקבלן + חותמת</div>'+
+        '<div style="border-bottom:1px solid #bbb;margin-bottom:5px"></div>'+
+        '<div style="font-size:9px;color:#ccc">שם + חתימה + חותמת + תאריך</div></div>'+
+      '</div>'+
+    '</div>'+
+
+    // NOTES
+    '<div style="background:#f5f2ea;padding:14px 28px;border-bottom:1px solid #e8e8e8">'+
+      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px">הערות כלליות</div>'+
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">'+
+        ['כמויות כפופות לאישור כ"כ מדוד סופי',
+         'תוקף הצעה '+expiryDays+' יום מתאריך הנפקה',
+         'שינויים בתוכנית לפי כתב שינויים מוסכם',
+         'אישורי פיקוד העורף לממ"ד על אחריות הקבלן',
+         'ביטוח אתר שצד ג כלול במחיר',
+         'פינוי פסולת ולוגיסטיקה כלולים בהצעה'
+        ].map(function(n){
+          return '<div style="font-size:11px;color:#555;display:flex;gap:5px;line-height:1.5"><span style="color:#b8860b;font-weight:700;flex-shrink:0">•</span>'+n+'</div>';
+        }).join('')+
+      '</div>'+
+    '</div>'+
+
+    // FOOTER
+    '<div style="background:#1a3a6c;padding:13px 28px;display:flex;justify-content:space-between;align-items:center">'+
+      '<div style="color:#a8c4e8;font-size:10px;line-height:1.8">'+offerNum+' | ברגר ליאור ונועה | היתר 16860<br>'+
+      'כל המחירים כוללים מע"מ 18% | תוקף עד '+expStr+'</div>'+
+      '<div style="color:#fff;font-size:12px;font-weight:600;text-align:left">'+fmt2(today)+'<br><span style="color:#a8c4e8;font-size:9px;font-weight:400">תאריך הנפקה</span></div>'+
+    '</div>'+
+    '</div></body></html>';
+
+  if(mode==='html') {
+    var blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    var url  = URL.createObjectURL(blob);
+    var w = window.open(url,'_blank');
+    if(!w) {
+      // fallback: download
+      var a = document.createElement('a');
+      a.href = url; a.download = 'offer_'+offerNum.replace(/[^a-zA-Z0-9]/g,'_')+'.html';
+      a.click();
+    }
+    setTimeout(function(){URL.revokeObjectURL(url);},10000);
+    document.getElementById('offerModal').remove();
+    toast('הצעה נוצרה — פתח והדפס כ-PDF ✓','ok');
+  }
+  else if(mode==='whatsapp') {
+    var msg = 'שלום,\nמצורפת הצעת מחיר '+offerNum+' לתוספת קומה ב׳ — היתר 16860\n'+
+      'לקוח: ברגר ליאור ונועה\n'+
+      'סה"כ הצעה: ₪'+totalOffer.toLocaleString('he-IL')+' (כולל מע"מ)\n'+
+      'תוקף עד: '+expStr+'\n\nלפרטים נוספים — אנא צרו קשר.';
+    window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+    document.getElementById('offerModal').remove();
+  }
+  else if(mode==='email') {
+    var subj = 'הצעת מחיר '+offerNum+' — תוספת קומה ב׳ | ברגר';
+    var body = 'שלום,\n\nמצורפת הצעת מחיר עבור:\nפרויקט: תוספת קומה ב׳ — היתר 16860, מגרש 37A\nלקוח: ברגר ליאור ונועה\n\nסה"כ הצעה: ₪'+totalOffer.toLocaleString('he-IL')+' (כולל מע"מ 18%)\nסה"כ לפני מע"מ: ₪'+totalSell.toLocaleString('he-IL')+'\n\nתוקף הצעה: עד '+expStr+'\n\nלפרטים ושאלות — אנא צרו קשר.\n\nבברכה';
+    window.location.href = 'mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);
+    document.getElementById('offerModal').remove();
+  }
+}
+</script>
+
+
+</body>
