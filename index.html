@@ -1324,7 +1324,7 @@ function renderRows(catId) {
       var tr = document.createElement('tr');
       tr.setAttribute('data-id', row.id);
       tr.innerHTML =
-        '<td colspan="13" style="background:rgba(245,158,11,.08);border-right:3px solid var(--amber);' +
+        '<td colspan="14" style="background:rgba(245,158,11,.08);border-right:3px solid var(--amber);' +
         'padding:5px 12px;font-size:11px;color:var(--amber);font-style:italic">' +
         '⚠ ' + esc(row.descHe) +
         (row.desc ? '<span style="color:var(--text3);margin-right:8px"> — ' + esc(row.desc) + '</span>' : '') +
@@ -1389,7 +1389,7 @@ function renderRows(catId) {
     var tr = document.createElement('tr');
     tr.setAttribute('data-id', row.id);
     tr.innerHTML =
-      '<td style="text-align:center;padding:2px 3px;width:52px">'+dekelBadge+'</td>' +
+      '<td style="text-align:center;padding:2px 3px;min-width:52px;width:52px">'+dekelBadge+'</td>' +
       '<td style="text-align:center;color:var(--text3);font-size:11px">'+(i+1)+'</td>' +
       '<td><input class="ciw" value="'+esc(row.descHe)+'" ' +
         'onchange="upd(\''+catId+'\',' +
