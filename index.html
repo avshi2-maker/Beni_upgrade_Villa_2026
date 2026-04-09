@@ -365,6 +365,50 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
       </div>
     </div>
 
+    <!-- ── UTILITY / ISSUES PANEL ──────────────────────────── -->
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+      <div style="background:var(--surface2);padding:12px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:16px">🔧</span>
+          <span style="font-weight:700;font-size:14px">לוח כלים — בעיות, הערות ושחזור</span>
+        </div>
+        <span style="font-size:11px;color:var(--text3)">לשימוש בני — לא מופיע בהצעה ללקוח</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0">
+
+        <!-- LEFT: Cancelled rows restore -->
+        <div style="padding:16px 18px;border-left:1px solid var(--border)">
+          <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:6px">
+            <span>🗑 שורות מבוטלות</span>
+            <span style="background:rgba(239,68,68,0.1);color:#dc2626;padding:1px 7px;border-radius:10px;font-size:10px" id="cancelCount">0</span>
+          </div>
+          <div id="cancelledPanel" style="max-height:200px;overflow-y:auto;font-size:11px">
+            <div style="color:var(--text3);font-size:12px;padding:8px">אין שורות מבוטלות</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Issues log -->
+        <div style="padding:16px 18px">
+          <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:10px">📋 הערות ובעיות פתוחות</div>
+          <div id="issuesList" style="max-height:160px;overflow-y:auto;display:flex;flex-direction:column;gap:6px"></div>
+          <div style="display:flex;gap:6px;margin-top:10px">
+            <input id="issueInput" placeholder="תאר בעיה או הערה..." style="flex:1;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;background:var(--surface);color:var(--text1);direction:rtl">
+            <select id="issuePriority" style="padding:6px;border:1px solid var(--border);border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;background:var(--surface);color:var(--text1)">
+              <option value="high">🔴 דחוף</option>
+              <option value="med" selected>🟡 רגיל</option>
+              <option value="low">🟢 נמוך</option>
+            </select>
+            <button onclick="addIssue()" style="background:#1a3a6c;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;cursor:pointer">+ הוסף</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM: Status summary -->
+      <div style="padding:12px 18px;border-top:1px solid var(--border);background:var(--surface2);display:flex;gap:16px;flex-wrap:wrap" id="statusSummary">
+      </div>
+    </div>
+
     <!-- ── PROJECT PRESENTATION GALLERY ─────────────────────── -->
     <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
       <div style="background:var(--surface2);padding:12px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
@@ -1049,6 +1093,28 @@ function ensureStandardsLoaded(cb) {
 }
 
 // ── GET PRICE for a row ───────────────────────────────────────
+// Price sanity ranges per category (min, max per unit)
+// Used to flag suspicious Dekel matches
+var PRICE_RANGES = {
+  stairs:    {min:2500,  max:99999},
+  doors:     {min:5000,  max:99999},
+  sanitary:  {min:2500,  max:99999},
+  outlets:   {min:500,   max:99999},
+  paint:     {min:15,    max:120},
+  pituch:    {min:5000,  max:10000},
+  chatzer:   {min:10000, max:20000},
+  tiles:     {min:80,    max:800},
+  plaster:   {min:40,    max:600},
+  windows:   {min:300,   max:15000},
+  lighting:  {min:50,    max:3000},
+  elec_panel:{min:200,   max:15000},
+  hvac:      {min:200,   max:50000},
+  bisus:     {min:10,    max:200000},
+  roof:      {min:30,    max:5000},
+  mamad:     {min:500,   max:20000},
+  logistics: {min:100,   max:5000},
+};
+
 // Chapter whitelist per BOQ category — prevents cross-chapter contamination
 var CAT_CHAPTERS = {
   bisus:    ['2','23','51'],
@@ -1084,11 +1150,39 @@ function getPrice(row) {
   // Allowed chapters for this BOQ category
   var allowedChapters = CAT_CHAPTERS[cat] || [];
 
+  // Alias table: BOQ description fragment → search term to use instead
+  var ALIASES = {
+    'שבירת ראשי כלונסאות': 'כלונסאות',
+    'קורות יורדות':         'קורת',
+    'קורות כתר':            'קורת',
+    'תפסנים חשמליים':       'תפסן',
+    'טרמוסטטים':            'טרמוסטט',
+    'תנפוחי אוויר':          'תנפוח',
+    'מסננת חצץ':            'מילוי גרנולרי',
+    'שפה בטונית':           'שפה',
+    'הזזה גדולה':           'חלון הזזה',
+    'חיפוי אבן חוץ':        'חיפוי אבן',
+    'שוחת ביקורת':          'שוחה',
+    'פרשת מפלסי קרקע':      'עפר',
+    'תפר ביצוע':            'תפר',
+    'לוח שליטה מרכזי':      'לוח',
+    'נקודת עומס כבד':       'חשמל',
+    'נקודת תריס':           'תריס',
+  };
+
   var stopWords = ['קומה','קרקע','צפון','דרום','מזרח','מערב','ראשית','עליונה',
     'תחתונה','כפול','קטן','גדול','ב','א','ג','יחד','כולל','לפי','עד','מעל'];
 
-  var descWords = desc.replace(/[()״"׳\-—]/g,' ').split(/[\s,\/\+]+/)
-    .filter(function(w){ return w.length > 1 && stopWords.indexOf(w) < 0; });
+  // Check alias table first
+  var aliasWord = '';
+  Object.keys(ALIASES).forEach(function(k){
+    if(desc.indexOf(k)>-1) aliasWord = ALIASES[k];
+  });
+
+  var descWords = aliasWord
+    ? [aliasWord]
+    : desc.replace(/[()״"׳\-—]/g,' ').split(/[\s,\/\+]+/)
+        .filter(function(w){ return w.length > 1 && stopWords.indexOf(w) < 0; });
 
   if (!descWords.length) return { p: 0, src: 'missing' };
 
@@ -1115,7 +1209,15 @@ function getPrice(row) {
     if (score > bestScore) { bestScore = score; bestMatch = item; bestCode = code; }
   });
 
-  if (bestMatch && bestScore >= 1) return { p: bestMatch.p, src: 'dekel', code: bestCode };
+  if (bestMatch && bestScore >= 1) {
+    return {
+      p: bestMatch.p,
+      src: 'dekel',
+      code: bestCode,
+      dekelDesc: (bestMatch.desc||'').substr(0,60),
+      chapter: bestMatch.chapter||''
+    };
+  }
   return { p: 0, src: 'missing' };
 }
 
@@ -1131,7 +1233,7 @@ function calcRow(row) {
   var profitAmt = sellTotal - cost;
   return { costUnit: pp.p, costTotal: cost, sellUnit: sellPrice,
            sellTotal: sellTotal, profitAmt: profitAmt, offer: offer, src: pp.src,
-           code: pp.code||'' };
+           code: pp.code||'', dekelDesc: pp.dekelDesc||'' };
 }
 
 function getVAT() {
@@ -1195,6 +1297,7 @@ function renderSummaryCards() {
     grid.appendChild(card);
   });
 
+  updateStatusSummary();
   document.getElementById('grand-total-display').textContent = '₪ ' + fmt(grandOffer);
   document.getElementById('priceCount').textContent = pricedRows + ' / ' + totalRows;
   recalcSummary();
@@ -1338,14 +1441,22 @@ function renderRows(catId) {
     var priceClass = c.src==='dekel' ? 'pf' : c.src==='manual' ? 'pm' : 'px';
     var costDisplay = c.src==='missing'
       ? '<span class="px">לא נמצא</span>'
-      : '<span class="'+priceClass+'">'+fmt(c.costUnit)+'</span>';
+      : '<span class="'+priceClass+'" title="'+
+          (c.src==='dekel' ? 'דקל: '+c.dekelDesc : 'מחיר ידני')+
+          '">'+fmt(c.costUnit)+'</span>';
 
     var profitClass = c.profitAmt >= 0 ? 'profit-pos' : 'profit-neg';
 
-    var statOpts = ['new','existing','demolish'].map(function(s) {
-      var label = s==='new'?'חדש':s==='existing'?'קיים':'הריסה';
+    var statOpts = ['new','existing','demolish','tentative','excluded'].map(function(s) {
+      var label = s==='new'?'חדש':s==='existing'?'קיים':s==='demolish'?'הריסה':
+                  s==='tentative'?'תלוי':'לא בסקופ';
       return '<option value="'+s+'"'+(row.status===s?' selected':'')+'>'+label+'</option>';
     }).join('');
+
+    // Row styling based on status
+    var rowBg = '';
+    if (row.status === 'tentative') rowBg = 'style="background:rgba(251,191,36,0.08)"';
+    if (row.status === 'excluded')  rowBg = 'style="background:rgba(239,68,68,0.08)"';
 
     // Standard tag — correct columns: standard_id, title_he
     var stdDisplay = '';
@@ -1360,6 +1471,15 @@ function renderRows(catId) {
     } else {
       stdDisplay = '<div class="std-tag" style="opacity:.5" ' +
         'onclick="openStdSearch(\''+catId+'\',\''+row.id+'\')" title="בחר תקן">+ תקן</div>';
+    }
+
+    // Price sanity check
+    var priceWarning = '';
+    if (c.src === 'dekel' && c.costUnit > 0) {
+      var ranges = PRICE_RANGES[catId];
+      if (ranges && (c.costUnit < ranges.min || c.costUnit > ranges.max)) {
+        priceWarning = ' title="⚠ מחיר חריג: ₪'+fmt(c.costUnit)+'/'+row.unit+' — בדוק מול דקל"';
+      }
     }
 
     // Dekel chapter badge
@@ -1377,9 +1497,11 @@ function renderRows(catId) {
         '92':'#B8860B','93':'#B8860B'};
       var chName = chNames[chNum] || ('פ'+chNum);
       var chColor = chColors[chNum] || '#888888';
-      dekelBadge = '<div title="'+dekelCode+'" style="background:'+chColor+
+      var warnBorder = priceWarning ? ';outline:2px solid #ff4444' : '';
+      dekelBadge = '<div title="'+(priceWarning?'⚠ מחיר חריג — ':'')+dekelCode+'" style="background:'+chColor+
         ';color:#fff;border-radius:4px;padding:2px 4px;font-size:9px;font-weight:700;'+
-        'text-align:center;line-height:1.5;cursor:help;white-space:nowrap">'+chName+'</div>';
+        'text-align:center;line-height:1.5;cursor:help;white-space:nowrap'+warnBorder+'">'+
+        (priceWarning?'⚠ ':'')+chName+'</div>';
     } else if (c.src === 'manual') {
       dekelBadge = '<div style="color:var(--text3);font-size:9px;text-align:center;font-style:italic">ידני</div>';
     } else {
@@ -1388,6 +1510,7 @@ function renderRows(catId) {
 
     var tr = document.createElement('tr');
     tr.setAttribute('data-id', row.id);
+    if (rowBg) tr.setAttribute('style', rowBg.replace('style="','').replace('"',''));
     tr.innerHTML =
       '<td style="text-align:center;padding:2px 3px;min-width:52px;width:52px">'+dekelBadge+'</td>' +
       '<td style="text-align:center;color:var(--text3);font-size:11px">'+(i+1)+'</td>' +
@@ -1638,10 +1761,117 @@ function addRow(catId) {
   recalcAll();
 }
 
+// Cancelled rows archive — for restore
+var cancelledRows = [];
+
 function delRow(catId, rowId) {
+  var row = (boqData[catId]||[]).find(function(r){ return r.id===rowId; });
+  if (row) {
+    // Archive before removing
+    cancelledRows.push({ catId: catId, row: JSON.parse(JSON.stringify(row)), ts: new Date().toLocaleTimeString('he-IL') });
+    updateCancelledPanel();
+  }
   boqData[catId] = (boqData[catId]||[]).filter(function(r){ return r.id!==rowId; });
   renderRows(catId);
   recalcAll();
+}
+
+function restoreRow(idx) {
+  var item = cancelledRows[idx];
+  if (!item) return;
+  if (!boqData[item.catId]) boqData[item.catId] = [];
+  boqData[item.catId].push(item.row);
+  cancelledRows.splice(idx, 1);
+  var cat = CATS.find(function(c){ return c.id===item.catId; });
+  renderRows(item.catId);
+  recalcAll();
+  updateCancelledPanel();
+  toast('שורה שוחזרה: '+item.row.descHe.substr(0,30),'ok');
+}
+
+// Issues log
+var issuesList = [];
+
+function addIssue() {
+  var input = document.getElementById('issueInput');
+  var priority = document.getElementById('issuePriority');
+  var text = (input.value||'').trim();
+  if (!text) return;
+  issuesList.push({ text: text, priority: priority.value, ts: new Date().toLocaleDateString('he-IL'), done: false });
+  input.value = '';
+  renderIssues();
+  toast('הערה נוספה ✓','ok');
+}
+
+function toggleIssue(idx) {
+  issuesList[idx].done = !issuesList[idx].done;
+  renderIssues();
+}
+
+function deleteIssue(idx) {
+  issuesList.splice(idx, 1);
+  renderIssues();
+}
+
+function renderIssues() {
+  var el = document.getElementById('issuesList');
+  if (!el) return;
+  if (!issuesList.length) {
+    el.innerHTML = '<div style="color:var(--text3);font-size:11px">אין הערות פתוחות</div>';
+    return;
+  }
+  el.innerHTML = issuesList.map(function(issue, i){
+    var colors = {high:'#dc2626', med:'#d97706', low:'#16a34a'};
+    var dot = '<span style="color:'+colors[issue.priority]+';font-size:10px">●</span>';
+    return '<div style="display:flex;align-items:center;gap:6px;padding:4px 6px;background:var(--surface);border-radius:5px;border:0.5px solid var(--border)">'+
+      dot+
+      '<span style="flex:1;font-size:11px;color:var(--text1);'+(issue.done?'text-decoration:line-through;opacity:0.5':'')+'">' +issue.text+'</span>'+
+      '<span style="font-size:9px;color:var(--text3)">'+issue.ts+'</span>'+
+      '<button onclick="toggleIssue('+i+')" style="background:none;border:none;cursor:pointer;font-size:12px;padding:0 2px">'+(issue.done?'↩':'✓')+'</button>'+
+      '<button onclick="deleteIssue('+i+')" style="background:none;border:none;cursor:pointer;font-size:11px;color:#dc2626;padding:0 2px">✕</button>'+
+    '</div>';
+  }).join('');
+}
+
+function updateStatusSummary() {
+  var el = document.getElementById('statusSummary');
+  if (!el) return;
+  var counts = {new:0, existing:0, demolish:0, tentative:0, excluded:0};
+  Object.keys(boqData).forEach(function(cat){
+    (boqData[cat]||[]).forEach(function(r){
+      if (!r.isRemark && counts.hasOwnProperty(r.status)) counts[r.status]++;
+    });
+  });
+  var labels = {new:'חדש', existing:'קיים', demolish:'הריסה', tentative:'תלוי', excluded:'לא בסקופ'};
+  var colors  = {new:'#1a3a6c', existing:'#0f6e56', demolish:'#a32d2d', tentative:'#b8860b', excluded:'#dc2626'};
+  el.innerHTML = Object.keys(counts).map(function(k){
+    return '<div style="display:flex;align-items:center;gap:5px;font-size:11px">'+
+      '<span style="width:8px;height:8px;border-radius:50%;background:'+colors[k]+';display:inline-block"></span>'+
+      '<span style="color:var(--text2)">'+labels[k]+':</span>'+
+      '<span style="font-weight:600;color:var(--text1)">'+counts[k]+'</span>'+
+    '</div>';
+  }).join('');
+}
+
+function updateCancelledPanel() {
+  var panel = document.getElementById('cancelledPanel');
+  if (!panel) return;
+  if (!cancelledRows.length) {
+    panel.innerHTML = '<div style="color:var(--text3);font-size:12px;padding:8px">אין שורות מבוטלות</div>';
+    return;
+  }
+  var countEl = document.getElementById('cancelCount');
+  if (countEl) countEl.textContent = cancelledRows.length;
+  panel.innerHTML = cancelledRows.map(function(item, i){
+    return '<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:0.5px solid var(--border)">'+
+      '<span style="font-size:10px;color:var(--text3);min-width:45px">'+item.ts+'</span>'+
+      '<span style="font-size:11px;color:var(--text2);flex:1">'+
+        '<span style="background:rgba(239,68,68,0.1);color:#dc2626;padding:1px 5px;border-radius:3px;font-size:9px;margin-left:4px">'+item.catId+'</span>'+
+        item.row.descHe.substr(0,50)+
+      '</span>'+
+      '<button onclick="restoreRow('+i+')" style="background:#16a34a;color:#fff;border:none;border-radius:4px;padding:2px 8px;font-size:10px;cursor:pointer;font-family:Heebo,sans-serif">↩ שחזר</button>'+
+    '</div>';
+  }).join('');
 }
 
 function applyDefaultProfit() {
@@ -1685,6 +1915,7 @@ function recalcAll() {
     e = document.getElementById('scard-'+cat.id);       if(e) e.textContent = '₪ '+fmt(catOffer);
   });
 
+  updateStatusSummary();
   document.getElementById('grand-total-display').textContent = '₪ ' + fmt(grandOffer);
   document.getElementById('priceCount').textContent = priced + ' / ' + total;
   recalcSummary();
@@ -1976,6 +2207,29 @@ function openGenerateOfferModal() {
 }
 
 function generateOffer(mode) {
+  // Build excluded items block first
+  var excludedItems = [];
+  CATS.forEach(function(cat){
+    (boqData[cat.id]||[]).forEach(function(r){
+      if (!r.isRemark && r.status === 'excluded') excludedItems.push({cat:cat.he, icon:cat.icon, desc:r.descHe});
+    });
+  });
+  var excludedBlock = '';
+  if (excludedItems.length) {
+    excludedBlock = '<div style="padding:14px 28px;border-bottom:1px solid #e8e8e8;background:#fff8f8">'+
+      '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.7px;margin-bottom:8px">סעיפים שאינם כלולים בהצעה זו</div>'+
+      '<div style="font-size:11px;color:#888;margin-bottom:6px">הסעיפים הבאים קיימים בתכנון אך אינם כלולים בהצעת המחיר הנוכחית:</div>'+
+      excludedItems.map(function(e){
+        return '<div style="display:flex;align-items:center;gap:8px;padding:3px 0;font-size:11px">'+
+          '<span style="color:#dc2626">—</span>'+
+          '<span style="color:#555">'+e.icon+' '+e.cat+'</span>'+
+          '<span style="color:#aaa;margin:0 4px">›</span>'+
+          '<span style="color:#888">'+e.desc.substr(0,70)+'</span>'+
+        '</div>';
+      }).join('')+
+    '</div>';
+  }
+
   var vat = getVAT();
   var offerNum   = (document.getElementById('offerNum')||{}).value || 'הצ-16860-04-2026';
   var expiryDays = parseInt((document.getElementById('offerExpiry')||{}).value) || 30;
@@ -2135,7 +2389,8 @@ function generateOffer(mode) {
       '</div>'+
     '</div>'+
 
-    // PAYMENT
+    // EXCLUDED + PAYMENT
+    excludedBlock +
     '<div style="padding:16px 28px;border-bottom:1px solid #e8e8e8">'+
       '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px">לוח תשלומים מוצע</div>'+
       '<div style="display:flex;height:26px;border-radius:5px;overflow:hidden;font-size:10px;color:#fff;font-weight:600">'+
@@ -2233,6 +2488,7 @@ function generateOffer(mode) {
         '<div style="font-size:9px;color:#ccc">שם + חתימה + חותמת + תאריך</div></div>'+
       '</div>'+
     '</div>'+
+
 
     // NOTES
     '<div style="background:#f5f2ea;padding:14px 28px;border-bottom:1px solid #e8e8e8">'+
