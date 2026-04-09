@@ -223,6 +223,8 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
     <button class="btn btn-secondary btn-sm" onclick="open3DViewer()" style="background:linear-gradient(135deg,#1a4a8c,#0f3268);border-color:#1a4a8c;color:#fff;font-weight:700">🏗 תצוגה תלת-מימדית</button>
     <button class="btn btn-primary"          onclick="saveToSupabase()">💾 שמור</button>
     <button class="btn btn-success"          onclick="exportCSV()">📊 Excel XLS</button>
+    <button onclick="collapseAll()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer" title="כווץ הכל">▶ כווץ</button>
+    <button onclick="expandAll()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer" title="פתח הכל">▼ פתח</button>
     <button onclick="openGenerateOfferModal()" style="background:linear-gradient(135deg,#b8860b,#8b6508);color:#fff;border:none;padding:8px 18px;border-radius:7px;font-family:'Heebo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.3px">📋 צור הצעה ללקוח</button>
   </div>
 </div>
@@ -362,6 +364,85 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
         <div id="paymentRemarks" style="display:flex;flex-direction:column;gap:6px">
         </div>
         <button onclick="addPaymentRemark()" class="btn btn-secondary btn-sm" style="align-self:flex-start">+ הוסף הערה</button>
+      </div>
+    </div>
+
+    <!-- ── AI SANITY TEST PANEL ────────────────────────────── -->
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden" id="sanityPanel">
+      <div style="background:linear-gradient(135deg,#1a3a6c,#0f2548);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">🧠</span>
+          <div>
+            <div style="color:#fff;font-size:14px;font-weight:700">בדיקת תקינות AI — Sanity Test</div>
+            <div style="color:#a8c4e8;font-size:10px;margin-top:1px">השווה את ה-BOQ מול מנועי AI שונים לזיהוי טעויות, השמטות וסיכונים</div>
+          </div>
+        </div>
+        <button onclick="toggleSanityPanel()" id="sanityToggle" style="background:rgba(255,255,255,0.15);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer">▼ פתח</button>
+      </div>
+      <div id="sanityBody" style="display:none">
+
+        <!-- STEP 1: BOQ Summary -->
+        <div style="padding:14px 20px;border-bottom:1px solid var(--border);background:var(--surface2)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span style="font-size:12px;font-weight:600;color:var(--text1)">שלב 1 — צור סיכום BOQ לבדיקה</span>
+            <button onclick="buildSanityPrompt()" style="background:#1a3a6c;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer">⚙ צור פרומפט</button>
+          </div>
+          <textarea id="sanityPrompt" rows="8" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;font-family:monospace;font-size:11px;background:var(--surface);color:var(--text1);direction:ltr;resize:vertical" placeholder="לחץ 'צור פרומפט' לבניית הבדיקה..."></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+            <button onclick="copySanityPrompt()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text1);padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer">📋 העתק פרומפט</button>
+            <span style="font-size:11px;color:var(--text3);align-self:center">→ שלב 2: פתח AI ולחץ על הכפתור המתאים</span>
+          </div>
+        </div>
+
+        <!-- STEP 2: AI Links -->
+        <div style="padding:14px 20px;border-bottom:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:600;color:var(--text1);margin-bottom:10px">שלב 2 — שלח לבדיקה</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div style="border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+              <div style="font-size:22px;margin-bottom:6px">🤖</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text1);margin-bottom:4px">Claude</div>
+              <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Anthropic — הכי טוב לניתוח חוזים</div>
+              <button onclick="openAI('claude')" style="background:#b8860b;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;cursor:pointer;width:100%">פתח Claude ↗</button>
+            </div>
+            <div style="border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+              <div style="font-size:22px;margin-bottom:6px">💎</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text1);margin-bottom:4px">Gemini</div>
+              <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Google — חזק בנתונים כמותיים</div>
+              <button onclick="openAI('gemini')" style="background:#1a73e8;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;cursor:pointer;width:100%">פתח Gemini ↗</button>
+            </div>
+            <div style="border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center">
+              <div style="font-size:22px;margin-bottom:6px">⚡</div>
+              <div style="font-size:13px;font-weight:600;color:var(--text1);margin-bottom:4px">ChatGPT</div>
+              <div style="font-size:10px;color:var(--text3);margin-bottom:8px">OpenAI — ניסיון רחב בבנייה</div>
+              <button onclick="openAI('chatgpt')" style="background:#10a37f;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;cursor:pointer;width:100%">פתח ChatGPT ↗</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Paste responses + compare -->
+        <div style="padding:14px 20px;border-bottom:1px solid var(--border)">
+          <div style="font-size:12px;font-weight:600;color:var(--text1);margin-bottom:10px">שלב 3 — הדבק תשובות</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:#b8860b;margin-bottom:4px">🤖 Claude</div>
+              <textarea id="resp-claude" rows="6" placeholder="הדבק תשובת Claude כאן..." style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;background:var(--surface);color:var(--text1);resize:vertical"></textarea>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:#1a73e8;margin-bottom:4px">💎 Gemini</div>
+              <textarea id="resp-gemini" rows="6" placeholder="הדבק תשובת Gemini כאן..." style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;background:var(--surface);color:var(--text1);resize:vertical"></textarea>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:#10a37f;margin-bottom:4px">⚡ ChatGPT</div>
+              <textarea id="resp-chatgpt" rows="6" placeholder="הדבק תשובת ChatGPT כאן..." style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;font-family:Heebo,sans-serif;font-size:11px;background:var(--surface);color:var(--text1);resize:vertical"></textarea>
+            </div>
+          </div>
+          <button onclick="buildComparisonReport()" style="background:linear-gradient(135deg,#1a3a6c,#0f2548);color:#fff;border:none;padding:8px 20px;border-radius:7px;font-family:Heebo,sans-serif;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px">📊 צור דוח השוואה</button>
+        </div>
+
+        <!-- STEP 4: Comparison Report -->
+        <div style="padding:14px 20px" id="comparisonReport" style="display:none">
+        </div>
+
       </div>
     </div>
 
@@ -999,6 +1080,206 @@ function initBOQ() {
 
 function uid() { return Math.random().toString(36).substr(2,9); }
 
+// ── SANITY TEST ──────────────────────────────────────────────
+
+function toggleSanityPanel() {
+  var body = document.getElementById('sanityBody');
+  var btn  = document.getElementById('sanityToggle');
+  if (body.style.display === 'none') {
+    body.style.display = '';
+    btn.textContent = '▲ סגור';
+  } else {
+    body.style.display = 'none';
+    btn.textContent = '▼ פתח';
+  }
+}
+
+function buildSanityPrompt() {
+  var vat = getVAT();
+  var lines = [];
+  var grand = 0;
+
+  lines.push('אתה מומחה בניה ישראלי. בדוק את כתב הכמויות הבא עבור פרויקט תוספת קומה ב׳ בישראל.');
+  lines.push('היתר בניה 16860 | מגרש 37A הרצליה | 62.82 מ"ר ברוטו | 6 כלונסאות Ø50 עומק 11מ');
+  lines.push('');
+  lines.push('=== כתב כמויות — סיכום לפי קטגוריה ===');
+  lines.push('');
+
+  var missingCats = [];
+  CATS.forEach(function(cat) {
+    var rows = (boqData[cat.id]||[]).filter(function(r){return !r.isRemark && (r.qty||0)>0;});
+    var catOffer = rows.reduce(function(s,r){
+      r._cat = cat.id;
+      return s + calcRow(r).offer;
+    }, 0);
+
+    if (catOffer === 0) { missingCats.push(cat.he); return; }
+    grand += catOffer;
+
+    lines.push('── ' + cat.he + ' ──');
+    rows.forEach(function(r){
+      r._cat = cat.id;
+      var c = calcRow(r);
+      if(c.offer <= 0) return;
+      var src = c.src==='dekel' ? '[דקל '+c.code+']' : c.src==='manual'?'[ידני]':'[חסר]';
+      lines.push('  • ' + r.descHe.substr(0,60) + ' | ' + r.qty + ' ' + r.unit +
+        ' × ₪' + Math.round(c.costUnit) + ' = ₪' + Math.round(c.offer) +
+        ' (כולל מע"מ+רווח) ' + src);
+    });
+    lines.push('  סה"כ קטגוריה: ₪' + Math.round(catOffer).toLocaleString('he-IL'));
+    lines.push('');
+  });
+
+  lines.push('=== סיכום כולל ===');
+  lines.push('סה"כ הצעה ללקוח (כולל מע"מ 18%): ₪' + Math.round(grand).toLocaleString('he-IL'));
+  lines.push('עלות למ"ר ברוטו: ₪' + Math.round(grand/62.82).toLocaleString('he-IL'));
+  if (missingCats.length) lines.push('קטגוריות ללא מחיר: ' + missingCats.join(', '));
+
+  lines.push('');
+  lines.push('=== בקשה לבדיקה ===');
+  lines.push('1. האם המחיר למ"ר סביר לפרויקט תוספת קומה בישראל 2025/2026?');
+  lines.push('2. האם יש קטגוריות חשובות שחסרות לחלוטין מהרשימה?');
+  lines.push('3. האם יש פריטים בודדים שנראים יקרים מדי או זולים מדי?');
+  lines.push('4. מה הסיכונים המשפטיים/חוזיים שיש לכלול בחוזה לפרויקט כזה?');
+  lines.push('5. האם ישנם סעיפים שעלולים לגרום לסכסוך עם הלקוח? ציין אותם.');
+  lines.push('6. מה ה-RISK ITEMS שכדאי לבני (הקבלן) לשים לב אליהם?');
+  lines.push('ענה בעברית. הגש תשובה מובנית לפי הסעיפים 1-6.');
+
+  document.getElementById('sanityPrompt').value = lines.join('\n');
+  toast('פרומפט נבנה — '+lines.length+' שורות ✓','ok');
+}
+
+function copySanityPrompt() {
+  var txt = document.getElementById('sanityPrompt').value;
+  if (!txt) { toast('בנה פרומפט קודם','err'); return; }
+  navigator.clipboard.writeText(txt).then(function(){
+    toast('פרומפט הועתק — עבור ל-AI ולחץ הדבק ✓','ok');
+  });
+}
+
+function openAI(which) {
+  var urls = {
+    claude:  'https://claude.ai/new',
+    gemini:  'https://gemini.google.com',
+    chatgpt: 'https://chat.openai.com'
+  };
+  copySanityPrompt();
+  window.open(urls[which],'_blank');
+  toast('פרומפט הועתק — הדבק ב-'+which+' ✓','ok');
+}
+
+function buildComparisonReport() {
+  var rClaude  = (document.getElementById('resp-claude').value||'').trim();
+  var rGemini  = (document.getElementById('resp-gemini').value||'').trim();
+  var rChatgpt = (document.getElementById('resp-chatgpt').value||'').trim();
+
+  if (!rClaude && !rGemini && !rChatgpt) {
+    toast('הדבק לפחות תשובה אחת','err'); return;
+  }
+
+  var panel = document.getElementById('comparisonReport');
+  panel.style.display = '';
+
+  // Parse responses for key risk signals
+  var riskWords = ['סיכון','בעיה','חסר','חריג','יקר','זול','מחלוקת','עורך דין','תביעה','ליקוי','חוסר','אזהרה','שים לב','לא כולל','אינו כולל'];
+
+  function extractRisks(text) {
+    if (!text) return [];
+    var risks = [];
+    var lines = text.split(/[\n.!?]/);
+    lines.forEach(function(line){
+      var l = line.trim();
+      if (l.length < 10) return;
+      var hasRisk = riskWords.some(function(w){ return l.indexOf(w) > -1; });
+      if (hasRisk) risks.push(l.substr(0,120));
+    });
+    return risks.slice(0,8);
+  }
+
+  var claudeRisks  = extractRisks(rClaude);
+  var geminiRisks  = extractRisks(rGemini);
+  var chatgptRisks = extractRisks(rChatgpt);
+
+  // Find consensus risks (mentioned by 2+ AIs)
+  var allRisks = claudeRisks.concat(geminiRisks).concat(chatgptRisks);
+  var sharedKeywords = {};
+  riskWords.forEach(function(w){
+    var count = [rClaude,rGemini,rChatgpt].filter(function(r){ return r && r.indexOf(w)>-1; }).length;
+    if (count >= 2) sharedKeywords[w] = count;
+  });
+
+  var reportHtml = '<div style="font-size:13px;font-weight:700;color:var(--text1);margin-bottom:14px">📊 דוח השוואה — '+new Date().toLocaleDateString('he-IL')+'</div>';
+
+  // Consensus box
+  var shared = Object.keys(sharedKeywords);
+  if (shared.length) {
+    reportHtml += '<div style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px;margin-bottom:12px">'+
+      '<div style="font-size:11px;font-weight:700;color:#dc2626;margin-bottom:6px">⚠ נושאים שהוזכרו ב-2 AI או יותר (עדיפות גבוהה)</div>'+
+      shared.map(function(w){
+        return '<span style="display:inline-block;background:rgba(239,68,68,0.1);color:#dc2626;padding:2px 8px;border-radius:10px;font-size:11px;margin:2px">'+
+          w+' ('+sharedKeywords[w]+'/3)</span>';
+      }).join('')+
+    '</div>';
+  }
+
+  // Per-AI responses
+  var ais = [
+    {key:'claude',  label:'🤖 Claude',   color:'#b8860b', risks:claudeRisks,  text:rClaude},
+    {key:'gemini',  label:'💎 Gemini',   color:'#1a73e8', risks:geminiRisks,  text:rGemini},
+    {key:'chatgpt', label:'⚡ ChatGPT', color:'#10a37f', risks:chatgptRisks, text:rChatgpt},
+  ];
+
+  reportHtml += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px">';
+  ais.forEach(function(ai){
+    if (!ai.text) { reportHtml += '<div style="border:1px solid var(--border);border-radius:8px;padding:12px;opacity:0.4"><div style="font-size:12px;font-weight:600;color:var(--text2)">'+ai.label+'</div><div style="font-size:11px;color:var(--text3);margin-top:6px">לא הוזן</div></div>'; return; }
+    reportHtml += '<div style="border:1px solid var(--border);border-radius:8px;padding:12px">'+
+      '<div style="font-size:12px;font-weight:700;color:'+ai.color+';margin-bottom:8px;border-bottom:2px solid '+ai.color+';padding-bottom:4px">'+ai.label+'</div>'+
+      '<div style="font-size:10px;color:var(--text3);margin-bottom:6px">נושאי סיכון שזוהו:</div>'+
+      (ai.risks.length ? ai.risks.map(function(r){
+        return '<div style="font-size:10px;color:var(--text2);padding:3px 0;border-bottom:0.5px solid var(--border);display:flex;gap:5px">'+
+          '<span style="color:'+ai.color+';flex-shrink:0">•</span><span>'+r+'</span></div>';
+      }).join('') : '<div style="font-size:10px;color:var(--text3)">לא זוהו נושאי סיכון ספציפיים</div>')+
+    '</div>';
+  });
+  reportHtml += '</div>';
+
+  // Full text accordion
+  reportHtml += '<div style="font-size:11px;color:var(--text3);margin-bottom:6px">תשובות מלאות:</div>'+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">';
+  ais.forEach(function(ai){
+    if(!ai.text) return;
+    reportHtml += '<div style="background:var(--surface2);border-radius:6px;padding:10px;max-height:200px;overflow-y:auto">'+
+      '<div style="font-size:10px;font-weight:600;color:'+ai.color+';margin-bottom:5px">'+ai.label+'</div>'+
+      '<div style="font-size:10px;color:var(--text2);white-space:pre-wrap;line-height:1.6">'+ai.text.substr(0,2000)+'</div>'+
+    '</div>';
+  });
+  reportHtml += '</div>';
+
+  // Print report button
+  reportHtml += '<div style="margin-top:12px;display:flex;gap:8px">'+
+    '<button onclick="printSanityReport()" style="background:#1a3a6c;color:#fff;border:none;padding:8px 16px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer">🖨 הדפס דוח</button>'+
+    '<button onclick="document.getElementById(\'comparisonReport\').style.display=\'none\'" style="background:var(--surface2);border:1px solid var(--border);color:var(--text1);padding:8px 16px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer">✕ סגור</button>'+
+  '</div>';
+
+  panel.innerHTML = reportHtml;
+  panel.scrollIntoView({behavior:'smooth'});
+  toast('דוח השוואה נוצר ✓','ok');
+}
+
+function printSanityReport() {
+  var content = document.getElementById('comparisonReport').innerHTML;
+  var w = window.open('','_blank');
+  w.document.write('<html dir="rtl"><head><meta charset="UTF-8">'+
+    '<title>דוח בדיקת תקינות AI — BOQ 16860</title>'+
+    '<style>body{font-family:Arial,sans-serif;direction:rtl;padding:20px;font-size:12px}'+
+    '.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}'+
+    '@media print{body{font-size:10px}}</style></head><body>'+
+    '<h2>דוח בדיקת תקינות AI — BOQ 16860 — '+new Date().toLocaleDateString('he-IL')+'</h2>'+
+    content+'</body></html>');
+  w.document.close();
+  setTimeout(function(){w.print();},500);
+}
+
 // ── IMAGE URL COPY ────────────────────────────────────────────
 function copyImgUrl(url, label) {
   navigator.clipboard.writeText(url).then(function() {
@@ -1181,13 +1462,13 @@ function getPrice(row) {
 
   var descWords = aliasWord
     ? [aliasWord]
-    : desc.replace(/[()״"׳\-—]/g,' ').split(/[\s,\/\+]+/)
+    : desc.replace(/[()\u05F4"\u05F3\-\u2014]/g,' ').split(/[\s,\/\+]+/)
         .filter(function(w){ return w.length > 1 && stopWords.indexOf(w) < 0; });
 
   if (!descWords.length) return { p: 0, src: 'missing' };
 
   var bestMatch = null, bestScore = 0, bestCode = '';
-  var unitNorm = unit.replace(/['’׳]/g,'').trim();
+  var unitNorm = unit.replace(/['\u2019\u05F3]/g,'').trim();
   var unitGroups = {'מ"ר':1,'מר':1,'מ"ק':2,'מק':2,'מ"א':3,'מא':3,'טון':4,'ק"ג':4,'קג':4};
 
   Object.keys(priceCache).forEach(function(code){
@@ -1195,7 +1476,7 @@ function getPrice(row) {
     if (!item || !item.p) return;
     // Chapter filter — only search in allowed chapters
     if (allowedChapters.length > 0 && allowedChapters.indexOf(String(item.chapter)) < 0) return;
-    var itemUnitNorm = String(item.unit||'').replace(/['’׳]/g,'').trim();
+    var itemUnitNorm = String(item.unit||'').replace(/['\u2019\u05F3]/g,'').trim();
     // Hard unit group filter
     var g1 = unitGroups[unitNorm], g2 = unitGroups[itemUnitNorm];
     if (g1 && g2 && g1 !== g2) return;
@@ -1372,13 +1653,18 @@ function renderCatSection(cat, container) {
   sec.className = 'cat-sec'; sec.id = 'sec-' + cat.id;
 
   sec.innerHTML =
-    '<div class="cat-hdr">' +
+    '<div class="cat-hdr" onclick="toggleCollapse(\''+cat.id+'\')" style="cursor:pointer">' +
+      '<button id="collapse-btn-'+cat.id+'" style="background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;padding:0 4px;min-width:18px;direction:ltr">'+(collapsedCats[cat.id]?'▶':'▼')+'</button>' +
       '<div class="cat-badge" style="background:'+cat.color+'"></div>' +
       '<span class="cat-title">'+cat.icon+' '+cat.he+'</span>' +
       '<span class="cat-sub">'+cat.en+'</span>' +
       '<span class="cat-tot" id="ctot-'+cat.id+'">₪ 0</span>' +
-      '<button class="btn-add" onclick="addRow(\''+cat.id+'\')">+ הוסף שורה</button>' +
+      '<button class="btn-add" onclick="event.stopPropagation();addRow(\''+cat.id+'\')" style="margin-right:auto">+ הוסף שורה</button>' +
     '</div>';
+
+  var tblWrap = document.createElement('div');
+  tblWrap.id = 'tbl-wrap-'+cat.id;
+  if (collapsedCats[cat.id]) tblWrap.style.display = 'none';
 
   var tbl = document.createElement('table');
   tbl.className = 'boq-table';
@@ -1409,7 +1695,8 @@ function renderCatSection(cat, container) {
     '<td id="tfoot-offer-'+cat.id+'">₪ 0</td>' +
     '<td colspan="2"></td>' +
     '</tr></tfoot>';
-  sec.appendChild(tbl);
+  tblWrap.appendChild(tbl);
+  sec.appendChild(tblWrap);
   container.appendChild(sec);
   renderRows(cat.id);
 }
@@ -1624,7 +1911,7 @@ function stdSearchText(s) {
 function stdMatches(s, words) {
   var haystack = stdSearchText(s).toLowerCase()
     // normalise Hebrew ligatures / spelling variants
-    .replace(/[״׳"']/g, '')
+    .replace(/[\u05F4\u05F3"']/g, '')
     .replace(/ך/g,'כ').replace(/ם/g,'מ').replace(/ן/g,'נ')
     .replace(/ף/g,'פ').replace(/ץ/g,'צ');
   for (var i = 0; i < words.length; i++) {
@@ -1643,7 +1930,7 @@ function filterStds() {
 
   // Normalise query: remove punctuation, split on whitespace
   var normQ = rawQ.toLowerCase()
-    .replace(/[״׳"']/g, '')
+    .replace(/[\u05F4\u05F3"']/g, '')
     .replace(/ך/g,'כ').replace(/ם/g,'מ').replace(/ן/g,'נ')
     .replace(/ף/g,'פ').replace(/ץ/g,'צ');
   var words = normQ.split(/\s+/).filter(function(w){ return w.length > 0; });
@@ -1763,6 +2050,7 @@ function addRow(catId) {
 
 // Cancelled rows archive — for restore
 var cancelledRows = [];
+var collapsedCats = {};  // catId -> true if collapsed
 
 function delRow(catId, rowId) {
   var row = (boqData[catId]||[]).find(function(r){ return r.id===rowId; });
@@ -1774,6 +2062,42 @@ function delRow(catId, rowId) {
   boqData[catId] = (boqData[catId]||[]).filter(function(r){ return r.id!==rowId; });
   renderRows(catId);
   recalcAll();
+}
+
+function toggleCollapse(catId) {
+  collapsedCats[catId] = !collapsedCats[catId];
+  var tbl = document.getElementById('tbl-wrap-'+catId);
+  var btn = document.getElementById('collapse-btn-'+catId);
+  var hdr = document.getElementById('sec-'+catId);
+  if (collapsedCats[catId]) {
+    if(tbl) tbl.style.display = 'none';
+    if(btn) btn.textContent = '▶';
+    if(hdr) hdr.classList.add('collapsed');
+  } else {
+    if(tbl) tbl.style.display = '';
+    if(btn) btn.textContent = '▼';
+    if(hdr) hdr.classList.remove('collapsed');
+  }
+}
+
+function collapseAll() {
+  CATS.forEach(function(cat){
+    collapsedCats[cat.id] = true;
+    var tbl = document.getElementById('tbl-wrap-'+cat.id);
+    var btn = document.getElementById('collapse-btn-'+cat.id);
+    if(tbl) tbl.style.display = 'none';
+    if(btn) btn.textContent = '▶';
+  });
+}
+
+function expandAll() {
+  CATS.forEach(function(cat){
+    collapsedCats[cat.id] = false;
+    var tbl = document.getElementById('tbl-wrap-'+cat.id);
+    var btn = document.getElementById('collapse-btn-'+cat.id);
+    if(tbl) tbl.style.display = '';
+    if(btn) btn.textContent = '▼';
+  });
 }
 
 function restoreRow(idx) {
@@ -2236,6 +2560,8 @@ function generateOffer(mode) {
   var img1       = ((document.getElementById('offerImg1')||{}).value||'').trim();
   var img2       = ((document.getElementById('offerImg2')||{}).value||'').trim();
 
+  // Check if collapsed view is requested (all categories collapsed)
+  var allCollapsed = CATS.every(function(cat){ return collapsedCats[cat.id]; });
   var today      = new Date();
   var expiry     = new Date(today.getTime() + expiryDays*24*60*60*1000);
   var fmt2 = function(d){ return d.getDate().toString().padStart(2,'0')+'/'+(d.getMonth()+1).toString().padStart(2,'0')+'/'+d.getFullYear(); };
@@ -2278,11 +2604,29 @@ function generateOffer(mode) {
   var scopeItems = cats_offer.map(function(c,i){
     var pStr = '₪ '+c.offer.toLocaleString('he-IL');
     var pct  = (c.offer/totalOffer*100).toFixed(1)+'%';
-    return '<div style="padding:9px 28px;display:flex;justify-content:space-between;align-items:center;border-bottom:0.5px solid #f0f0f0;border-right:0.5px solid #f0f0f0">'+
-      '<span style="font-size:12px;color:#1a1a1a;display:flex;align-items:center;gap:7px">'+
+    var hdrRow = '<div style="padding:9px 28px;display:flex;justify-content:space-between;align-items:center;'+
+      'border-bottom:0.5px solid #f0f0f0;background:'+(i%2===0?'#fff':'#fafaf7')+'">'+
+      '<span style="font-size:12px;color:#1a1a1a;display:flex;align-items:center;gap:7px;font-weight:600">'+
         '<span style="width:8px;height:8px;border-radius:50%;background:'+COLORS[i%COLORS.length]+';display:inline-block;flex-shrink:0"></span>'+c.icon+' '+c.he+'</span>'+
-      '<span style="font-size:12px;font-weight:600;color:#1a3a6c">'+pStr+' <span style="font-size:10px;color:#bbb;font-weight:400">('+pct+')</span></span>'+
+      '<span style="font-size:12px;font-weight:700;color:#1a3a6c">'+pStr+' <span style="font-size:10px;color:#bbb;font-weight:400">('+pct+')</span></span>'+
     '</div>';
+
+    // If not collapsed → show line items under header
+    var lineRows = '';
+    if (!allCollapsed && !collapsedCats[c.id]) {
+      (boqData[c.id]||[]).forEach(function(r){
+        if(r.isRemark || r.status==='excluded' || (r.qty||0)===0) return;
+        r._cat = c.id;
+        var cr = calcRow(r);
+        if(cr.offer <= 0) return;
+        lineRows += '<div style="padding:5px 28px 5px 44px;display:flex;justify-content:space-between;'+
+          'border-bottom:0.5px solid #f5f5f5;font-size:11px;color:#555">'+
+          '<span>'+r.descHe.substr(0,60)+(r.descHe.length>60?'...':'')+'</span>'+
+          '<span style="font-weight:500;color:#1a3a6c;white-space:nowrap">'+r.qty+' '+r.unit+' × ₪'+fmt(cr.costUnit)+' = ₪'+fmt(cr.offer)+'</span>'+
+        '</div>';
+      });
+    }
+    return hdrRow + lineRows;
   }).join('');
 
   var imgBlock = '';
