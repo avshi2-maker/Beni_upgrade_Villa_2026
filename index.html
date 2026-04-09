@@ -1069,22 +1069,29 @@ function getPrice(row) {
 
   var bestMatch = null, bestScore = 0, bestCode = '';
 
+  // Normalize unit — Dekel uses יח' (with geresh), BOQ uses יח
+  var unitNorm = unit.replace(/['’׳]/g,'').trim();
+
   Object.keys(priceCache).forEach(function(code){
     var item = priceCache[code];
     if (!item || !item.p) return;
-    // Unit filter — must match exactly if both have units
-    if (item.unit && unit && item.unit !== unit) return;
+    var itemUnitNorm = String(item.unit||'').replace(/['’׳]/g,'').trim();
+    // Hard filter only for clearly incompatible units (m2 vs m3 vs ton vs unit)
+    var unitGroups = {'מ"ר':1,'מר':1,'מ"ק':2,'מק':2,'מ"א':3,'מא':3,'טון':4,'ק"ג':4,'קג':4};
+    var g1 = unitGroups[unitNorm], g2 = unitGroups[itemUnitNorm];
+    if (g1 && g2 && g1 !== g2) return; // incompatible — skip
     var itemDesc = String(item.desc||'').toLowerCase();
     var score = 0;
     descWords.forEach(function(w){
       if (itemDesc.indexOf(w.toLowerCase()) > -1) score++;
     });
-    // Bonus: first meaningful word is a strong signal
+    // Bonus: first word match is strong signal
     if (descWords[0] && itemDesc.indexOf(descWords[0].toLowerCase()) > -1) score += 0.5;
+    // Bonus: same unit group
+    if (unitNorm && itemUnitNorm && unitNorm === itemUnitNorm) score += 0.3;
     if (score > bestScore) { bestScore = score; bestMatch = item; bestCode = code; }
   });
 
-  // Threshold: 1 word match is enough (Dekel items are very specific)
   if (bestMatch && bestScore >= 1) return { p: bestMatch.p, src: 'dekel', code: bestCode };
   return { p: 0, src: 'missing' };
 }
