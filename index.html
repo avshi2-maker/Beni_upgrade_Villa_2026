@@ -597,6 +597,8 @@ var CATS = [
 // ── DEFAULT BOQ ───────────────────────────────────────────────
 var DEFAULT_BOQ = {
   areas:[
+    {isRemark:true, id:'rem_areas_header',
+     descHe:'⚠️ שטחי בניה לפי תוכניות — להצגה בלבד ללא מחירים — חובה בדיקה חוזרת מול תוכניות ומתכנן'},
     {descHe:'שטח ברוטו קומה ב',      qty:62.82,unit:'מ"ר',priceKey:'',   status:'new',     profit:20,stdKey:''},
     {descHe:'שטח עיקרי נטו קומה ב',  qty:50.45,unit:'מ"ר',priceKey:'',     status:'new',     profit:20,stdKey:''},
     {descHe:'שטח קומת קרקע קיימת',   qty:112.0, unit:'מ"ר',priceKey:'', status:'existing',profit:15,stdKey:''},
@@ -604,47 +606,57 @@ var DEFAULT_BOQ = {
     {descHe:'יסוד / תת רצפה',         qty:62.82,unit:'מ"ר',priceKey:'',    status:'new',     profit:18,stdKey:''},
   ],
   tiles:[
-    {descHe:'ריצוף רצפה קומה ב (מנוכה 9 מ"ר ממ"ד)',     qty:41.45,unit:'מ"ר',priceKey:'',        manualPrice:260.0, status:'new',     profit:25,stdKey:''},
-    {descHe:'ריצוף רצפה קרקע',       qty:95.0, unit:'מ"ר',priceKey:'',        manualPrice:260.0, status:'existing',profit:20,stdKey:''},
-    {descHe:'ריצוף קירות אמבטיה עליונה',qty:19.0,unit:'מ"ר',priceKey:'',      manualPrice:260.0, status:'new',     profit:25,stdKey:''},
+    {descHe:'ריצוף רצפה קומה ב (מנוכה 9 מ"ר ממ"ד)',     qty:41.45,unit:'מ"ר',priceKey:'',        manualPrice:300, status:'new',     profit:25,stdKey:''},
+    {descHe:'ריצוף רצפה קרקע',       qty:95.0, unit:'מ"ר',priceKey:'',        manualPrice:300, status:'existing',profit:20,stdKey:''},
+    {descHe:'ריצוף קירות אמבטיה עליונה',qty:19.0,unit:'מ"ר',priceKey:'',      manualPrice:260, status:'new',     profit:25,stdKey:''},
     {descHe:'ריצוף קירות אמבטיה קרקע',qty:15.0,unit:'מ"ר',priceKey:'',        manualPrice:260, status:'existing',profit:20,stdKey:''},
   ],
   plaster:[
-    {descHe:'טיח חוץ צפון',           qty:42.0, unit:'מ"ר',priceKey:'',  manualPrice:227.54, status:'new',     profit:22,stdKey:''},
-    {descHe:'טיח חוץ דרום',           qty:42.0, unit:'מ"ר',priceKey:'',  manualPrice:227.54, status:'new',     profit:22,stdKey:''},
-    {descHe:'טיח חוץ מזרח',           qty:38.0, unit:'מ"ר',priceKey:'',  manualPrice:227.54, status:'new',     profit:22,stdKey:''},
-    {descHe:'טיח חוץ מערב',           qty:38.0, unit:'מ"ר',priceKey:'',  manualPrice:227.54, status:'new',     profit:22,stdKey:''},
-    {descHe:'חיפוי אבן חוץ',          qty:80.0, unit:'מ"ר',priceKey:'',    manualPrice:393.17, status:'new',     profit:30,stdKey:''},
+    {descHe:'טיח חוץ צפון',           qty:42.0, unit:'מ"ר',priceKey:'',  manualPrice:190, status:'new',     profit:22,stdKey:''},
+    {descHe:'טיח חוץ דרום',           qty:42.0, unit:'מ"ר',priceKey:'',  manualPrice:190, status:'new',     profit:22,stdKey:''},
+    {descHe:'טיח חוץ מזרח',           qty:38.0, unit:'מ"ר',priceKey:'',  manualPrice:190, status:'new',     profit:22,stdKey:''},
+    {descHe:'טיח חוץ מערב',           qty:38.0, unit:'מ"ר',priceKey:'',  manualPrice:190, status:'new',     profit:22,stdKey:''},
+    {descHe:'חיפוי אבן חוץ כולל פינות רשת מגולוון',          qty:80.0, unit:'מ"ר',priceKey:'',    manualPrice:570, status:'new',     profit:30,stdKey:''},
   ],
   stairs:[
-    {descHe:'מדרגות פנים קרקע לב',   qty:1,    unit:'יח', priceKey:'', manualPrice:18000, status:'new',     profit:25,stdKey:''},
-    {descHe:'מדרגות כניסה מערב',      qty:1,    unit:'יח', priceKey:'',    manualPrice:114.7, status:'existing',profit:15,stdKey:''},
-    {descHe:'מדרגות כניסה דרום',      qty:1,    unit:'יח', priceKey:'',    manualPrice:114.7, status:'existing',profit:15,stdKey:''},
+    {descHe:'מדרגות פנים קרקע לב',   qty:1,    unit:'יח', priceKey:'', manualPrice:22000, status:'new',     profit:25,stdKey:''},
+    {isRemark:true, id:'rem_stairs_west', style:'warning',
+     descHe:'⚠️ מדרגות כניסה מערב — בחר אפשרות: (א) אבן ₪400/מדרגה  |  (ב) בטון ₪800/מדרגה — ממתין לאישור בני'},
+    {descHe:'מדרגות כניסה מערב — אבן (אפשרות א)',  qty:1, unit:'יח', priceKey:'', manualPrice:700, status:'new', profit:20,stdKey:''},
+    {descHe:'מדרגות כניסה מערב — בטון (אפשרות ב)', qty:1, unit:'יח', priceKey:'', manualPrice:370, status:'excluded', profit:20,stdKey:''},
+    {isRemark:true, id:'rem_stairs_west_install',
+     descHe:'📋 התקנה — מחיר טרם נקבע, ממתין להצעת קבלן'},
+    {isRemark:true, id:'rem_stairs_south', style:'warning',
+     descHe:'⚠️ מדרגות כניסה דרום — בחר אפשרות: (א) אבן ₪400/מדרגה  |  (ב) בטון ₪800/מדרגה — ממתין לאישור בני'},
+    {descHe:'מדרגות כניסה דרום — אבן (אפשרות א)',  qty:1, unit:'יח', priceKey:'', manualPrice:700, status:'new', profit:20,stdKey:''},
+    {descHe:'מדרגות כניסה דרום — בטון (אפשרות ב)', qty:1, unit:'יח', priceKey:'', manualPrice:370, status:'excluded', profit:20,stdKey:''},
+    {isRemark:true, id:'rem_stairs_south_install',
+     descHe:'📋 התקנה — מחיר טרם נקבע, ממתין להצעת קבלן'},
   ],
   windows:[
-    {descHe:'חלון אלו קומה ב',     qty:6,    unit:'יח', priceKey:'',manualPrice:3200.0, status:'new',    profit:30,stdKey:''},
-    {descHe:'חלון אלו מערב ב', qty:2,   unit:'יח', priceKey:'',manualPrice:3500.0, status:'new',    profit:30,stdKey:''},
-    {descHe:'הזזה גדולה דרום',        qty:1,    unit:'יח', priceKey:'',manualPrice:6500.0, status:'existing',profit:20,stdKey:''},
-    {descHe:'חלון גדול מערב קרקע',    qty:2,    unit:'יח', priceKey:'', status:'existing',profit:20,stdKey:''},
-    {descHe:'חלון קטן מזרח קרקע',     qty:2,    unit:'יח', priceKey:'',manualPrice:2200.0, status:'existing',profit:20,stdKey:''},
-    {descHe:'חלון שרות קטן מערב',     qty:1,    unit:'יח', priceKey:'', status:'existing',profit:20,stdKey:''},
-    {descHe:'חלון גג',                 qty:1,    unit:'יח', priceKey:'',           manualPrice:4800.0, status:'new',     profit:25,stdKey:''},
+    {descHe:'חלון אלו קומה ב',     qty:6,    unit:'יח', priceKey:'',manualPrice:3000, status:'new',    profit:30,stdKey:''},
+    {descHe:'חלון אלו מערב ב', qty:2,   unit:'יח', priceKey:'',manualPrice:3700, status:'new',    profit:30,stdKey:''},
+    {descHe:'הזזה גדולה דרום',        qty:1,    unit:'יח', priceKey:'',manualPrice:7300, status:'existing',profit:20,stdKey:''},
+    {descHe:'חלון גדול מערב קרקע',    qty:2,    unit:'יח', priceKey:'', manualPrice:4900, status:'existing',profit:20,stdKey:''},
+    {descHe:'חלון קטן מזרח קרקע',     qty:2,    unit:'יח', priceKey:'',manualPrice:1600, status:'existing',profit:20,stdKey:''},
+    {descHe:'חלון שרות קטן מערב',     qty:1,    unit:'יח', priceKey:'', manualPrice:1250, status:'existing',profit:20,stdKey:''},
+    {descHe:'חלון גג',                 qty:1,    unit:'יח', priceKey:'',           manualPrice:5000, status:'new',     profit:25,stdKey:''},
   ],
   doors:[
-    {descHe:'דלת כניסה ראשית מערב',  qty:1,    unit:'יח', priceKey:'',      manualPrice:9500.0, status:'existing',profit:25,stdKey:''},
-    {descHe:'דלת כניסה דרום',         qty:1,    unit:'יח', priceKey:'',      manualPrice:6500.0, status:'existing',profit:25,stdKey:''},
+    {descHe:'דלת כניסה ראשית מערב',  qty:1,    unit:'יח', priceKey:'',      manualPrice:5700, status:'existing',profit:25,stdKey:''},
+    {descHe:'דלת כניסה דרום',         qty:1,    unit:'יח', priceKey:'',      manualPrice:3800, status:'existing',profit:25,stdKey:''},
     {descHe:'שער מוסך כפול צפון',     qty:1,    unit:'יח', priceKey:'', status:'existing',profit:20,stdKey:''},
-    {descHe:'דלתות פנים קומה ב',      qty:5,    unit:'יח', priceKey:'',      manualPrice:2800.0, status:'new',     profit:30,stdKey:''},
-    {descHe:'דלתות פנים קרקע',        qty:5,    unit:'יח', priceKey:'',      manualPrice:2800.0, status:'existing',profit:20,stdKey:''},
-    {descHe:'דלת חוץ מזרח',           qty:1,    unit:'יח', priceKey:'',      manualPrice:5500.0, status:'existing',profit:22,stdKey:''},
+    {descHe:'דלתות פנים קומה ב',      qty:5,    unit:'יח', priceKey:'',      manualPrice:1950, status:'new',     profit:30,stdKey:''},
+    {descHe:'דלתות פנים קרקע',        qty:5,    unit:'יח', priceKey:'',      manualPrice:1950, status:'existing',profit:20,stdKey:''},
+    {descHe:'דלת חוץ מזרח',           qty:1,    unit:'יח', priceKey:'',      manualPrice:3100, status:'existing',profit:22,stdKey:''},
   ],
   sanitary:[
-    {descHe:'אסלה קומה ב',            qty:1,    unit:'יח', priceKey:'',        manualPrice:2200.0, status:'new',     profit:25,stdKey:''},
-    {descHe:'כיור קומה ב',            qty:1,    unit:'יח', priceKey:'',     manualPrice:1800.0, status:'new',     profit:25,stdKey:''},
-    {descHe:'מקלחון קומה ב',          qty:1,    unit:'יח', priceKey:'',        manualPrice:3500.0, status:'new',     profit:25,stdKey:''},
-    {descHe:'אסלה קרקע',              qty:1,    unit:'יח', priceKey:'',        manualPrice:2200.0, status:'existing',profit:15,stdKey:''},
-    {descHe:'כיור קרקע',              qty:1,    unit:'יח', priceKey:'',     manualPrice:1800.0, status:'existing',profit:15,stdKey:''},
-    {descHe:'כיור מטבח',              qty:1,    unit:'יח', priceKey:'',       manualPrice:1800.0, status:'existing',profit:15,stdKey:''},
+    {descHe:'אסלה קומה ב',            qty:1,    unit:'יח', priceKey:'',        manualPrice:3000, status:'new',     profit:25,stdKey:''},
+    {descHe:'כיור קומה ב',            qty:1,    unit:'יח', priceKey:'',     manualPrice:2000, status:'new',     profit:25,stdKey:''},
+    {descHe:'מקלחון קומה ב',          qty:1,    unit:'יח', priceKey:'',        manualPrice:2700, status:'new',     profit:25,stdKey:''},
+    {descHe:'אסלה קרקע',              qty:1,    unit:'יח', priceKey:'',        manualPrice:3000, status:'existing',profit:15,stdKey:''},
+    {descHe:'כיור קרקע',              qty:1,    unit:'יח', priceKey:'',     manualPrice:2000, status:'existing',profit:15,stdKey:''},
+    {descHe:'כיור מטבח',              qty:1,    unit:'יח', priceKey:'',       manualPrice:2000, status:'existing',profit:15,stdKey:''},
   ],
   taps:[
     {descHe:'ברז אמבטיה עליונה',      qty:2,    unit:'יח', priceKey:'',       manualPrice:850, status:'new',     profit:30,stdKey:''},
@@ -670,7 +682,7 @@ var DEFAULT_BOQ = {
     {descHe:'נקודת עומס כבד — מזגן / דוד (קו ישיר ללוח, לנקודה)',
      qty:4,  unit:'יח', priceKey:'', manualPrice:183.37, status:'new', profit:25, stdKey:''},
     {descHe:'נקודת טלוויזיה / נתונים Cat6 — חדרים (לנקודה)',
-     qty:3,  unit:'יח', priceKey:'', manualPrice:300, status:'new', profit:25, stdKey:''},
+     qty:3,  unit:'יח', priceKey:'', manualPrice:400, status:'new', profit:25, stdKey:''},
     {descHe:'מתג אור — יחיד / כפול (חיווט + מנגנון, לנקודה)',
      qty:8,  unit:'יח', priceKey:'', manualPrice:300, status:'new', profit:25, stdKey:''},
     {descHe:'נקודת תאורה — תקרה / קיר (חיווט לנקודה, לא כולל גוף תאורה)',
@@ -678,7 +690,7 @@ var DEFAULT_BOQ = {
     {descHe:'שקעים ומתגים קומת קרקע — שיפוץ קיים (לנקודה)',
      qty:15, unit:'יח', priceKey:'', manualPrice:779.5, status:'existing', profit:15, stdKey:''},
     {descHe:'נקודת תריס חשמלי / תריסון ממונע (חיווט + בקר, לנקודה)',
-     qty:6,  unit:'יח', priceKey:'', manualPrice:300, status:'new', profit:25, stdKey:''},
+     qty:6,  unit:'יח', priceKey:'', manualPrice:450, status:'new', profit:25, stdKey:''},
     {descHe:'שקע חוץ עמיד מים — מרפסת / גינה (IP65, לנקודה)',
      qty:4,  unit:'יח', priceKey:'', manualPrice:1618.97, status:'new', profit:25, stdKey:''},
     {isRemark:true, id:'rem_elec_points',
@@ -702,7 +714,7 @@ var DEFAULT_BOQ = {
     {descHe:'ארון תקשורת — בנוי בקיר, ליד כניסה / מסדרון',
      qty:1,  unit:'יח', priceKey:'', manualPrice:2041.62, status:'new', profit:20, stdKey:''},
     {descHe:'מתג רשת מנוהל 16–24 פורט + ראוטר Mesh — אספקה',
-     qty:1,  unit:'יח', priceKey:'', manualPrice:2800, status:'new', profit:20, stdKey:''},
+     qty:1,  unit:'יח', priceKey:'', manualPrice:3700, status:'new', profit:20, stdKey:''},
     {descHe:'פאנל טלאים + עבודת הגדרת רשת (סיום כבלי חדרים + תצורה)',
      qty:1,  unit:'יח', priceKey:'', manualPrice:170.51, status:'new', profit:20, stdKey:''},
     {isRemark:true, id:'rem_comm_cabinet',
@@ -718,18 +730,18 @@ var DEFAULT_BOQ = {
      descHe:'תעודת בדיקה חשמלית חובה לפני אכלוס ולכל חברות הביטוח. חייב להיות מוציא על ידי מעבדה מורשית'},
   ],
   paint:[
-    {descHe:'צבע פנים קירות קומה ב (מנוכה ~32 מ"ר ממ"ד)', qty:148,  unit:'מ"ר',priceKey:'',     manualPrice:55, status:'new',     profit:25,stdKey:''},
-    {descHe:'צבע פנים תקרה קומה ב (מנוכה 9 מ"ר ממ"ד)', qty:41,   unit:'מ"ר',priceKey:'',     manualPrice:55, status:'new',     profit:25,stdKey:''},
-    {descHe:'צבע פנים חדר מדרגות',    qty:30,   unit:'מ"ר',priceKey:'',     manualPrice:55, status:'new',     profit:25,stdKey:''},
-    {descHe:'צבע פנים קרקע רענון',    qty:250,  unit:'מ"ר',priceKey:'',     manualPrice:45, status:'existing',profit:20,stdKey:''},
+    {descHe:'צבע פנים קירות קומה ב (מנוכה ~32 מ"ר ממ"ד)', qty:148,  unit:'מ"ר',priceKey:'',     manualPrice:60, status:'new',     profit:25,stdKey:''},
+    {descHe:'צבע פנים תקרה קומה ב (מנוכה 9 מ"ר ממ"ד)', qty:41,   unit:'מ"ר',priceKey:'',     manualPrice:65, status:'new',     profit:25,stdKey:''},
+    {descHe:'צבע פנים חדר מדרגות',    qty:30,   unit:'מ"ר',priceKey:'',     manualPrice:60, status:'new',     profit:25,stdKey:''},
+    {descHe:'צבע פנים קרקע רענון',    qty:250,  unit:'מ"ר',priceKey:'',     manualPrice:60, status:'existing',profit:20,stdKey:''},
   ],
   roof:[
     // ── גג עליון — יח"ד 1 (upper unit, hipped tile roof ~10.55×17.25m pitched) ──
     {descHe:'רעפים מלצג — גג עליון יח"ד 1, שטח משופע כולל ירכתיים',
-     qty:95, unit:'מ"ר', priceKey:'', manualPrice:110, status:'new', profit:25, stdKey:''},
+     qty:95, unit:'מ"ר', priceKey:'', manualPrice:230, status:'new', profit:25, stdKey:''},
     // ── גג תחתון — יח"ד 2 (lower unit, hipped tile roof ~10.0×9.0m pitched) ───
     {descHe:'רעפים מלצג — גג תחתון יח"ד 2, שטח משופע כולל ירכתיים',
-     qty:75, unit:'מ"ר', priceKey:'', manualPrice:110, status:'new', profit:25, stdKey:''},
+     qty:75, unit:'מ"ר', priceKey:'', manualPrice:230, status:'new', profit:25, stdKey:''},
     {isRemark:true, id:'rem_roof_tiles',
      descHe:'סה"כ ~170 מ"ר בשני גגות ירכתיים. תעריף ₪250–320 למ"ר אספקה + הנחה כולל רשת תחתית. לאמת עם תוכנית קונסטרוקציה'},
     // ── בידוד ────────────────────────────────────────────────────
@@ -737,9 +749,9 @@ var DEFAULT_BOQ = {
      qty:170, unit:'מ"ר', priceKey:'', manualPrice:382.31, status:'new', profit:20, stdKey:''},
     // ── קונסטרוקציה ──────────────────────────────────────────────
     {descHe:'קונסטרוקציית עץ גג — יח"ד עליונה (שברים, מישנים, קורת שדרה)',
-     qty:95, unit:'מ"ר', priceKey:'', manualPrice:12000, status:'new', profit:25, stdKey:''},
+     qty:95, unit:'מ"ר', priceKey:'', manualPrice:24000, status:'new', profit:25, stdKey:''},
     {descHe:'קונסטרוקציית עץ גג — יח"ד תחתונה (שברים, מישנים, קורת שדרה)',
-     qty:75, unit:'מ"ר', priceKey:'', manualPrice:12000, status:'new', profit:25, stdKey:''},
+     qty:75, unit:'מ"ר', priceKey:'', manualPrice:24000, status:'new', profit:25, stdKey:''},
     {isRemark:true, id:'rem_roof_struct',
      descHe:'הערת תוכנית: מיקום עמודים יש לבצע לפי תכנית קונסטרוקציה — לתאם עם המהנדס לפני ביצוע'},
     // ── שכלת + ירכתיים ──────────────────────────────────────────
@@ -755,14 +767,14 @@ var DEFAULT_BOQ = {
     {descHe:'תעלות אלומיניום (ארגז) — שתי יחידות, 3 צדדים כל אחת',
      qty:48, unit:'מ"א', priceKey:'', manualPrice:30.0, status:'new', profit:20, stdKey:''},
     {descHe:'צינורות ירידה — PVC/אלומיניום, שתי יחידות (~1 לכל פינה)',
-     qty:8, unit:'יח', priceKey:'', manualPrice:450, status:'new', profit:20, stdKey:''},
+     qty:8, unit:'יח', priceKey:'', manualPrice:800, status:'new', profit:20, stdKey:''},
     {isRemark:true, id:'rem_gutters',
      descHe:'הערת תוכנית: יש לחשבון את הסים ארגז תחריים 7 ס"מ לפחות על כל צד. ניקוז גג עפ"י נספח סניטרי — תיאום עם יועץ'},
     // ── גישה לגג ────────────────────────────────────────────────
     {descHe:'פתח גישה לגג / חלון גג לפי סמל בתוכנית',
-     qty:1, unit:'יח', priceKey:'', manualPrice:3500, status:'new', profit:25, stdKey:''},
+     qty:1, unit:'יח', priceKey:'', manualPrice:5000, status:'new', profit:25, stdKey:''},
     {descHe:'מעקה בטיחות בשולי הגג / ממ"ד גג (היכן שנדרש)',
-     qty:22, unit:'מ"א', priceKey:'', manualPrice:1800, status:'new', profit:22, stdKey:''},
+     qty:22, unit:'מ"א', priceKey:'', manualPrice:1500, status:'new', profit:22, stdKey:''},
     {descHe:'השלמת יציקת בטון בין קורות עץ גג — לפי הנחיית יועץ גגות (ב-30)',
      qty:18, unit:'מ"א', priceKey:'', manualPrice:52.0, status:'new', profit:22, stdKey:''},
     {isRemark:true, id:'rem_rafter_infill',
@@ -805,9 +817,9 @@ var DEFAULT_BOQ = {
   chatzer:[
     // ── הריסות ─────────────────────────────────────────────────
     {descHe:'הריסת חלק מגג רעפים — יח"ד מס׳ 1 לפי תוכנית',
-     qty:30, unit:'מ"ר', priceKey:'', manualPrice:85, status:'existing', profit:20, stdKey:''},
+     qty:30, unit:'מ"ר', priceKey:'', manualPrice:95, status:'existing', profit:20, stdKey:''},
     {descHe:'הריסת חלק מגג רעפים — יח"ד מס׳ 2 לפי תוכנית',
-     qty:25, unit:'מ"ר', priceKey:'', manualPrice:85, status:'existing', profit:20, stdKey:''},
+     qty:25, unit:'מ"ר', priceKey:'', manualPrice:95, status:'existing', profit:20, stdKey:''},
     {isRemark:true, id:'rem_roof_demo',
      descHe:'תעריף ₪80–130 למ"ר — כולל הסרת רעפים, רצועות עץ ופינוי מהאתר'},
     {descHe:'הריסת קירוי טנסף קיים',
@@ -823,7 +835,7 @@ var DEFAULT_BOQ = {
      qty:4, unit:'יח', priceKey:'', manualPrice:195.54, status:'existing', profit:20, stdKey:''},
     // ── כביש ומדרכה ────────────────────────────────────────────
     {descHe:'ריצוף אספלט — דרך גישה / כביש פנימי (5 ס"מ בינדר + 4 ס"מ שכבת בלאי)',
-     qty:80, unit:'מ"ר', priceKey:'', manualPrice:220, status:'new', profit:22, stdKey:''},
+     qty:80, unit:'מ"ר', priceKey:'', manualPrice:240, status:'new', profit:22, stdKey:''},
     {isRemark:true, id:'rem_asphalt',
      descHe:'תעריף ₪180–240 למ"ר — כולל שכבת בינדר, שכבת בלאי והידוק. בסיס אגרגט בסעיף נפרד'},
     {descHe:'שכבת בסיס אגרגט תחת אספלט — 20 ס"מ מהודק',
@@ -850,7 +862,7 @@ var DEFAULT_BOQ = {
     {isRemark:true, id:'rem_manhole',
      descHe:'תעריף ₪1,800–2,600 ליחידה (DN400–600). עומק מעל 1.5מ — תוספת 15–20%. יש לאמת מפלסי IL בשטח'},
     {descHe:'חיבור ביוב / אינסטלציה לקו עירוני — עבודה + צנרת, סכום כולל',
-     qty:1, unit:'יח', priceKey:'', manualPrice:5500, status:'new', profit:22, stdKey:''},
+     qty:1, unit:'יח', priceKey:'', manualPrice:6000, status:'new', profit:22, stdKey:''},
     {isRemark:true, id:'rem_sewage',
      descHe:'סכום כולל ₪4,000–7,000. לתיאום עם יועץ אינסטלציה — ראה הערה בתוכנית: ביוב ואינסטלציה ראה תכנית'},
     {descHe:'מחסן פלסטיק — אספקה והתקנה לפי תוכנית',
@@ -863,7 +875,7 @@ var DEFAULT_BOQ = {
     {isRemark:true, id:'rem_fence',
      descHe:'תעריף ₪650–1,100 למ"א — פרופיל תקני. יש לאמת גבולות מדויקים עם מודד לפני הזמנה'},
     {descHe:'גינון — שורת עצים חדשה + השקיה בטפטוף + ערוגות לפי תוכנית',
-     qty:30, unit:'מ"א', priceKey:'', manualPrice:420, status:'new', profit:20, stdKey:''},
+     qty:30, unit:'מ"א', priceKey:'', manualPrice:450, status:'new', profit:20, stdKey:''},
     {isRemark:true, id:'rem_landscape',
      descHe:'תעריף ₪350–550 למ"א — כולל הכנת קרקע, השקיה בטפטוף 2", עצים 15–25 ליטר מהמשתלה'},
   ],
@@ -875,13 +887,13 @@ var DEFAULT_BOQ = {
      descHe:'תעריף ₪130–160 למ"ק. הערת תוכנית: הקבלן לקרוא את הקרקע לפני ביצוע — המודד מוסמך לתואם'},
     // ── כלונסאות ────────────────────────────────────────────────
     {descHe:'כלונסאות יצוק באתר — Ø50 ס"מ, עומק 11.0מ, בטון ב-30 (6 כלונסאות)',
-     qty:6, unit:'יח', priceKey:'', manualPrice:8500, status:'new', profit:25, stdKey:''},
+     qty:6, unit:'יח', priceKey:'', manualPrice:9300, status:'new', profit:25, stdKey:''},
     {isRemark:true, id:'rem_pile_spec',
      descHe:'מפרט: Ø50 ס"מ, 7ø16 אורכי, אונקלים ø8@20, L=11.0מ, ב-30, כיסוי 6 ס"מ. נדרש מדידת AS-MADE לכל כלונסאה'},
     {descHe:'כלוב ברזל לכלונסאה — 7ø16 אורכי + אונקלים ø8@20, L=11.0מ (אספקה + הורדה)',
      qty:6, unit:'יח', priceKey:'', manualPrice:2200, status:'new', profit:25, stdKey:''},
     {descHe:'שבירת ראשי כלונסאות למפלס תכנוני לאחר יציקה',
-     qty:6, unit:'יח', priceKey:'', manualPrice:550, status:'new', profit:20, stdKey:''},
+     qty:6, unit:'יח', priceKey:'', manualPrice:650, status:'new', profit:20, stdKey:''},
     // ── יסודות ──────────────────────────────────────────────────
     {descHe:'ראש כלונסאה / יסוד בודד — בטון מזוין על כלונסאה, ב-30, כיסוי 5 ס"מ',
      qty:6, unit:'יח', priceKey:'', manualPrice:1358.73, status:'new', profit:22, stdKey:''},
@@ -891,7 +903,7 @@ var DEFAULT_BOQ = {
      qty:42, unit:'מ"ר', priceKey:'', manualPrice:29.2, status:'new', profit:18, stdKey:''},
     // ── עמודים וקירות ───────────────────────────────────────────
     {descHe:'עמודי חוץ — גובה עד 2.0מ, ב-30, 7ø16, כיסוי 6 ס"מ',
-     qty:6, unit:'יח', priceKey:'', manualPrice:1800, status:'new', profit:25, stdKey:''},
+     qty:6, unit:'יח', priceKey:'', manualPrice:2400, status:'new', profit:25, stdKey:''},
     {descHe:'עמודי פנים — גובה עד 2.0מ, ב-30, כיסוי 6 ס"מ',
      qty:4, unit:'יח', priceKey:'', manualPrice:2182.37, status:'new', profit:25, stdKey:''},
     {descHe:'קירות חוץ מזויינים — גובה עד 2.0מ, ב-30, כיסוי 6 ס"מ',
@@ -955,22 +967,22 @@ var DEFAULT_BOQ = {
   hvac:[
     // ── יחידות מרכזיות ───────────────────────────────────────────
     {descHe:'יחידת מיזוג מרכזית אינוורטר — לקומה (סה"כ 10–12 HP ל-350 מ"ר)',
-     qty:2, unit:'יח', priceKey:'', manualPrice:18000, status:'new', profit:20, stdKey:''},
+     qty:2, unit:'יח', priceKey:'', manualPrice:28000, status:'new', profit:20, stdKey:''},
     {isRemark:true, id:'rem_hvac_units',
      descHe:'תעריף ₪14,000–₪18,000 ליחידה. 2 יחידות לוילה דו-קומתית. חלופה: מערכת VRF ₪110,000–₪150,000 לשליטה עצמאית בכל חדר'},
     // ── תפסנים וטרמוסטטים ────────────────────────────────────────
     {descHe:'תפסנים חשמליים — שליטת אזורים ממונעת (לתפסן)',
-     qty:9, unit:'יח', priceKey:'', manualPrice:650, status:'new', profit:22, stdKey:''},
+     qty:9, unit:'יח', priceKey:'', manualPrice:1000, status:'new', profit:22, stdKey:''},
     {descHe:'טרמוסטטים לחדרים — שליטה עצמאית (ליחידה)',
-     qty:9, unit:'יח', priceKey:'', manualPrice:550, status:'new', profit:22, stdKey:''},
+     qty:9, unit:'יח', priceKey:'', manualPrice:800, status:'new', profit:22, stdKey:''},
     // ── לוח שליטה ────────────────────────────────────────────────
     {descHe:'לוח שליטה מרכזי למיזוג — ניהול כל האזורים',
      qty:1, unit:'יח', priceKey:'', manualPrice:34777.78, status:'new', profit:20, stdKey:''},
     // ── תעלות ────────────────────────────────────────────────────
     {descHe:'תעלות אוויר — אספקה + חזרה, מבודדות, שתי קומות (סכום כולל)',
-     qty:1, unit:'יח', priceKey:'', manualPrice:18000, status:'new', profit:20, stdKey:''},
+     qty:1, unit:'יח', priceKey:'', manualPrice:20000, status:'new', profit:20, stdKey:''},
     {descHe:'תנפוחי אוויר / גרילים — אספקה וחזרה (ליחידה)',
-     qty:18, unit:'יח', priceKey:'', manualPrice:280, status:'new', profit:20, stdKey:''},
+     qty:18, unit:'יח', priceKey:'', manualPrice:430, status:'new', profit:20, stdKey:''},
     // ── התקנה ────────────────────────────────────────────────────
     {descHe:'עבודת התקנת מיזוג — הקמה מלאה ותחילת הפעלה (סכום כולל)',
      qty:1, unit:'יח', priceKey:'', manualPrice:11679.74, status:'new', profit:20, stdKey:''},
@@ -980,7 +992,7 @@ var DEFAULT_BOQ = {
     {descHe:'נקודת חשמל למזגן — קו ישיר תלת-פאזי ליחידה חיצונית (לנקודה)',
      qty:2, unit:'יח', priceKey:'', manualPrice:555.17, status:'new', profit:20, stdKey:''},
     {descHe:'חיווט מתח נמוך לטרמוסטט / תפסן (לנקודה)',
-     qty:9, unit:'יח', priceKey:'', manualPrice:180, status:'new', profit:20, stdKey:''},
+     qty:9, unit:'יח', priceKey:'', manualPrice:300, status:'new', profit:20, stdKey:''},
     // ── אופציה: Smart Home ────────────────────────────────────────
     {descHe:'אינטגרציה בית חכם למיזוג — שליטה מרכזית (טלפון / KNX / Control4)',
      qty:0, unit:'יח', priceKey:'', manualPrice:0, status:'new', profit:20, stdKey:''},
@@ -1720,10 +1732,12 @@ function renderRows(catId) {
     if (row.isRemark) {
       var tr = document.createElement('tr');
       tr.setAttribute('data-id', row.id);
+      var isWarn = row.style === 'warning';
+      var remarkBg  = isWarn ? 'background:#fffbea;border-right:4px solid #f59e0b;' : 'background:rgba(245,158,11,.08);border-right:3px solid var(--amber);';
+      var remarkCol = isWarn ? 'color:#92400e;font-weight:800;font-size:12px;' : 'color:var(--amber);font-style:italic;font-size:11px;';
       tr.innerHTML =
-        '<td colspan="14" style="background:rgba(245,158,11,.08);border-right:3px solid var(--amber);' +
-        'padding:5px 12px;font-size:11px;color:var(--amber);font-style:italic">' +
-        '⚠ ' + esc(row.descHe) +
+        '<td colspan="14" style="' + remarkBg + 'padding:8px 12px;' + remarkCol + '">' +
+        (isWarn ? '' : '⚠ ') + esc(row.descHe) +
         (row.desc ? '<span style="color:var(--text3);margin-right:8px"> — ' + esc(row.desc) + '</span>' : '') +
         '</td>' +
         '<td style="background:rgba(245,158,11,.08)">' +
