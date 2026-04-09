@@ -617,7 +617,7 @@ var DEFAULT_BOQ = {
     {descHe:'חיפוי אבן חוץ',          qty:80.0, unit:'מ"ר',priceKey:'',    manualPrice:393.17, status:'new',     profit:30,stdKey:''},
   ],
   stairs:[
-    {descHe:'מדרגות פנים קרקע לב',   qty:1,    unit:'יח', priceKey:'', status:'new',     profit:25,stdKey:''},
+    {descHe:'מדרגות פנים קרקע לב',   qty:1,    unit:'יח', priceKey:'', manualPrice:18000, status:'new',     profit:25,stdKey:''},
     {descHe:'מדרגות כניסה מערב',      qty:1,    unit:'יח', priceKey:'',    manualPrice:114.7, status:'existing',profit:15,stdKey:''},
     {descHe:'מדרגות כניסה דרום',      qty:1,    unit:'יח', priceKey:'',    manualPrice:114.7, status:'existing',profit:15,stdKey:''},
   ],
@@ -670,15 +670,15 @@ var DEFAULT_BOQ = {
     {descHe:'נקודת עומס כבד — מזגן / דוד (קו ישיר ללוח, לנקודה)',
      qty:4,  unit:'יח', priceKey:'', manualPrice:183.37, status:'new', profit:25, stdKey:''},
     {descHe:'נקודת טלוויזיה / נתונים Cat6 — חדרים (לנקודה)',
-     qty:3,  unit:'יח', priceKey:'', manualPrice:180, status:'new', profit:25, stdKey:''},
+     qty:3,  unit:'יח', priceKey:'', manualPrice:300, status:'new', profit:25, stdKey:''},
     {descHe:'מתג אור — יחיד / כפול (חיווט + מנגנון, לנקודה)',
-     qty:8,  unit:'יח', priceKey:'', manualPrice:150, status:'new', profit:25, stdKey:''},
+     qty:8,  unit:'יח', priceKey:'', manualPrice:300, status:'new', profit:25, stdKey:''},
     {descHe:'נקודת תאורה — תקרה / קיר (חיווט לנקודה, לא כולל גוף תאורה)',
      qty:12, unit:'יח', priceKey:'', manualPrice:328.06, status:'new', profit:25, stdKey:''},
     {descHe:'שקעים ומתגים קומת קרקע — שיפוץ קיים (לנקודה)',
      qty:15, unit:'יח', priceKey:'', manualPrice:779.5, status:'existing', profit:15, stdKey:''},
     {descHe:'נקודת תריס חשמלי / תריסון ממונע (חיווט + בקר, לנקודה)',
-     qty:6,  unit:'יח', priceKey:'', manualPrice:320, status:'new', profit:25, stdKey:''},
+     qty:6,  unit:'יח', priceKey:'', manualPrice:300, status:'new', profit:25, stdKey:''},
     {descHe:'שקע חוץ עמיד מים — מרפסת / גינה (IP65, לנקודה)',
      qty:4,  unit:'יח', priceKey:'', manualPrice:1618.97, status:'new', profit:25, stdKey:''},
     {isRemark:true, id:'rem_elec_points',
@@ -726,10 +726,10 @@ var DEFAULT_BOQ = {
   roof:[
     // ── גג עליון — יח"ד 1 (upper unit, hipped tile roof ~10.55×17.25m pitched) ──
     {descHe:'רעפים מלצג — גג עליון יח"ד 1, שטח משופע כולל ירכתיים',
-     qty:95, unit:'מ"ר', priceKey:'', manualPrice:280, status:'new', profit:25, stdKey:''},
+     qty:95, unit:'מ"ר', priceKey:'', manualPrice:110, status:'new', profit:25, stdKey:''},
     // ── גג תחתון — יח"ד 2 (lower unit, hipped tile roof ~10.0×9.0m pitched) ───
     {descHe:'רעפים מלצג — גג תחתון יח"ד 2, שטח משופע כולל ירכתיים',
-     qty:75, unit:'מ"ר', priceKey:'', manualPrice:280, status:'new', profit:25, stdKey:''},
+     qty:75, unit:'מ"ר', priceKey:'', manualPrice:110, status:'new', profit:25, stdKey:''},
     {isRemark:true, id:'rem_roof_tiles',
      descHe:'סה"כ ~170 מ"ר בשני גגות ירכתיים. תעריף ₪250–320 למ"ר אספקה + הנחה כולל רשת תחתית. לאמת עם תוכנית קונסטרוקציה'},
     // ── בידוד ────────────────────────────────────────────────────
@@ -785,12 +785,12 @@ var DEFAULT_BOQ = {
     {descHe:'ביצוע תבנית לקיר — שתי פנים',
      qty:72, unit:'מ"ר', priceKey:'', manualPrice:180, status:'new', profit:22, stdKey:''},
     {descHe:'ברזל פרוס קיר תומך — ø8 עד ø12 לפי פרט (כולל הכנה והנחה)',
-     qty:1.1, unit:'טון', priceKey:'', manualPrice:5200, status:'new', profit:28, stdKey:''},
+     qty:1.1, unit:'טון', priceKey:'', manualPrice:6000, status:'new', profit:28, stdKey:''},
     {descHe:'תפר ביצוע / תפר דיון קיר — פרופיל PVC',
      qty:18, unit:'מ"א', priceKey:'', manualPrice:85, status:'new', profit:20, stdKey:''},
     // ── ניקוז ────────────────────────────────────────────────────
     {descHe:'צינור ניקוז Ø4" C.V.P דרך קיר — כל 1.5מ גובה ו-2מ לאורך',
-     qty:12, unit:'יח', priceKey:'', manualPrice:280, status:'new', profit:25, stdKey:''},
+     qty:12, unit:'יח', priceKey:'', manualPrice:110, status:'new', profit:25, stdKey:''},
     {descHe:'מסננת חצץ 30/30/30 + בד גיאוטכני — מאחורי קיר תומך',
      qty:20, unit:'מ"ק', priceKey:'', manualPrice:1769.73, status:'new', profit:22, stdKey:''},
     // ── מילוי ────────────────────────────────────────────────────
@@ -881,7 +881,7 @@ var DEFAULT_BOQ = {
     {descHe:'כלוב ברזל לכלונסאה — 7ø16 אורכי + אונקלים ø8@20, L=11.0מ (אספקה + הורדה)',
      qty:6, unit:'יח', priceKey:'', manualPrice:2200, status:'new', profit:25, stdKey:''},
     {descHe:'שבירת ראשי כלונסאות למפלס תכנוני לאחר יציקה',
-     qty:6, unit:'יח', priceKey:'', manualPrice:850, status:'new', profit:20, stdKey:''},
+     qty:6, unit:'יח', priceKey:'', manualPrice:550, status:'new', profit:20, stdKey:''},
     // ── יסודות ──────────────────────────────────────────────────
     {descHe:'ראש כלונסאה / יסוד בודד — בטון מזוין על כלונסאה, ב-30, כיסוי 5 ס"מ',
      qty:6, unit:'יח', priceKey:'', manualPrice:1358.73, status:'new', profit:22, stdKey:''},
