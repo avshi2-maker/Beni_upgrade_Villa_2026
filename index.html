@@ -1049,18 +1049,43 @@ function ensureStandardsLoaded(cb) {
 }
 
 // ── GET PRICE for a row ───────────────────────────────────────
+// Chapter whitelist per BOQ category — prevents cross-chapter contamination
+var CAT_CHAPTERS = {
+  bisus:    ['2','23','51'],
+  pituch:   ['2','51'],
+  chatzer:  ['40','41','42','51','52','57'],
+  roof:     ['40'],
+  tiles:    ['40'],
+  plaster:  ['40'],
+  stairs:   ['40'],
+  windows:  ['40'],
+  doors:    ['40'],
+  sanitary: ['40','57'],
+  taps:     ['40','57'],
+  lighting: ['8','40'],
+  outlets:  ['8'],
+  elec_panel:['8'],
+  paint:    ['40'],
+  hvac:     ['8'],
+  logistics:['51','40'],
+  mamad:    ['2','40'],
+  areas:    []
+};
+
 function getPrice(row) {
   // Priority 1: manualPrice — always wins
   if (row.manualPrice) return { p: row.manualPrice, src: 'manual' };
 
-  // Priority 2: Dekel keyword search
   var desc = String(row.descHe||'').trim();
   var unit = String(row.unit||'').trim();
+  var cat  = String(row._cat||'').trim();
   if (!desc || Object.keys(priceCache).length === 0) return { p: 0, src: 'missing' };
 
-  // Filter out location/direction words — they appear in BOQ but not in Dekel
+  // Allowed chapters for this BOQ category
+  var allowedChapters = CAT_CHAPTERS[cat] || [];
+
   var stopWords = ['קומה','קרקע','צפון','דרום','מזרח','מערב','ראשית','עליונה',
-    'תחתונה','כפול','קטן','גדול','ב','א','ג','יח','יחד','כולל','לפי','עד','מעל'];
+    'תחתונה','כפול','קטן','גדול','ב','א','ג','יחד','כולל','לפי','עד','מעל'];
 
   var descWords = desc.replace(/[()״"׳\-—]/g,' ').split(/[\s,\/\+]+/)
     .filter(function(w){ return w.length > 1 && stopWords.indexOf(w) < 0; });
@@ -1068,26 +1093,24 @@ function getPrice(row) {
   if (!descWords.length) return { p: 0, src: 'missing' };
 
   var bestMatch = null, bestScore = 0, bestCode = '';
-
-  // Normalize unit — Dekel uses יח' (with geresh), BOQ uses יח
   var unitNorm = unit.replace(/['’׳]/g,'').trim();
+  var unitGroups = {'מ"ר':1,'מר':1,'מ"ק':2,'מק':2,'מ"א':3,'מא':3,'טון':4,'ק"ג':4,'קג':4};
 
   Object.keys(priceCache).forEach(function(code){
     var item = priceCache[code];
     if (!item || !item.p) return;
+    // Chapter filter — only search in allowed chapters
+    if (allowedChapters.length > 0 && allowedChapters.indexOf(String(item.chapter)) < 0) return;
     var itemUnitNorm = String(item.unit||'').replace(/['’׳]/g,'').trim();
-    // Hard filter only for clearly incompatible units (m2 vs m3 vs ton vs unit)
-    var unitGroups = {'מ"ר':1,'מר':1,'מ"ק':2,'מק':2,'מ"א':3,'מא':3,'טון':4,'ק"ג':4,'קג':4};
+    // Hard unit group filter
     var g1 = unitGroups[unitNorm], g2 = unitGroups[itemUnitNorm];
-    if (g1 && g2 && g1 !== g2) return; // incompatible — skip
+    if (g1 && g2 && g1 !== g2) return;
     var itemDesc = String(item.desc||'').toLowerCase();
     var score = 0;
     descWords.forEach(function(w){
       if (itemDesc.indexOf(w.toLowerCase()) > -1) score++;
     });
-    // Bonus: first word match is strong signal
     if (descWords[0] && itemDesc.indexOf(descWords[0].toLowerCase()) > -1) score += 0.5;
-    // Bonus: same unit group
     if (unitNorm && itemUnitNorm && unitNorm === itemUnitNorm) score += 0.3;
     if (score > bestScore) { bestScore = score; bestMatch = item; bestCode = code; }
   });
@@ -1152,7 +1175,7 @@ function renderSummaryCards() {
     rows.forEach(function(r) {
       if (r.isRemark) return;
       totalRows++;
-      var c = calcRow(r);
+      r._cat = cat.id; var c = calcRow(r);
       if (c.src !== 'missing') pricedRows++;
       catOffer   += c.offer;
       grandCost  += c.costTotal;
@@ -1184,7 +1207,7 @@ function recalcSummary() {
   CATS.forEach(function(cat) {
     (boqData[cat.id]||[]).forEach(function(r) {
       if (r.isRemark) return;
-      var c = calcRow(r);
+      r._cat = cat.id; var c = calcRow(r);
       grandCost   += c.costTotal;
       grandSell   += c.sellTotal;
       grandProfit += c.profitAmt;
@@ -1311,7 +1334,7 @@ function renderRows(catId) {
       tbody.appendChild(tr);
       return;
     }
-    var c = calcRow(row);
+    row._cat = catId; var c = calcRow(row);
     var priceClass = c.src==='dekel' ? 'pf' : c.src==='manual' ? 'pm' : 'px';
     var costDisplay = c.src==='missing'
       ? '<span class="px">לא נמצא</span>'
@@ -1642,7 +1665,7 @@ function recalcAll() {
     rows.forEach(function(r) {
       if (r.isRemark) return;  // remarks contribute ₪0
       total++;
-      var c = calcRow(r);
+      r._cat = cat.id; var c = calcRow(r);
       if (c.src !== 'missing') priced++;
       catCost   += c.costTotal;
       catProfit += c.profitAmt;
@@ -1678,7 +1701,7 @@ function saveToSupabase() {
   var allRows = [];
   CATS.forEach(function(cat) {
     (boqData[cat.id]||[]).forEach(function(row) {
-      var c = calcRow(row);
+      row._cat = catId; var c = calcRow(row);
       allRows.push({
         permit_number: '16860', category: cat.id, category_he: cat.he,
         description: row.desc, description_he: row.descHe,
@@ -1750,7 +1773,7 @@ function exportCSV() {
 
     (boqData[cat.id]||[]).forEach(function(row) {
       if (row.isRemark) return;
-      var c = calcRow(row);
+      row._cat = catId; var c = calcRow(row);
       grand += c.offer;
       var statusHe = row.status==='new'?'חדש':row.status==='existing'?'קיים':'שיפוץ';
       rows += '<Row>'+
@@ -1968,7 +1991,7 @@ function generateOffer(mode) {
   var totalSell = 0, totalOffer = 0;
   CATS.forEach(function(cat){
     var rows = (boqData[cat.id]||[]).filter(function(r){return !r.isRemark;});
-    var sell = rows.reduce(function(s,r){return s+calcRow(r).sellTotal;},0);
+    var sell = rows.reduce(function(s,r){r._cat=cat.id;return s+calcRow(r).sellTotal;},0);
     var offer = sell*(1+vat);
     if(offer>0){
       cats_offer.push({he:cat.he, icon:cat.icon, offer:Math.round(offer)});
