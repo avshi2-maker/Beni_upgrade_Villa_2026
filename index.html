@@ -1428,6 +1428,13 @@ function getPrice(row) {
   var cat  = String(row._cat||'').trim();
   if (!desc || Object.keys(priceCache).length === 0) return { p: 0, src: 'missing' };
 
+  // Categories not in Dekel — use manualPrice only
+  var NO_DEKEL = ['areas','windows','doors','sanitary'];
+  if (NO_DEKEL.indexOf(cat) > -1) {
+    if (row.manualPrice) return { p: row.manualPrice, src: 'manual' };
+    return { p: 0, src: 'missing' };
+  }
+
   // Allowed chapters for this BOQ category
   var allowedChapters = CAT_CHAPTERS[cat] || [];
 
