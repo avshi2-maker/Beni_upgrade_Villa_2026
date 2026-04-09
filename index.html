@@ -982,18 +982,26 @@ function sbFetch(baseUrl, key, path) {
 
 // ── LOAD PRICES from new Supabase ────────────────────────────
 function loadPrices() {
-  return sbFetch(SB_NEW_URL, SB_NEW_KEY, '/rest/v1/price_unit?select=price_key,price&limit=500')
-    .then(function(r) { return r.json(); })
-    .then(function(rows) {
-      if (!Array.isArray(rows)) throw new Error(JSON.stringify(rows).substr(0,100));
-      priceCache = {};
-      rows.forEach(function(row) {
-        var k = String(row.price_key||'').trim();
-        var p = parseFloat(row.price) || 0;
-        if (k) priceCache[k] = p;
+  // Load ALL price_chapters from Dekel מחירון into priceCache
+  // Key = item_code, also index by keywords for fuzzy matching
+  var allRows = [];
+  function fetchPage(offset) {
+    return sbFetch(SB_NEW_URL, SB_NEW_KEY,
+      '/rest/v1/price_chapters?select=item_code,chapter,description,unit,price&price=not.is.null&limit=500&offset='+offset)
+      .then(function(r){ return r.json(); })
+      .then(function(rows){
+        if(!Array.isArray(rows)) throw new Error(JSON.stringify(rows).substr(0,80));
+        rows.forEach(function(r){
+          if(r.price && r.item_code) {
+            priceCache[r.item_code] = { p: parseFloat(r.price), desc: r.description||'', unit: r.unit||'', chapter: r.chapter||'' };
+          }
+        });
+        allRows = allRows.concat(rows);
+        if(rows.length === 500) return fetchPage(offset+500);
+        return allRows.length;
       });
-      return rows.length;
-    });
+  }
+  return fetchPage(0);
 }
 
 // ── LOAD STANDARDS — lazy, called on first search open ───────
@@ -1042,9 +1050,32 @@ function ensureStandardsLoaded(cb) {
 
 // ── GET PRICE for a row ───────────────────────────────────────
 function getPrice(row) {
-  // ALL priceKeys cleared — manualPrice is the ONLY source of truth
-  // DB priceCache is NEVER consulted — this permanently fixes the inflation bug
+  // Priority 1: manualPrice (Beni's own price — always wins)
   if (row.manualPrice) return { p: row.manualPrice, src: 'manual' };
+
+  // Priority 2: Search Dekel price_chapters by keyword in description
+  var desc = String(row.descHe||'').trim();
+  var unit = String(row.unit||'').trim();
+  if (!desc || Object.keys(priceCache).length === 0) return { p: 0, src: 'missing' };
+
+  var bestMatch = null, bestScore = 0;
+  var descWords = desc.replace(/[()״"׳]/g,'').split(/[\s,\/\-]+/).filter(function(w){return w.length>1;});
+
+  Object.keys(priceCache).forEach(function(code){
+    var item = priceCache[code];
+    if(!item || !item.p) return;
+    // Unit must match (or item has no unit)
+    if(item.unit && unit && item.unit !== unit) return;
+    // Score: count matching words in Dekel description
+    var itemDesc = String(item.desc||'').toLowerCase();
+    var score = 0;
+    descWords.forEach(function(w){
+      if(w.length > 1 && itemDesc.indexOf(w) > -1) score++;
+    });
+    if(score > bestScore) { bestScore = score; bestMatch = item; }
+  });
+
+  if(bestMatch && bestScore >= 2) return { p: bestMatch.p, src: 'dekel' };
   return { p: 0, src: 'missing' };
 }
 
@@ -1263,7 +1294,7 @@ function renderRows(catId) {
       return;
     }
     var c = calcRow(row);
-    var priceClass = c.src==='db'||c.src==='db~' ? 'pf' : c.src==='manual' ? 'pm' : 'px';
+    var priceClass = c.src==='dekel' ? 'pf' : c.src==='manual' ? 'pm' : 'px';
     var costDisplay = c.src==='missing'
       ? '<span class="px">לא נמצא</span>'
       : '<span class="'+priceClass+'">'+fmt(c.costUnit)+'</span>';
@@ -1796,16 +1827,15 @@ document.getElementById('loadingText').textContent = 'טוען מחירים...';
 document.getElementById('stdCount').textContent = 'לחץ 📚 לטעינה';
 loadPrices()
   .then(function(n) {
-    document.getElementById('dbStatus').textContent = 'מחובר ('+n+' מחירים — ידני בלבד)';
+    document.getElementById('dbStatus').textContent = 'מחירון דקל: '+n+' פריטים';
     document.getElementById('dbDot').className = 'sdot dg';
-    toast('מחובר ✓ — מחירים ידניים פעילים','ok');
-    // Do NOT call renderAllTables/recalcAll here — manualPrices already set at boot
-    // DB prices are loaded but getPrice() ignores them (manualPrice always wins)
+    toast('מחירון דקל נטען — '+n+' פריטים ✓','ok');
+    renderAllTables(); recalcAll();
   })
   .catch(function(e) {
-    document.getElementById('dbStatus').textContent = 'שגיאת חיבור (עובד במצב ידני)';
+    document.getElementById('dbStatus').textContent = 'שגיאת חיבור';
     document.getElementById('dbDot').className = 'sdot dr';
-    toast('עובד במצב ידני ✓','ok');
+    toast('שגיאת מחירון: '+e.message.substr(0,40),'err');
   })
   .finally(function() {
     document.getElementById('loadingOverlay').style.display = 'none';
