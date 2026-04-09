@@ -1050,32 +1050,42 @@ function ensureStandardsLoaded(cb) {
 
 // ── GET PRICE for a row ───────────────────────────────────────
 function getPrice(row) {
-  // Priority 1: manualPrice (Beni's own price — always wins)
+  // Priority 1: manualPrice — always wins
   if (row.manualPrice) return { p: row.manualPrice, src: 'manual' };
 
-  // Priority 2: Search Dekel price_chapters by keyword in description
+  // Priority 2: Dekel keyword search
   var desc = String(row.descHe||'').trim();
   var unit = String(row.unit||'').trim();
   if (!desc || Object.keys(priceCache).length === 0) return { p: 0, src: 'missing' };
 
-  var bestMatch = null, bestScore = 0;
-  var descWords = desc.replace(/[()״"׳]/g,'').split(/[\s,\/\-]+/).filter(function(w){return w.length>1;});
+  // Filter out location/direction words — they appear in BOQ but not in Dekel
+  var stopWords = ['קומה','קרקע','צפון','דרום','מזרח','מערב','ראשית','עליונה',
+    'תחתונה','כפול','קטן','גדול','ב','א','ג','יח','יחד','כולל','לפי','עד','מעל'];
+
+  var descWords = desc.replace(/[()״"׳\-—]/g,' ').split(/[\s,\/\+]+/)
+    .filter(function(w){ return w.length > 1 && stopWords.indexOf(w) < 0; });
+
+  if (!descWords.length) return { p: 0, src: 'missing' };
+
+  var bestMatch = null, bestScore = 0, bestCode = '';
 
   Object.keys(priceCache).forEach(function(code){
     var item = priceCache[code];
-    if(!item || !item.p) return;
-    // Unit must match (or item has no unit)
-    if(item.unit && unit && item.unit !== unit) return;
-    // Score: count matching words in Dekel description
+    if (!item || !item.p) return;
+    // Unit filter — must match exactly if both have units
+    if (item.unit && unit && item.unit !== unit) return;
     var itemDesc = String(item.desc||'').toLowerCase();
     var score = 0;
     descWords.forEach(function(w){
-      if(w.length > 1 && itemDesc.indexOf(w) > -1) score++;
+      if (itemDesc.indexOf(w.toLowerCase()) > -1) score++;
     });
-    if(score > bestScore) { bestScore = score; bestMatch = item; }
+    // Bonus: first meaningful word is a strong signal
+    if (descWords[0] && itemDesc.indexOf(descWords[0].toLowerCase()) > -1) score += 0.5;
+    if (score > bestScore) { bestScore = score; bestMatch = item; bestCode = code; }
   });
 
-  if(bestMatch && bestScore >= 2) return { p: bestMatch.p, src: 'dekel' };
+  // Threshold: 1 word match is enough (Dekel items are very specific)
+  if (bestMatch && bestScore >= 1) return { p: bestMatch.p, src: 'dekel', code: bestCode };
   return { p: 0, src: 'missing' };
 }
 
@@ -1090,7 +1100,8 @@ function calcRow(row) {
   var offer     = sellTotal * (1 + vat);                   // offer to customer inc VAT
   var profitAmt = sellTotal - cost;
   return { costUnit: pp.p, costTotal: cost, sellUnit: sellPrice,
-           sellTotal: sellTotal, profitAmt: profitAmt, offer: offer, src: pp.src };
+           sellTotal: sellTotal, profitAmt: profitAmt, offer: offer, src: pp.src,
+           code: pp.code||'' };
 }
 
 function getVAT() {
@@ -1240,8 +1251,8 @@ function renderCatSection(cat, container) {
   tbl.className = 'boq-table';
   tbl.innerHTML =
     '<thead><tr>' +
+    '<th style="width:52px;font-size:10px">דקל</th>' +
     '<th style="width:28px">#</th>' +
-    '<th style="min-width:150px">תיאור (EN)</th>' +
     '<th style="min-width:130px">תיאור (HE)</th>' +
     '<th style="min-width:120px">תקן / מפרט</th>' +
     '<th style="width:55px">יח</th>' +
@@ -1321,14 +1332,39 @@ function renderRows(catId) {
         'onclick="openStdSearch(\''+catId+'\',\''+row.id+'\')" title="בחר תקן">+ תקן</div>';
     }
 
+    // Dekel chapter badge
+    var dekelCode = c.code || '';
+    var dekelBadge = '';
+    if (dekelCode) {
+      var chNum = dekelCode.split('.')[0];
+      var chNames = {'2':'פ02 בטון','8':'פ08 חשמל','23':'פ23 כלונס','26':'פ26 עוגנים',
+        '40':'פ40 פיתוח','41':'פ41 גינון','42':'פ42 ריהוט','43':'פ43 קירות',
+        '44':'פ44 גדרות','51':'פ51 עפר','52':'פ52 אספלט','57':'פ57 מים/ביוב',
+        '92':'פ92 בקרה','93':'פ93 בטיחות'};
+      var chColors = {'2':'#534AB7','8':'#185FA5','23':'#0F6E56','26':'#854F0B',
+        '40':'#A32D2D','41':'#3B6D11','42':'#633806','43':'#791F1F',
+        '44':'#5F5E5A','51':'#888780','52':'#333333','57':'#0C447C',
+        '92':'#B8860B','93':'#B8860B'};
+      var chName = chNames[chNum] || ('פ'+chNum);
+      var chColor = chColors[chNum] || '#888888';
+      dekelBadge = '<div title="'+dekelCode+'" style="background:'+chColor+
+        ';color:#fff;border-radius:4px;padding:2px 4px;font-size:9px;font-weight:700;'+
+        'text-align:center;line-height:1.5;cursor:help;white-space:nowrap">'+chName+'</div>';
+    } else if (c.src === 'manual') {
+      dekelBadge = '<div style="color:var(--text3);font-size:9px;text-align:center;font-style:italic">ידני</div>';
+    } else {
+      dekelBadge = '<div style="color:#ccc;font-size:9px;text-align:center">—</div>';
+    }
+
     var tr = document.createElement('tr');
     tr.setAttribute('data-id', row.id);
     tr.innerHTML =
+      '<td style="text-align:center;padding:2px 3px;width:52px">'+dekelBadge+'</td>' +
       '<td style="text-align:center;color:var(--text3);font-size:11px">'+(i+1)+'</td>' +
-      '<td><input class="ciw" value="'+esc(row.desc)+'" ' +
-        'onchange="upd(\''+catId+'\',\''+row.id+'\',\'desc\',this.value)"></td>' +
       '<td><input class="ciw" value="'+esc(row.descHe)+'" ' +
-        'onchange="upd(\''+catId+'\',\''+row.id+'\',\'descHe\',this.value)"></td>' +
+        'onchange="upd(\''+catId+'\',' +
+        '\''+row.id+'\',' +
+        '\'descHe\',this.value)"></td>' +
       '<td>'+stdDisplay+'</td>' +
       '<td style="color:var(--text2);text-align:center;font-size:11px">'+row.unit+'</td>' +
       '<td><input class="ci" type="number" min="0" step="0.01" value="'+(row.qty||0)+'" ' +
