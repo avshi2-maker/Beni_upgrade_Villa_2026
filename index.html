@@ -659,65 +659,29 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
         </div>
       </div>
 
-      <!-- ── PHOTOS GRID ── -->
+      <!-- ── VILLA IMAGE (NanoBanana render) ── -->
       <div style="padding:14px 18px 0">
-        <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;align-items:start">
-
-          <!-- Infographic -->
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase">אינפוגרפיקה — כתב כמויות מתוקן ✓</div>
-            <a href="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/infographic_16860_09042026.png" target="_blank" style="display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer">
-              <img src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/infographic_16860_09042026.png"
-                alt="אינפוגרפיקה BOQ 16860 מתוקן"
-                style="width:100%;display:block;object-fit:cover;max-height:220px;border-radius:7px"
-                onerror="this.parentElement.innerHTML='<div style=\'padding:30px;text-align:center;color:var(--text3);font-size:11px\'>⚠ העלה infographic_16860_09042026.png לסופאבייס</div>'">
-            </a>
-            <div style="font-size:10px;color:var(--text2)">לחץ לפתיחה בגודל מלא</div>
-          </div>
-
-          <!-- middetails -->
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase">הדמיה — פירוט</div>
-            <a href="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png" target="_blank" style="display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer">
-              <img src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png"
-                alt="middetails"
-                style="width:100%;display:block;object-fit:cover;max-height:220px;border-radius:7px"
-                onerror="this.parentElement.innerHTML='<div style=\'padding:30px;text-align:center;color:var(--text3);font-size:11px\'>⚠ תמונה לא נטענה</div>'">
-            </a>
-            <div style="font-size:10px;color:var(--text2)">לחץ לפתיחה בגודל מלא</div>
-          </div>
-
-          <!-- midj -->
-          <div style="display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase">הדמיה — Midjourney</div>
-            <a href="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png" target="_blank" style="display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer">
-              <img src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png"
-                alt="הדמיה midjourney"
-                style="width:100%;display:block;object-fit:cover;max-height:220px;border-radius:7px"
-                onerror="this.parentElement.innerHTML='<div style=\'padding:30px;text-align:center;color:var(--text3);font-size:11px\'>⚠ תמונה לא נטענה</div>'">
-            </a>
-            <div style="font-size:10px;color:var(--text2)">לחץ לפתיחה בגודל מלא</div>
-          </div>
-
-        </div>
+        <div style="font-size:10px;color:var(--text3);font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px">הדמיית הבית — NanoBanana</div>
+        <a href="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/vilanano.png" target="_blank" style="display:block;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:pointer">
+          <img src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/vilanano.png"
+            alt="הדמיית וילת ברגר"
+            style="width:100%;display:block;object-fit:cover;max-height:320px;object-position:center 30%;border-radius:7px"
+            onerror="this.parentElement.parentElement.style.display='none'">
+        </a>
+        <div style="font-size:10px;color:var(--text2);margin-top:4px">לחץ לפתיחה בגודל מלא</div>
       </div>
 
-      <!-- Quick copy URLs -->
-      <div style="padding:10px 18px 14px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:14px">
-        <span style="font-size:11px;color:var(--text3);align-self:center">העתק URL להצעת מחיר:</span>
+      <!-- Quick copy URLs + back button -->
+      <div style="padding:10px 18px 14px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:14px;align-items:center">
+        <button onclick="scrollToBoq()" style="background:linear-gradient(135deg,#1a5cb0,#2a7de0);color:#fff;border:none;padding:7px 18px;border-radius:20px;font-family:Heebo,sans-serif;font-size:13px;font-weight:800;cursor:pointer">📋 חזור לכתב כמויות</button>
+        <span style="font-size:11px;color:var(--text3);align-self:center;margin-right:8px">| העתק URL:</span>
         <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/infographic_16860_09042026.png','אינפוגרפיקה')" class="btn btn-secondary btn-sm">📋 אינפוגרפיקה</button>
-        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/vilanano.png','הדמיה NanoBanana')" class="btn btn-secondary btn-sm">📋 הדמיה — נאנו</button>
-        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png','הדמיה פירוט')" class="btn btn-secondary btn-sm">📋 הדמיה — פירוט</button>
-        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png','הדמיה Midjourney')" class="btn btn-secondary btn-sm">📋 הדמיה — MJ</button>
+        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/vilanano.png','הדמיה')" class="btn btn-secondary btn-sm">📋 הדמיה — נאנו</button>
       </div>
     </div>
 
-    <!-- ── חזור לכתב כמויות FLOATING BUTTON ── -->
-    <div id="backToBoqBtn" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999">
-      <button onclick="scrollToBoq()" style="background:linear-gradient(135deg,#1a5cb0,#2a7de0);color:#fff;border:none;padding:12px 28px;border-radius:28px;font-family:Heebo,sans-serif;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 20px rgba(26,92,176,.5);display:flex;align-items:center;gap:8px">
-        📋 חזור לכתב כמויות
-      </button>
-    </div>
+    <!-- ── חזור לכתב כמויות — inline in copy bar ── -->
+    <div id="backToBoqBtn" style="display:none"></div>
 
   </div>
 </div>
