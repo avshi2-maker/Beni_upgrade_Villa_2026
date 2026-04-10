@@ -220,7 +220,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
   <div class="hbtns">
     <button class="btn btn-secondary btn-sm" onclick="reloadPrices()">🔄 רענן מחירים</button>
     <button class="btn btn-secondary btn-sm" onclick="reloadStandards()">📚 רענן תקנים</button>
-    <button class="btn btn-secondary btn-sm" onclick="open3DViewer()" style="background:linear-gradient(135deg,#1a4a8c,#0f3268);border-color:#1a4a8c;color:#fff;font-weight:700">🏗 תצוגה תלת-מימדית</button>
+    <button class="btn btn-secondary btn-sm" onclick="scrollTo3D()" style="background:linear-gradient(135deg,#1a4a8c,#0f3268);border-color:#1a4a8c;color:#fff;font-weight:700">🏗 תצוגה תלת-מימדית</button>
     <button class="btn btn-primary"          onclick="saveToSupabase()">💾 שמור</button>
     <button class="btn btn-success"          onclick="exportCSV()">📊 Excel XLS</button>
     <button onclick="collapseAll()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer" title="כווץ הכל">▶ כווץ</button>
@@ -1500,10 +1500,16 @@ function copyImgUrl(url, label) {
 
 // ── 3D VIEWER ─────────────────────────────────────────────────
 function open3DViewer() {
-  var url = 'villa3d_08042026.html';
-  var w = window.open(url, '_blank');
-  if (!w) {
-    toast('אפשר חלונות קופצים בדפדפן כדי לפתוח את התצוגה התלת-מימדית', 'err');
+  // Legacy — redirect to embedded viewer
+  scrollTo3D();
+}
+function scrollTo3D() {
+  var el = document.getElementById('hadmayaWrap');
+  if (el) {
+    el.scrollIntoView({behavior:'smooth', block:'center'});
+    // Flash the border to signal it
+    el.style.boxShadow = '0 0 0 4px #c9a84c';
+    setTimeout(function(){ el.style.boxShadow = ''; }, 1500);
   }
 }
 
@@ -2840,9 +2846,15 @@ function generateOffer(mode) {
         r._cat = c.id;
         var cr = calcRow(r);
         if(cr.offer <= 0) return;
+        var stdBadge = '';
+        if (r.stdKey) {
+          var stdObj = standardsDB.find(function(s){ return s.standard_id===r.stdKey || String(s.id)===String(r.stdKey); });
+          var stdNum = stdObj ? (stdObj.standard_id||r.stdKey) : r.stdKey;
+          stdBadge = ' <span style="display:inline-block;background:#e8f0ff;color:#1a3a6c;border:0.5px solid #b8c8e8;border-radius:3px;padding:0px 5px;font-size:9px;font-weight:600;vertical-align:middle;white-space:nowrap">ת"י '+stdNum+'</span>';
+        }
         lineRows += '<div style="padding:5px 28px 5px 44px;display:flex;justify-content:space-between;'+
           'border-bottom:0.5px solid #f5f5f5;font-size:11px;color:#555">'+
-          '<span>'+r.descHe.substr(0,60)+(r.descHe.length>60?'...':'')+'</span>'+
+          '<span>'+r.descHe.substr(0,60)+(r.descHe.length>60?'...':'')+stdBadge+'</span>'+
           '<span style="font-weight:500;color:#1a3a6c;white-space:nowrap">'+r.qty+' '+r.unit+' × ₪'+fmt(cr.costUnit)+' = ₪'+fmt(cr.offer)+'</span>'+
         '</div>';
       });
@@ -2954,8 +2966,71 @@ function generateOffer(mode) {
       '</div>'+
     '</div>'+
 
+    // STANDARDS COMPLIANCE SECTION
+    (function(){
+      // Collect all unique standards referenced in this BOQ
+      var stdMap = {};
+      CATS.forEach(function(cat){
+        (boqData[cat.id]||[]).forEach(function(r){
+          if (r.isRemark || r.status==='excluded') return;
+          if (r.stdKey) {
+            var stdObj = standardsDB.find(function(s){
+              return s.standard_id===r.stdKey || String(s.id)===String(r.stdKey);
+            });
+            if (stdObj && !stdMap[r.stdKey]) {
+              stdMap[r.stdKey] = {
+                num:   stdObj.standard_id || r.stdKey,
+                title: stdObj.title_he    || r.stdKey,
+                cat:   stdObj.standard_category || stdObj.industry_category || cat.he,
+                catHe: cat.he
+              };
+            } else if (!stdMap[r.stdKey]) {
+              stdMap[r.stdKey] = {num:r.stdKey, title:r.stdKey, cat:cat.he, catHe:cat.he};
+            }
+          }
+        });
+      });
+      var stdList = Object.values(stdMap);
+
+      if (stdList.length === 0) return;
+
+      var stdRows = stdList.map(function(s){
+        return '<tr>'+
+          '<td style="padding:5px 10px;font-size:11px;font-weight:700;color:#1a3a6c;white-space:nowrap;border-bottom:0.5px solid #eee">ת"י '+s.num+'</td>'+
+          '<td style="padding:5px 10px;font-size:11px;color:#333;border-bottom:0.5px solid #eee">'+s.title+'</td>'+
+          '<td style="padding:5px 10px;font-size:10px;color:#888;border-bottom:0.5px solid #eee;white-space:nowrap">'+s.catHe+'</td>'+
+        '</tr>';
+      }).join('');
+
+      var stdBlock =
+        '<div style="padding:14px 28px;border-bottom:1px solid #e8e8e8;background:#f5f8ff">'+
+          '<div style="font-size:10px;color:#1a3a6c;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-weight:700">'+
+            '📋 תאימות לתקנים ישראלים — כל העבודות מבוצעות בהתאם לתקינה הבאה'+
+          '</div>'+
+          '<div style="font-size:11px;color:#555;margin-bottom:10px;line-height:1.6">'+
+            'הצעת מחיר זו מבוצעת בהתאם לתקנים הישראלים (ת"י) הרלוונטיים. '+
+            'ציות לתקנים הינו חלק בלתי נפרד מתנאי ביצוע העבודה ומהווה ערך מוסף ללקוח.'+
+          '</div>'+
+          '<table style="width:100%;border-collapse:collapse;background:#fff;border-radius:6px;overflow:hidden;border:0.5px solid #dde8ff">'+
+            '<thead>'+
+              '<tr style="background:#1a3a6c">'+
+                '<th style="padding:7px 10px;text-align:right;color:#fff;font-size:10px;font-weight:600;white-space:nowrap">תקן</th>'+
+                '<th style="padding:7px 10px;text-align:right;color:#fff;font-size:10px;font-weight:600">נושא</th>'+
+                '<th style="padding:7px 10px;text-align:right;color:#fff;font-size:10px;font-weight:600">קטגוריה</th>'+
+              '</tr>'+
+            '</thead>'+
+            '<tbody>'+stdRows+'</tbody>'+
+          '</table>'+
+          '<div style="font-size:9px;color:#aaa;margin-top:7px">'+
+            '* ת"י = תקן ישראלי. עמידה בתקנים כוללת: חומרים מאושרים, ביצוע ע"י בעלי מקצוע מוסמכים, ובדיקות קבלה לפי הנחיות המכון הישראלי לתקנים.'+
+          '</div>'+
+        '</div>';
+
+      html += stdBlock;
+    })();
+
     // EXCLUDED + PAYMENT
-    excludedBlock +
+    html +=  excludedBlock +
     '<div style="padding:16px 28px;border-bottom:1px solid #e8e8e8">'+
       '<div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px">לוח תשלומים מוצע</div>'+
       '<div style="display:flex;height:26px;border-radius:5px;overflow:hidden;font-size:10px;color:#fff;font-weight:600">'+
