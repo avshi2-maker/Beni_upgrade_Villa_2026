@@ -491,7 +491,7 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
     </div>
 
     <!-- ── PROJECT PRESENTATION GALLERY ─────────────────────── -->
-    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:visible">
       <div style="background:var(--surface2);padding:12px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:16px">🖼</span>
@@ -591,8 +591,9 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
       <div style="padding:10px 18px 14px;display:flex;gap:8px;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:14px">
         <span style="font-size:11px;color:var(--text3);align-self:center">העתק URL להצעת מחיר:</span>
         <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/infographic_16860_09042026.png','אינפוגרפיקה')" class="btn btn-secondary btn-sm">📋 אינפוגרפיקה</button>
-        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png','הדמיה')" class="btn btn-secondary btn-sm">📋 הדמיה</button>
-        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png','הדמיה')" class="btn btn-secondary btn-sm">📋 הדמיה</button>
+        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/vilanano.png','הדמיה NanoBanana')" class="btn btn-secondary btn-sm">📋 הדמיה — נאנו</button>
+        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/middetails.png','הדמיה פירוט')" class="btn btn-secondary btn-sm">📋 הדמיה — פירוט</button>
+        <button onclick="copyImgUrl('https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/midj.png','הדמיה Midjourney')" class="btn btn-secondary btn-sm">📋 הדמיה — MJ</button>
       </div>
     </div>
 
@@ -1493,25 +1494,26 @@ var PRICE_RANGES = {
 
 // Chapter whitelist per BOQ category — prevents cross-chapter contamination
 var CAT_CHAPTERS = {
-  bisus:    ['2','23','51'],
-  pituch:   ['2','51'],
-  chatzer:  ['40','41','42','51','52','57'],
-  roof:     ['40'],
-  tiles:    ['40'],
-  plaster:  ['40'],
-  stairs:   ['40'],
-  windows:  ['40'],
-  doors:    ['40'],
-  sanitary: ['40','57'],
-  taps:     ['40','57'],
-  lighting: ['8','40'],
-  outlets:  ['8'],
-  elec_panel:['8'],
-  paint:    ['40'],
-  hvac:     ['8'],
-  logistics:['51','40'],
-  mamad:    ['2','40'],
-  areas:    []
+  // Verified 09/04/2026 against actual Dekel CSV (find_chapters.py)
+  bisus:     ['2','23','51'],        // בטון, כלונסאות, עפר
+  pituch:    ['2','51'],             // בטון, עפר
+  chatzer:   ['40','41','42','51','52','57'], // פיתוח, גינון, ריהוט, עפר, אספלט, מים
+  roof:      ['40'],                 // רעפים — פיתוח (Dekel ch40 covers roof tiles)
+  tiles:     ['40'],                 // ריצוף — פיתוח
+  plaster:   ['2','51'],             // FIXED: טיח = בטון/עפר, NOT ch40
+  stairs:    ['2','40'],             // מדרגות — בטון + פיתוח
+  windows:   [],                     // FIXED: NOT IN DEKEL — street prices only
+  doors:     [],                     // FIXED: NOT IN DEKEL — street prices only
+  sanitary:  [],                     // FIXED: NOT IN DEKEL — street prices only
+  taps:      [],                     // FIXED: NOT IN DEKEL — street prices only
+  lighting:  ['8'],                  // חשמל בלבד
+  outlets:   ['8'],                  // חשמל
+  elec_panel:['8'],                  // חשמל
+  paint:     ['2','51'],             // FIXED: צבע חוץ = 2/51, not 40
+  hvac:      ['8'],                  // חשמל/בקרה
+  logistics: ['51'],                 // עפר/פינוי
+  mamad:     ['2','23'],             // FIXED: ממד = בטון + כלונסאות (not 40)
+  areas:     []
 };
 
 function getPrice(row) {
@@ -1879,12 +1881,12 @@ function renderRows(catId) {
     if (dekelCode) {
       var chNum = dekelCode.split('.')[0];
       var chNames = {'2':'פ02 בטון','8':'פ08 חשמל','23':'פ23 כלונס','26':'פ26 עוגנים',
-        '40':'פ40 פיתוח','41':'פ41 גינון','42':'פ42 ריהוט','43':'פ43 קירות',
-        '44':'פ44 גדרות','51':'פ51 עפר','52':'פ52 אספלט','57':'פ57 מים/ביוב',
+        '40':'פ40 רעפים','41':'פ41 גינון','42':'פ42 ריהוט','43':'פ43 קירות',
+        '44':'פ44 גדרות','51':'פ51 עפר','52':'פ52 אספלט','57':'פ57 ביוב',
         '92':'פ92 בקרה','93':'פ93 בטיחות'};
       var chColors = {'2':'#534AB7','8':'#185FA5','23':'#0F6E56','26':'#854F0B',
-        '40':'#A32D2D','41':'#3B6D11','42':'#633806','43':'#791F1F',
-        '44':'#5F5E5A','51':'#888780','52':'#333333','57':'#0C447C',
+        '40':'#8B1A1A','41':'#3B6D11','42':'#633806','43':'#791F1F',
+        '44':'#5F5E5A','51':'#6B6B5A','52':'#333333','57':'#0C447C',
         '92':'#B8860B','93':'#B8860B'};
       var chName = chNames[chNum] || ('פ'+chNum);
       var chColor = chColors[chNum] || '#888888';
