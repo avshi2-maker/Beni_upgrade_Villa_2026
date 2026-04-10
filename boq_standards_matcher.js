@@ -80,6 +80,12 @@ window.openStandardsMatcher = function() {
   var rows = [];
   var cats = window.CATS || [];
   var data = window.boqData || {};
+  // DEBUG — remove after fix
+  console.log('[BSM] CATS count:', cats.length);
+  console.log('[BSM] boqData keys:', Object.keys(data));
+  var totalRows = 0;
+  cats.forEach(function(c){ totalRows += (data[c.id]||[]).length; });
+  console.log('[BSM] total rows in boqData:', totalRows);
   cats.forEach(function(cat) {
     (data[cat.id]||[]).forEach(function(row) {
       if ((!row.stdKey || !row.stdKey.trim()) && row.descHe && row.descHe.trim()) {
