@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1060">
+<title>אינפוגרפיקה — היתר 16860 | בית ברגר</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:hidden}
+body{background:#fdf8ee;font-family:'Heebo',sans-serif;direction:rtl;
+  padding:16px;color:#1a1810;
+  max-width:100vw;overflow-x:hidden;
+  -webkit-text-size-adjust:100%}
+.page{
+  max-width:min(1060px,100%);
+  width:100%;
+  margin:0 auto;
+  display:flex;flex-direction:column;gap:14px;
+  overflow-x:hidden}
+
+/* HEADER */
+.hdr{background:linear-gradient(135deg,#162e5a 0%,#1e4a96 50%,#162e5a 100%);
+  border-radius:14px;padding:22px 32px;display:flex;justify-content:space-between;align-items:center;
+  border:2px solid #c8a84b;position:relative;overflow:hidden}
+.hdr::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;
+  background:radial-gradient(circle,rgba(200,168,75,.18),transparent 70%)}
+.hdr-left{}
+.permit{background:rgba(200,168,75,.18);border:1px solid #c8a84b;border-radius:5px;
+  padding:3px 12px;font-size:10px;font-weight:800;color:#e8c96a;letter-spacing:1px;display:inline-block;margin-bottom:6px}
+.proj-name{font-size:28px;font-weight:900;color:#fff;line-height:1.1}
+.proj-sub{font-size:12px;color:#9ab8d8;margin-top:4px}
+.hdr-right{text-align:left;flex-shrink:0}
+.tot-label{font-size:10px;color:#9ab8d8;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.tot-amt{font-size:clamp(24px,5vw,40px);font-weight:900;color:#e8c96a;line-height:1}
+.tot-note{font-size:10px;color:#9ab8d8;margin-top:3px}
+
+/* STAT CARDS ROW */
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.card{background:#fff;border:1px solid #e2d5b0;border-radius:11px;padding:18px 16px;text-align:center}
+.card-icon{font-size:26px;margin-bottom:8px}
+.card-val{font-size:28px;font-weight:900;color:#162e5a;line-height:1}
+.card-unit{font-size:13px;font-weight:700;color:#162e5a}
+.card-label{font-size:11px;color:#8a7850;font-weight:600;margin-top:5px}
+
+/* VILLA IMAGE PLACEHOLDER */
+.villa-img-wrap{background:#fff;border:1px solid #e2d5b0;border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column}
+.villa-img-wrap img{width:100%;height:clamp(200px,40vw,580px);object-fit:cover;object-position:center 30%;display:block}
+.villa-img-wrap .img-caption{padding:8px 14px;font-size:10px;color:#8a7850;text-align:center;
+  border-top:1px solid #e2d5b0;font-weight:600;letter-spacing:.3px}
+
+/* MAIN 2-COL */
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){
+  .main-grid{grid-template-columns:1fr}
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .hdr{flex-direction:column}
+}
+
+/* CATEGORY BARS */
+.bars-panel{background:#fff;border:1px solid #e2d5b0;border-radius:12px;overflow:hidden}
+.panel-hdr{background:#f5eedb;padding:10px 16px;border-bottom:1px solid #e2d5b0;
+  font-size:12px;font-weight:800;color:#3a2e10;display:flex;align-items:center;gap:7px}
+.bar-row{display:flex;align-items:center;gap:8px;padding:5px 14px;border-bottom:1px solid #f5eedb}
+.bar-row:last-child{border:none}
+.bar-name{font-size:11px;font-weight:700;color:#1a1810;min-width:118px;text-align:right}
+.bar-track{flex:1;height:9px;background:#f0e8cc;border-radius:5px;overflow:hidden}
+.bar-fill{height:100%;border-radius:5px}
+.bar-amt{font-size:10px;font-weight:700;color:#5a4e2a;min-width:52px;text-align:left;direction:ltr}
+
+/* PRICE BREAKDOWN DONUT TEXT */
+.summary-panel{background:#fff;border:1px solid #e2d5b0;border-radius:12px;overflow:hidden;
+  display:flex;flex-direction:column}
+.summary-body{padding:14px 16px;flex:1}
+.summary-row{display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;border-bottom:1px solid #f5eedb;font-size:12px}
+.summary-row:last-child{border:none}
+.summary-row.total{font-weight:900;font-size:14px;color:#162e5a;
+  border-top:2px solid #e2d5b0;padding-top:10px;margin-top:4px}
+.s-label{color:#5a4e2a}
+.s-val{font-weight:700;color:#1a1810}
+.s-val.gold{color:#c8a84b;font-size:16px}
+
+/* CANVAS for pie */
+#pieCanvas{display:block;margin:8px auto 4px}
+
+/* FOOTER */
+.footer{text-align:center;font-size:10px;color:#8a7850;padding:10px 0 2px;
+  border-top:1px solid #e2d5b0}
+.footer strong{color:#162e5a}
+</style>
+</head>
+<body>
+<div style="background:#162e5a;padding:8px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100">
+  <button onclick="window.close()" style="background:rgba(255,255,255,.12);color:#e8c96a;border:1px solid rgba(200,168,75,.4);padding:6px 16px;border-radius:20px;font-family:'Heebo',sans-serif;font-size:13px;font-weight:700;cursor:pointer">← חזור ל-BOQ</button>
+  <span style="color:#e8c96a;font-size:12px;font-weight:700">אינפוגרפיקה — היתר 16860 | וילת ברגר</span>
+  <button onclick="downloadAsPNG()" style="background:#c8a84b;color:#162e5a;border:none;padding:6px 16px;border-radius:20px;font-family:'Heebo',sans-serif;font-size:12px;font-weight:800;cursor:pointer">⬇ PNG</button>
+</div>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="permit">היתר 16860 · גוש 37A · הרצליה</div>
+      <div class="proj-name">וילת ברגר</div>
+      <div class="proj-sub">תוספת קומה ב׳ · Turnkey · כולל אספקה + התקנה · מחירי שוק 2025–2026</div>
+    </div>
+    <div class="hdr-right">
+      <div class="tot-label">סה״כ כולל מע״מ</div>
+      <div class="tot-amt">₪1,939,531</div>
+      <div class="tot-note">רווח קבלן 22.3% + מע״מ 18% · 148 סעיפים</div>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🏠</div>
+      <div><span class="card-val">80</span> <span class="card-unit">מ״ר</span></div>
+      <div class="card-label">גג שטוח (חדש)</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📐</div>
+      <div><span class="card-val">57</span> <span class="card-unit">מ״ר</span></div>
+      <div class="card-label">גג רעפים (מתוקן)</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <div><span class="card-val">148</span></div>
+      <div class="card-label">סעיפי BOQ</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🏗️</div>
+      <div><span class="card-val">175</span> <span class="card-unit">מ״ר</span></div>
+      <div class="card-label">סה״כ שטח הבית</div>
+    </div>
+  </div>
+
+  <!-- VILLA IMAGE (full width) -->
+  <div class="villa-img-wrap">
+    <img id="villaImg"
+      src="https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/vilanano.png"
+      alt="הדמיית וילת ברגר"
+      onerror="this.src='https://hbmnlfzvorektbricvsl.supabase.co/storage/v1/object/public/images/villa_berger_render.svg';this.onerror=function(){this.parentElement.style.display='none'}">
+    <div class="img-caption">הדמיית וילת ברגר — היתר 16860 · הרצליה</div>
+  </div>
+
+  <!-- MAIN GRID: bars + summary -->
+  <div class="main-grid">
+
+    <!-- CATEGORY BARS -->
+    <div class="bars-panel">
+      <div class="panel-hdr">📊 פירוט עלויות לפי קטגוריה</div>
+      <div id="barsContainer" style="padding:6px 0"></div>
+    </div>
+
+    <!-- PRICE SUMMARY + PIE -->
+    <div class="summary-panel">
+      <div class="panel-hdr">💰 מבנה המחיר</div>
+      <div style="padding:10px 16px 0;text-align:center">
+        <canvas id="pieCanvas" width="200" height="200"></canvas>
+      </div>
+      <div class="summary-body">
+        <div class="summary-row"><span class="s-label">עלות בסיס</span><span class="s-val">₪1,343,966</span></div>
+        <div class="summary-row"><span class="s-label">רווח קבלן 22.3%</span><span class="s-val">₪299,704</span></div>
+        <div class="summary-row"><span class="s-label">מע״מ 18%</span><span class="s-val">₪295,861</span></div>
+        <div class="summary-row total"><span class="s-label">סה״כ כולל מע״מ</span><span class="s-val gold">₪1,939,531</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>בני פרסקי — יזם ומפקח בניה</strong> &nbsp;·&nbsp; היתר 16860 · מגרש 37A · הרצליה &nbsp;·&nbsp; 09/04/2026 &nbsp;·&nbsp; מחירי שוק 2025–2026 &nbsp;·&nbsp; Turnkey · כולל מע״מ 18%
+  </div>
+
+</div>
+
+<script>
+var CATS = [
+  {name:'ביסוס ושלד',     amt:278935, color:'#1a5cb0'},
+  {name:'פיתוח חצר',      amt:215500, color:'#16803c'},
+  {name:'מיזוג VRF',      amt:150690, color:'#0f766e'},
+  {name:'גג רעפים',       amt:128060, color:'#c03010'},
+  {name:'ממ״ד',            amt:112376, color:'#7c3aed'},
+  {name:'טיח + אבן',      amt:106838, color:'#b45309'},
+  {name:'חלונות + דלתות', amt:100050, color:'#0891b2'},
+  {name:'קירות תומכים',   amt: 85506, color:'#64748b'},
+  {name:'חשמל + לוח',     amt: 81336, color:'#d97706'},
+  {name:'ריצוף + מדרגות', amt: 49775, color:'#65a30d'},
+  {name:'סניטציה',        amt: 28500, color:'#06b6d4'},
+  {name:'לוגיסטיקה',      amt:  6400, color:'#94a3b8'},
+];
+
+var maxAmt = Math.max.apply(null, CATS.map(function(c){return c.amt;}));
+var container = document.getElementById('barsContainer');
+CATS.forEach(function(c){
+  var pct = Math.round(c.amt/maxAmt*100);
+  var totalBase = 1343966;
+  var row = document.createElement('div');
+  row.className = 'bar-row';
+  row.innerHTML =
+    '<div class="bar-name">'+c.name+'</div>'+
+    '<div class="bar-track"><div class="bar-fill" style="width:'+pct+'%;background:'+c.color+'"></div></div>'+
+    '<div class="bar-amt">₪'+Math.round(c.amt/1000)+'K</div>';
+  container.appendChild(row);
+});
+
+// Pie chart
+var cv = document.getElementById('pieCanvas');
+var ctx = cv.getContext('2d');
+var slices = [
+  {label:'עלות בסיס', val:1343966, color:'#1a5cb0'},
+  {label:'רווח',      val:299704,  color:'#c8a84b'},
+  {label:'מע״מ',      val:295861,  color:'#e2d5b0'},
+];
+var total = slices.reduce(function(s,x){return s+x.val;},0);
+var cx2=100, cy2=100, r=88, start=-Math.PI/2;
+slices.forEach(function(s){
+  var angle = (s.val/total)*Math.PI*2;
+  ctx.beginPath();
+  ctx.moveTo(cx2,cy2);
+  ctx.arc(cx2,cy2,r,start,start+angle);
+  ctx.closePath();
+  ctx.fillStyle=s.color; ctx.fill();
+  ctx.strokeStyle='#fdf8ee'; ctx.lineWidth=2; ctx.stroke();
+  // label
+  var mid = start + angle/2;
+  var lx = cx2 + Math.cos(mid)*58, ly = cy2 + Math.sin(mid)*58;
+  ctx.fillStyle='#fff';
+  ctx.font='bold 11px Heebo,sans-serif';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText(Math.round(s.val/total*100)+'%', lx, ly);
+  start += angle;
+});
+// center hole
+ctx.beginPath(); ctx.arc(cx2,cy2,40,0,Math.PI*2);
+ctx.fillStyle='#fff'; ctx.fill();
+ctx.fillStyle='#162e5a'; ctx.font='bold 11px Heebo,sans-serif';
+ctx.textAlign='center'; ctx.textBaseline='middle';
+ctx.fillText('מבנה', cx2, cy2-7);
+ctx.fillText('מחיר', cx2, cy2+7);
+</script>
+
+<div style="text-align:center;padding:16px;border-top:1px solid #e2d5b0;margin-top:8px;background:#fdf8ee">
+  <button id="dlBtn" onclick="downloadAsPNG()" 
+    style="background:linear-gradient(135deg,#1a5cb0,#2a7de0);color:#fff;border:none;
+    padding:12px 32px;border-radius:8px;font-family:'Heebo',sans-serif;font-size:14px;
+    font-weight:800;cursor:pointer;letter-spacing:.3px">
+    ⬇ הורד כ-PNG לסופאבייס
+  </button>
+  <div style="font-size:11px;color:#8a7850;margin-top:6px">
+    שמור את הקובץ כ: <code>infographic_16860_09042026.png</code> → העלה לסופאבייס bucket: images
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+function downloadAsPNG(){
+  var btn = document.getElementById('dlBtn');
+  btn.textContent = '⏳ מכין תמונה...';
+  btn.disabled = true;
+  // Hide the download button itself before capture
+  btn.parentElement.style.display = 'none';
+  html2canvas(document.querySelector('.page'), {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#fdf8ee',
+    logging: false
+  }).then(function(canvas){
+    var link = document.createElement('a');
+    link.download = 'infographic_16860_09042026.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.parentElement.style.display = 'block';
+    btn.textContent = '⬇ הורד כ-PNG לסופאבייס';
+    btn.disabled = false;
+  }).catch(function(e){
+    btn.parentElement.style.display = 'block';
+    btn.textContent = '⚠ שגיאה — נסה שוב';
+    btn.disabled = false;
+  });
+}
+</script>
+</body>
+</html>
