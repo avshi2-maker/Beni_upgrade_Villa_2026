@@ -367,6 +367,76 @@ body{font-family:'Heebo',sans-serif;background:var(--bg);color:var(--text);direc
       </div>
     </div>
 
+
+    <!-- ── GEMINI PRICES REFERENCE TABLE ────────────────────── -->
+    <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden" id="geminiPricesPanel">
+      <div style="background:linear-gradient(135deg,#0f4c2a,#1a6e3c);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">🤖</span>
+          <div>
+            <div style="color:#fff;font-size:14px;font-weight:700">מחירי ייחוס Gemini — Israel 2026</div>
+            <div style="color:rgba(255,255,255,0.65);font-size:11px">29 סעיפים | חומר + עבודה | מאומת 09/04/2026</div>
+          </div>
+        </div>
+        <button onclick="(function(){var b=document.getElementById('geminiBody');var t=document.getElementById('geminiToggle');if(b.style.display==='none'){b.style.display='block';t.textContent='▲ סגור';}else{b.style.display='none';t.textContent='▼ פתח';}})()" id="geminiToggle" style="background:rgba(255,255,255,0.15);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer">▼ פתח</button>
+      </div>
+      <div id="geminiBody" style="display:none">
+        <div style="padding:8px 16px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:11px;color:var(--text3)">
+          ⚠️ מחירי ייעוץ בלבד — לא כולל ערכי BOQ נוכחי. לשימוש כלי עזר להשוואה מול מחירון דקל ומחירי שוק.
+        </div>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:var(--surface2)">
+                <th style="padding:7px 10px;text-align:right;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">קוד</th>
+                <th style="padding:7px 10px;text-align:right;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border)">תיאור</th>
+                <th style="padding:7px 10px;text-align:center;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">יחידה</th>
+                <th style="padding:7px 10px;text-align:center;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">חומר ₪</th>
+                <th style="padding:7px 10px;text-align:center;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">עבודה ₪</th>
+                <th style="padding:7px 10px;text-align:center;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">סה"כ ₪</th>
+                <th style="padding:7px 10px;text-align:right;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border)">הערה</th>
+              </tr>
+            </thead>
+            <tbody id="geminiTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DAILY RATES REFERENCE TABLE ───────────────────────── -->
+    <div style="margin-top:16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden" id="dailyRatesPanel">
+      <div style="background:linear-gradient(135deg,#4a2400,#7a3c00);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:18px">👷</span>
+          <div>
+            <div style="color:#fff;font-size:14px;font-weight:700">תעריפי כוח אדם יומיים — Israel 2026</div>
+            <div style="color:rgba(255,255,255,0.65);font-size:11px">11 מקצועות | מאומת Gemini 09/04/2026 | לא כולל חומרים</div>
+          </div>
+        </div>
+        <button onclick="(function(){var b=document.getElementById('dailyBody');var t=document.getElementById('dailyToggle');if(b.style.display==='none'){b.style.display='block';t.textContent='▲ סגור';}else{b.style.display='none';t.textContent='▼ פתח';}})()" id="dailyToggle" style="background:rgba(255,255,255,0.15);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-family:Heebo,sans-serif;font-size:12px;cursor:pointer">▼ פתח</button>
+      </div>
+      <div id="dailyBody" style="display:none">
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:12px">
+            <thead>
+              <tr style="background:var(--surface2)">
+                <th style="padding:7px 12px;text-align:right;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border)">תפקיד</th>
+                <th style="padding:7px 12px;text-align:right;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border)">תיאור</th>
+                <th style="padding:7px 12px;text-align:center;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">מינימום ₪</th>
+                <th style="padding:7px 12px;text-align:center;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">מקסימום ₪</th>
+                <th style="padding:7px 12px;text-align:center;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border);white-space:nowrap">ממוצע ₪</th>
+                <th style="padding:7px 12px;text-align:right;color:var(--text2);font-weight:700;border-bottom:2px solid var(--border)">הערות</th>
+              </tr>
+            </thead>
+            <tbody id="dailyTableBody"></tbody>
+          </table>
+        </div>
+        <div style="padding:10px 16px;font-size:10px;color:var(--text3);border-top:1px solid var(--border)">
+          * תעריפים לעובד בודד ליום עבודה (8 שעות) ללא חומרים. מקור: Gemini Pro — שוק ישראל Q1 2026.
+        </div>
+      </div>
+    </div>
+
     <!-- ── AI SANITY TEST PANEL ────────────────────────────── -->
     <div style="margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden" id="sanityPanel">
       <div style="background:linear-gradient(135deg,#1a3a6c,#0f2548);padding:14px 22px;display:flex;align-items:center;justify-content:space-between">
@@ -1007,18 +1077,52 @@ var DEFAULT_BOQ = {
      qty:55, unit:'מ"ק', priceKey:'', manualPrice:110, status:'new', profit:18, stdKey:''},
   ],
   labor:[
-    {descHe:'פועל בניה כללי — תעריף יומי',
-     qty:0, unit:'יום', priceKey:'', manualPrice:0, status:'new', profit:15, stdKey:''},
-    {descHe:'בעל מקצוע (רצף / טייח / צבעי) — תעריף יומי',
-     qty:0, unit:'יום', priceKey:'', manualPrice:0, status:'new', profit:15, stdKey:''},
-    {descHe:'חשמלאי — תעריף יומי',
-     qty:0, unit:'יום', priceKey:'', manualPrice:0, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_labor_header',
+     descHe:'✅ תעריפים יומיים מאומתים Gemini — שוק ישראל 2026 (לא כולל חומרים, עובד בודד). הזן כמות = ימי עבודה'},
+    {descHe:'עוזר כללי / פועל פשוט — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:525, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_helper',
+     descHe:'טווח שוק: ₪450–600/יום | עבודות פינוי וסיוע כלליות'},
+    {descHe:'טפסן / שלדאי (formwork) — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:1025, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_carpenter',
+     descHe:'טווח שוק: ₪850–1,200/יום | כולל מיומנות קריאת תוכניות'},
+    {descHe:'ברזלן — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:950, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_iron',
+     descHe:'טווח שוק: ₪800–1,100/יום | עבודה פיזית מאומצת'},
+    {descHe:'טייח — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:875, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_plaster',
+     descHe:'טווח שוק: ₪750–1,000/יום | עבודת הכנה וגמר'},
+    {descHe:'רצף (tiler) — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:1100, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_tiler',
+     descHe:'טווח שוק: ₪900–1,300/יום | מומחה אריחים גדולים 80/80 ומעלה'},
+    {descHe:'חשמלאי מוסמך — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:1350, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_elec',
+     descHe:'טווח שוק: ₪1,100–1,600/יום | כולל חתימה על אישורים'},
     {descHe:'אינסטלטור / סניטציה — תעריף יומי',
-     qty:0, unit:'יום', priceKey:'', manualPrice:0, status:'new', profit:15, stdKey:''},
-    {descHe:'מפעיל מנוף / ציוד — תעריף יומי',
-     qty:0, unit:'יום', priceKey:'', manualPrice:0, status:'new', profit:12, stdKey:''},
-    {isRemark:true, id:'rem_labor',
-     descHe:'הזן כמות = מספר ימי עבודה משוערים לכל מקצוע. תעריפים ממוצעים שוק 2026 (עובד בודד, לא כולל חומרים)'},
+     qty:0, unit:'יום', priceKey:'', manualPrice:1175, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_plumber',
+     descHe:'טווח שוק: ₪950–1,400/יום | עבודת יום לתיקונים או פריסה'},
+    {descHe:'צבעי — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:725, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_painter',
+     descHe:'טווח שוק: ₪600–850/יום | כולל שפכטל אמריקאי וגמר'},
+    {descHe:'רתך קונסטרוקציה — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:1075, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_welder',
+     descHe:'טווח שוק: ₪900–1,250/יום | עבודה בגובה / רתך מוסמך'},
+    {descHe:'מנהל עבודה / פורמן — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:1700, status:'new', profit:12, stdKey:''},
+    {isRemark:true, id:'rem_foreman',
+     descHe:'טווח שוק: ₪1,400–2,000/יום | אחריות על בטיחות ולו"ז'},
+    {descHe:'טכנאי מיזוג אוויר — תעריף יומי',
+     qty:0, unit:'יום', priceKey:'', manualPrice:1250, status:'new', profit:15, stdKey:''},
+    {isRemark:true, id:'rem_hvac_tech',
+     descHe:'טווח שוק: ₪1,000–1,500/יום | התקנות מורכבות/צנרת'},
   ],
   supervision:[
     {descHe:'מנהל עבודה / מפקח אתר — שכר חודשי',
@@ -3163,6 +3267,101 @@ function generateOffer(mode) {
   window.addEventListener('scroll',checkScroll,{passive:true});
   draw();
 })();
+
+// ── GEMINI PRICES TABLE DATA ──────────────────────────────────
+var GEMINI_PRICES = [
+  {code:'1.10',cat:'עבודות עפר',desc:'חפירה בקרקע רגילה ופינוי לאתר מורשה',unit:'מ\"ק',mat:0,lab:95,total:95,note:'כולל הובלה והטמנה 2026'},
+  {code:'1.20',cat:'עבודות עפר',desc:'מצע כוז א\' מהודק (שכבות 20 ס\"מ)',unit:'מ\"ק',mat:110,lab:85,total:195,note:'ת\"י 1468'},
+  {code:'2.10',cat:'שלד ובטונים',desc:'בטון ב-30 ליסודות ורצפה',unit:'מ\"ק',mat:440,lab:210,total:650,note:'ת\"י 118 - כולל משאבה'},
+  {code:'2.20',cat:'שלד ובטונים',desc:'ברזל מצולע לחיתוך וכיפוף (כולל קשירה)',unit:'ק\"ג',mat:5.1,lab:4.2,total:9.3,note:'ת\"י 466 - מחירי הלדה 2026'},
+  {code:'2.30',cat:'שלד ובטונים',desc:'בניית ממ\"ד תקני (קירות + תקרה)',unit:'מ\"ר',mat:2800,lab:3200,total:6000,note:'ת\"י 4577 - כולל אביזרי מיזוג'},
+  {code:'3.10',cat:'בנייה ובלוקים',desc:'בנייה בבלוק איטונג 22 ס\"מ (חוץ)',unit:'מ\"ר',mat:105,lab:125,total:230,note:'בידוד תרמי משופר'},
+  {code:'3.20',cat:'בנייה ובלוקים',desc:'בנייה בבלוק בטון 10 ס\"מ (מחיצות)',unit:'מ\"ר',mat:48,lab:95,total:143,note:'כולל חוזרות בטון'},
+  {code:'4.10',cat:'איטום ובידוד',desc:'איטום גגות בירועות ביטומניות 5 מ\"מ',unit:'מ\"ר',mat:72,lab:88,total:160,note:'ת\"י 1430 - גג לבן'},
+  {code:'4.20',cat:'איטום ובידוד',desc:'איטום חדרים רטובים (צמנטי 2 שכבות)',unit:'מ\"ר',mat:55,lab:105,total:160,note:'כולל רולפוט'},
+  {code:'5.10',cat:'אינסטלציה',desc:'נקודת דלוח/מים קומפלט (PEX-GOL)',unit:'נ\"ק',mat:480,lab:950,total:1430,note:'ת\"י 1205'},
+  {code:'5.20',cat:'אינסטלציה',desc:'התקנת קולטן 4 זול (כולל אביזרים)',unit:'מ\"א',mat:180,lab:220,total:400,note:'צנרת שקועה'},
+  {code:'6.10',cat:'חשמל',desc:'נקודת חשמל כוח/מאור (צנרת+חיווט+אביזר)',unit:'נ\"ק',mat:95,lab:190,total:285,note:'תקני חברת חשמל'},
+  {code:'6.20',cat:'חשמל',desc:'לוח חשמל דירתי 3X25 קומפלט',unit:'יח',mat:1800,lab:2500,total:4300,note:'כולל הגנות ופחת'},
+  {code:'7.10',cat:'טיח וגמר',desc:'טיח פנים (מייישר + שליכט לבן)',unit:'מ\"ר',mat:42,lab:95,total:137,note:'כולל פינות אלומיניום'},
+  {code:'7.20',cat:'טיח וגמר',desc:'טיח חוץ תרמי - מערכת מלאה',unit:'מ\"ר',mat:85,lab:165,total:250,note:'ת\"י 1364'},
+  {code:'8.10',cat:'ריצוף וחיפוי',desc:'ריצוף גרניט פורצלן 80/80 (על מצע)',unit:'מ\"ר',mat:120,lab:210,total:330,note:'לא כולל אריח'},
+  {code:'8.20',cat:'ריצוף וחיפוי',desc:'חיפוי קירות קרמיקה/גרניט פורצלן',unit:'מ\"ר',mat:95,lab:195,total:290,note:'כולל דבק ורובה'},
+  {code:'9.10',cat:'עבודות גבס',desc:'תקרת גבס/הנמכת מיזוג (לוח יבוק)',unit:'מ\"ר',mat:85,lab:145,total:230,note:'כולל קונסטרוקציה'},
+  {code:'10.1',cat:'אלומיניום',desc:'חלון אלומיניום דגם קלייל 7000 (כולל זכוכית)',unit:'מ\"ר',mat:950,lab:450,total:1400,note:'זכוכית בידודית'},
+  {code:'11.1',cat:'בנייה מתועשת',desc:'קונסטרוקציית פלדה למבנה תעשייתי',unit:'טון',mat:6500,lab:5500,total:12000,note:'כולל הובלה והנפה'},
+  {code:'12.1',cat:'מכבה פרטי',desc:'גלאי עשן עצמאי (פוטואלקטרי)',unit:'נ\"ק',mat:85,lab:120,total:205,note:'ת\"י 1220 חלק 2'},
+  {code:'12.2',cat:'מכבה פרטי',desc:'מערכת מתזים (ספרינקלרים) לבית פרטי - נקודה',unit:'נ\"ק',mat:280,lab:450,total:730,note:'ת\"י 1596 CPVC'},
+  {code:'12.3',cat:'מכבה פרטי',desc:'גלגלון כיבוי אש 3/4 כולל מזנק וארון',unit:'נ\"ק',mat:650,lab:550,total:1200,note:'ת\"י 1923'},
+  {code:'13.1',cat:'מכבה תעשייתי',desc:'רכזת גילוי אש כתובתית (עד 2 חוגים)',unit:'נ\"ק',mat:4200,lab:2800,total:7000,note:'ת\"י 1220 חלק 3'},
+  {code:'13.2',cat:'מכבה תעשייתי',desc:'גלאי עשן/חום כתובתי (כולל בסיס)',unit:'נ\"ק',mat:195,lab:165,total:360,note:'תקן UL/FM'},
+  {code:'13.3',cat:'מכבה תעשייתי',desc:'צנרת ספרינקלרים 2\" (פלדה שחורה)',unit:'מ\"א',mat:85,lab:115,total:200,note:'ת\"י 1596 - גובה'},
+  {code:'13.4',cat:'מכבה תעשייתי',desc:'עמדת כיבוי אש (גלגלון+זרנוק+מזרה)',unit:'נ\"ק',mat:1450,lab:850,total:2300,note:'כולל ארון פח אדום'},
+  {code:'13.5',cat:'מכבה תעשייתי',desc:'משאבת כיבוי אש (דיזל/חשמל)',unit:'נ\"ק',mat:45000,lab:15000,total:60000,note:'כולל הובלה והנפה'},
+  {code:'13.6',cat:'מכבה תעשייתי',desc:'מערכת הצפה (Deluge) לאזורי סיכון',unit:'נ\"ק',mat:8500,lab:4500,total:13000,note:''},
+];
+
+var DAILY_RATES = [
+  {title:'עוזר כללי / פועל פשוט',     desc_he:'עוזר כללי / פועל פשוט',     lo:450,  hi:600,  avg:525,  note:'פועל לעבודות פינוי וסיוע'},
+  {title:'Carpenter (Formwork)',        desc_he:'טפסן / שלדאי',              lo:850,  hi:1200, avg:1025, note:'כולל מיומנות קריאת תוכניות'},
+  {title:'Ironworker',                  desc_he:'ברזלן',                     lo:800,  hi:1100, avg:950,  note:'עבודה פיזית מאומצת'},
+  {title:'Plasterer',                   desc_he:'טייח',                      lo:750,  hi:1000, avg:875,  note:'עבודת הכנה וגמר'},
+  {title:'Tiler',                       desc_he:'רצף',                       lo:900,  hi:1300, avg:1100, note:'מומחה אריחים 80/80 ומעלה'},
+  {title:'Electrician (Certified)',     desc_he:'חשמלאי מוסמך',             lo:1100, hi:1600, avg:1350, note:'כולל חתימה על אישורים'},
+  {title:'Plumber',                     desc_he:'אינסטלטור',                 lo:950,  hi:1400, avg:1175, note:'תיקונים או פריסה'},
+  {title:'Painter',                     desc_he:'צבעי',                      lo:600,  hi:850,  avg:725,  note:'כולל שפכטל אמריקאי וגמר'},
+  {title:'Welder',                      desc_he:'רתך קונסטרוקציה',           lo:900,  hi:1250, avg:1075, note:'עבודה בגובה / מוסמך'},
+  {title:'Foreman',                     desc_he:'מנהל עבודה / פורמן',        lo:1400, hi:2000, avg:1700, note:'אחריות בטיחות ולו\"ז'},
+  {title:'Air Con Technician',          desc_he:'טכנאי מיזוג אוויר',         lo:1000, hi:1500, avg:1250, note:'התקנות מורכבות/צנרת'},
+];
+
+(function initRefTables(){
+  // Gemini table
+  var tbody = document.getElementById('geminiTableBody');
+  if (tbody) {
+    var lastCat = '';
+    GEMINI_PRICES.forEach(function(r, i) {
+      if (r.cat !== lastCat) {
+        var hdr = document.createElement('tr');
+        hdr.style.cssText = 'background:var(--surface2)';
+        hdr.innerHTML = '<td colspan="7" style="padding:5px 10px;font-size:10px;font-weight:800;color:var(--accent);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border)">'+r.cat+'</td>';
+        tbody.appendChild(hdr);
+        lastCat = r.cat;
+      }
+      var tr = document.createElement('tr');
+      tr.style.cssText = i%2===0 ? 'background:var(--surface)' : 'background:var(--surface2)';
+      tr.innerHTML =
+        '<td style="padding:5px 10px;font-size:11px;font-weight:700;color:var(--accent);white-space:nowrap">'+r.code+'</td>'+
+        '<td style="padding:5px 10px;font-size:11px">'+r.desc+'</td>'+
+        '<td style="padding:5px 10px;font-size:11px;text-align:center;color:var(--text2)">'+r.unit+'</td>'+
+        '<td style="padding:5px 10px;font-size:11px;text-align:center">'+r.mat.toLocaleString('he-IL')+'</td>'+
+        '<td style="padding:5px 10px;font-size:11px;text-align:center">'+r.lab.toLocaleString('he-IL')+'</td>'+
+        '<td style="padding:5px 10px;font-size:12px;font-weight:800;text-align:center;color:var(--green)">'+r.total.toLocaleString('he-IL')+'</td>'+
+        '<td style="padding:5px 10px;font-size:10px;color:var(--text3)">'+r.note+'</td>';
+      tbody.appendChild(tr);
+    });
+  }
+
+  // Daily rates table
+  var dtbody = document.getElementById('dailyTableBody');
+  if (dtbody) {
+    DAILY_RATES.forEach(function(r, i) {
+      var tr = document.createElement('tr');
+      tr.style.cssText = i%2===0 ? 'background:var(--surface)' : 'background:var(--surface2)';
+      var barW = Math.round((r.avg-400)/(2000-400)*100);
+      tr.innerHTML =
+        '<td style="padding:6px 12px;font-size:12px;font-weight:700">'+r.desc_he+'</td>'+
+        '<td style="padding:6px 12px;font-size:11px;color:var(--text2)">'+r.note+'</td>'+
+        '<td style="padding:6px 12px;font-size:11px;text-align:center;color:var(--text3)">₪'+r.lo.toLocaleString('he-IL')+'</td>'+
+        '<td style="padding:6px 12px;font-size:11px;text-align:center;color:var(--text3)">₪'+r.hi.toLocaleString('he-IL')+'</td>'+
+        '<td style="padding:6px 12px;font-size:13px;font-weight:800;text-align:center;color:var(--amber)">₪'+r.avg.toLocaleString('he-IL')+
+          '<div style="height:4px;background:var(--surface2);border-radius:2px;margin-top:3px"><div style="width:'+barW+'%;height:4px;background:var(--amber);border-radius:2px"></div></div></td>'+
+        '<td style="padding:6px 12px;font-size:10px;color:var(--text3)">'+r.note+'</td>';
+      dtbody.appendChild(tr);
+    });
+  }
+})();
+
 </script>
 
 
