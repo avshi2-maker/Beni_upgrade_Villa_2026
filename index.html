@@ -2118,10 +2118,8 @@ function renderRows(catId) {
         ';color:#fff;border-radius:4px;padding:2px 4px;font-size:9px;font-weight:700;'+
         'text-align:center;line-height:1.5;cursor:help;white-space:nowrap'+warnBorder+'">'+
         (priceWarning?'⚠ ':'')+chName+'</div>';
-    } else if (c.src === 'manual') {
-      dekelBadge = '<div style="color:var(--text3);font-size:9px;text-align:center;font-style:italic">ידני</div>';
     } else {
-      dekelBadge = '<div style="color:#ccc;font-size:9px;text-align:center">—</div>';
+      dekelBadge = '';
     }
 
     var tr = document.createElement('tr');
